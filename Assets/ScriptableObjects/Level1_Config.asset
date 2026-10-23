@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7ebdc38e5afce419851a5680d46c3d, type: 3}
+  m_Name: Level1_Config
+  m_EditorClassIdentifier: Assembly-CSharp::LevelConfigSO
+  levelId: 1
+  levelName: 'Level 1: First Splash'
+  defensePoints: 6
+  waves:
+  - isHugeWave: 0
+    preDelay: 3
+    spawnInterval: 1.2
+    enemyGroups:
+    - enemyType: jellien
+      spawnLocation: left
+      count: 3
+    - enemyType: jellien
+      spawnLocation: right
+      count: 3
+  - isHugeWave: 1
+    preDelay: 4
+    spawnInterval: 0.9
+    enemyGroups:
+    - enemyType: jellien
+      spawnLocation: left
+      count: 4
+    - enemyType: cheetozard
+      spawnLocation: right
+      count: 2
+    - enemyType: marshquito
+      spawnLocation: top
+      count: 2
+  - isHugeWave: 0
+    preDelay: 3
+    spawnInterval: 1.0
+    enemyGroups:
+    - enemyType: spearman
+      spawnLocation: left
+      count: 3
+    - enemyType: waffare
+      spawnLocation: right
+      count: 2
+    - enemyType: marshquito
+      spawnLocation: top
+      count: 2
+  - isHugeWave: 1
+    preDelay: 4
+    spawnInterval: 1.2
+    enemyGroups:
+    - enemyType: hammerman
+      spawnLocation: left
+      count: 1
+    - enemyType: moshi_mos
+      spawnLocation: right
+      count: 1
+    - enemyType: cheetozard
+      spawnLocation: right
+      count: 2
+    - enemyType: spearman
+      spawnLocation: left
+      count: 2

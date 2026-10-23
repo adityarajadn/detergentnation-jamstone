@@ -1,0 +1,13 @@
+{
+  "mcp": {
+    "servers": {
+      "unity-mcp": {
+        "type": "local",
+        "command": [
+          "C:\\Users\\adity\\.unity\\relay\\relay_win.exe",
+          "--mcp"
+        ]
+      }
+    }
+  }
+}
