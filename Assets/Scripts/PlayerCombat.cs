@@ -103,7 +103,7 @@ public class PlayerCombat : MonoBehaviour
         }
 
         bool reloadPress = Input.GetKeyDown(KeybindManager.Reload) || Input.GetKeyDown(KeyCode.R);
-        bool fireHold = Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.F);
+        bool fireHold = Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.J);
         bool meleePress = Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.V);
 
 #if ENABLE_INPUT_SYSTEM
@@ -111,7 +111,7 @@ public class PlayerCombat : MonoBehaviour
         if (kb != null)
         {
             if (kb.rKey.wasPressedThisFrame) reloadPress = true;
-            if (kb.jKey.isPressed || kb.fKey.isPressed) fireHold = true;
+            if (kb.jKey.isPressed) fireHold = true;
             if (kb.kKey.wasPressedThisFrame || kb.vKey.wasPressedThisFrame) meleePress = true;
         }
 
