@@ -17,9 +17,9 @@ public class SoapCannon : MonoBehaviour
     {
         if (timer > 0f) timer -= Time.deltaTime;
 
-        bool interact = Input.GetKeyDown(KeyCode.E);
+        bool interact = Input.GetKeyDown(KeybindManager.Interact) || Input.GetKeyDown(KeyCode.F);
 #if ENABLE_INPUT_SYSTEM
-        if (UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame) interact = true;
+        if (UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.fKey.wasPressedThisFrame) interact = true;
 #endif
 
         if (playerInRange && interact && timer <= 0f && ammo > 0)

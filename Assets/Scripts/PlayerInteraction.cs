@@ -15,8 +15,9 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        bool interactPress = Input.GetKeyDown(KeybindManager.Interact) || Input.GetKeyDown(KeyCode.E);
-        bool useItemPress = Input.GetKeyDown(KeybindManager.UseItem) || Input.GetKeyDown(KeyCode.Q);
+        bool interactPress = Input.GetKeyDown(KeybindManager.Interact) || Input.GetKeyDown(KeyCode.F);
+        bool useItem1Press = Input.GetKeyDown(KeybindManager.UseItem1) || Input.GetKeyDown(KeyCode.Q);
+        bool useItem2Press = Input.GetKeyDown(KeybindManager.UseItem2) || Input.GetKeyDown(KeyCode.E);
         bool slot1Press = Input.GetKeyDown(KeyCode.Alpha1);
         bool slot2Press = Input.GetKeyDown(KeyCode.Alpha2);
 
@@ -24,8 +25,9 @@ public class PlayerInteraction : MonoBehaviour
         var kb = Keyboard.current;
         if (kb != null)
         {
-            if (kb.eKey.wasPressedThisFrame) interactPress = true;
-            if (kb.qKey.wasPressedThisFrame) useItemPress = true;
+            if (kb.fKey.wasPressedThisFrame) interactPress = true;
+            if (kb.qKey.wasPressedThisFrame) useItem1Press = true;
+            if (kb.eKey.wasPressedThisFrame) useItem2Press = true;
             if (kb.digit1Key.wasPressedThisFrame) slot1Press = true;
             if (kb.digit2Key.wasPressedThisFrame) slot2Press = true;
         }
@@ -73,10 +75,19 @@ public class PlayerInteraction : MonoBehaviour
         if (scroll > 0f) activeSlot = 0;
         if (scroll < 0f) activeSlot = 1;
 
-        // Use consumable
-        if (useItemPress && player != null && !player.isPlanningMode)
+        // Use Item 1 (Q) & Use Item 2 (E)
+        if (player != null && !player.isPlanningMode)
         {
-            UseActiveConsumable();
+            if (useItem1Press)
+            {
+                activeSlot = 0;
+                UseActiveConsumable();
+            }
+            else if (useItem2Press)
+            {
+                activeSlot = 1;
+                UseActiveConsumable();
+            }
         }
     }
 
