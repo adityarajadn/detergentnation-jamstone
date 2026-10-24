@@ -63,6 +63,7 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button pause_resume_button;
     [SerializeField] private Button pause_settings_button;
     [SerializeField] private Button pause_menu_button;
+    [SerializeField] private SettingsUI settings_panel;
 
     [Header("UI Theme Colors")]
     [SerializeField] private Color slot_active_color = new Color(0.2f, 0.7f, 0.9f, 0.9f);
@@ -172,9 +173,28 @@ public class GameplayUI : MonoBehaviour
         {
             pause_settings_button.onClick.AddListener(() =>
             {
-                Time.timeScale = 1f;
-                SceneLoader.LoadSettings();
+                if (settings_panel != null)
+                {
+                    if (pause_panel != null) pause_panel.SetActive(false);
+                    settings_panel.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Time.timeScale = 1f;
+                    SceneLoader.LoadSettings();
+                }
             });
+        }
+        if (settings_panel != null)
+        {
+            settings_panel.on_closed += () =>
+            {
+                if (pause_panel != null && Time.timeScale == 0f)
+                {
+                    pause_panel.SetActive(true);
+                }
+            };
+            settings_panel.gameObject.SetActive(false);
         }
         if (pause_menu_button != null)
         {
@@ -439,6 +459,12 @@ public class GameplayUI : MonoBehaviour
 
     public void TogglePause()
     {
+        if (settings_panel != null && settings_panel.gameObject.activeSelf)
+        {
+            settings_panel.Close();
+            return;
+        }
+
         if (pause_panel == null) return;
         bool is_paused = !pause_panel.activeSelf;
         pause_panel.SetActive(is_paused);
@@ -447,6 +473,7 @@ public class GameplayUI : MonoBehaviour
 
     public void ResumeGame()
     {
+        if (settings_panel != null) settings_panel.gameObject.SetActive(false);
         if (pause_panel != null) pause_panel.SetActive(false);
         Time.timeScale = 1f;
     }

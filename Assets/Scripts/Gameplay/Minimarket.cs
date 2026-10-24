@@ -59,7 +59,7 @@ public class Minimarket : MonoBehaviour
         if (dist <= interaction_distance)
         {
             Keyboard kb = Keyboard.current;
-            if (kb != null && kb.eKey.wasPressedThisFrame)
+            if (KeybindManager.WasPressedThisFrame(KeyAction.Interact) || (kb != null && (kb.eKey.wasPressedThisFrame || kb.fKey.wasPressedThisFrame)))
             {
                 if (player_combat != null)
                 {
