@@ -5,23 +5,12 @@ using UnityEngine.Events;
 public class PlayerConsumableInventory : MonoBehaviour
 {
     public int active_consumable_slot = 1;
-    public GameObject soap_bomb_prefab;
-    public GameObject sonar_batarang_prefab;
 
     [Header("Consumable Prefabs")]
     public GameObject[] consumable_prefabs;
 
     [Header("Events")]
     public UnityEvent<int, string, int> on_consumable_updated;
-
-    [Header("Consumable Fallbacks")]
-    [SerializeField] private int first_aid_heal = 50;
-    [SerializeField] private float energy_drink_speed_boost = 1.5f;
-    [SerializeField] private float energy_drink_duration = 8.0f;
-    [SerializeField] private int soap_bucket_shields = 3;
-    [SerializeField] private int tools_box_repair = 50;
-    [SerializeField] private int tools_box_minimarket_heal = 50;
-    [SerializeField] private Vector2 bomb_throw_impulse = new Vector2(12f, 4f);
 
     private Camera main_camera;
     private PlayerCombat combat;
@@ -129,94 +118,25 @@ public class PlayerConsumableInventory : MonoBehaviour
 
     private bool ExecuteConsumableEffect(string item_name)
     {
+        if (consumable_prefabs == null) return false;
+
         if (main_camera == null) main_camera = Camera.main;
         Vector3 mouse_pos = main_camera != null && Mouse.current != null ? main_camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : transform.position;
         mouse_pos.z = 0f;
 
-        if (consumable_prefabs != null)
+        for (int i = 0; i < consumable_prefabs.Length; i++)
         {
-            for (int i = 0; i < consumable_prefabs.Length; i++)
+            if (consumable_prefabs[i] == null) continue;
+            ConsumableBase cb = consumable_prefabs[i].GetComponent<ConsumableBase>();
+            if (cb != null)
             {
-                if (consumable_prefabs[i] == null) continue;
-                ConsumableBase cb = consumable_prefabs[i].GetComponent<ConsumableBase>();
-                if (cb != null)
+                bool match = cb.consumable_name.Equals(item_name, System.StringComparison.OrdinalIgnoreCase) ||
+                    (cb.consumable_name == "Soap Water Bucket" && (item_name == "Soap Water Bucket" || item_name == "Soap Bucket")) ||
+                    (cb.consumable_name == "Tools Box" && (item_name == "Tools Box" || item_name == "Tool Box"));
+                if (match)
                 {
-                    bool match = cb.consumable_name.Equals(item_name, System.StringComparison.OrdinalIgnoreCase) ||
-                        (cb.consumable_name == "Soap Water Bucket" && (item_name == "Soap Water Bucket" || item_name == "Soap Bucket")) ||
-                        (cb.consumable_name == "Tools Box" && (item_name == "Tools Box" || item_name == "Tool Box"));
-                    if (match)
-                    {
-                        return cb.Use(combat, mouse_pos);
-                    }
+                    return cb.Use(combat, mouse_pos);
                 }
-            }
-        }
-
-        Vector3 origin = combat != null && combat.fire_point != null ? combat.fire_point.position : transform.position;
-
-        if (item_name == "Soap Bomb")
-        {
-            GameObject prefab = soap_bomb_prefab != null ? soap_bomb_prefab : (combat != null ? combat.soap_bomb_prefab : null);
-            if (prefab != null)
-            {
-                GameObject bomb = Instantiate(prefab, origin, Quaternion.identity);
-                SoapBombProjectile sbp = bomb.GetComponent<SoapBombProjectile>();
-                Vector2 throw_dir = ((Vector2)(mouse_pos - origin)).normalized * bomb_throw_impulse.x + Vector2.up * bomb_throw_impulse.y;
-                if (sbp != null) sbp.Launch(throw_dir);
-                else
-                {
-                    Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
-                    if (rb != null) rb.linearVelocity = throw_dir;
-                }
-                return true;
-            }
-        }
-        else if (item_name == "First Aid Kit")
-        {
-            Health health = GetComponent<Health>();
-            if (health != null)
-            {
-                health.Heal(first_aid_heal);
-                return true;
-            }
-        }
-        else if (item_name == "Energy Drink")
-        {
-            PlayerController pc = GetComponent<PlayerController>();
-            if (pc != null)
-            {
-                pc.ApplySpeedBoost(energy_drink_speed_boost, energy_drink_duration);
-                return true;
-            }
-        }
-        else if (item_name == "Soap Water Bucket" || item_name == "Soap Bucket")
-        {
-            Health health = GetComponent<Health>();
-            if (health != null)
-            {
-                health.shield_charges = soap_bucket_shields;
-                return true;
-            }
-        }
-        else if (item_name == "Tools Box" || item_name == "Tool Box")
-        {
-            if (combat != null) combat.AddRepairPoints(tools_box_repair);
-            if (Minimarket.instance != null && Minimarket.instance.health != null)
-            {
-                Minimarket.instance.health.Heal(tools_box_minimarket_heal);
-            }
-            return true;
-        }
-        else if (item_name == "Sonar Batarang")
-        {
-            GameObject prefab = sonar_batarang_prefab != null ? sonar_batarang_prefab : (combat != null ? combat.sonar_batarang_prefab : null);
-            if (prefab != null)
-            {
-                GameObject bat = Instantiate(prefab, origin, Quaternion.identity);
-                SonarBatarangProjectile sbp = bat.GetComponent<SonarBatarangProjectile>();
-                Vector2 fly_dir = ((Vector2)(mouse_pos - origin)).normalized;
-                if (sbp != null) sbp.Launch(fly_dir);
-                return true;
             }
         }
 

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
 
 [RequireComponent(typeof(PlayerWeaponAim))]
 [RequireComponent(typeof(PlayerAmmo))]
@@ -28,26 +27,16 @@ public class PlayerCombat : MonoBehaviour
     [Header("Upgrade Scaling")]
     [SerializeField] private int damage_bonus_per_level = 3;
 
-    // Component References
+    // Components
     private PlayerWeaponAim weapon_aim;
     private PlayerAmmo ammo_comp;
     private PlayerConsumableInventory consumable_inv;
 
-    // Backward compatibility proxies
-    public int ammo_in_mag => ammo_comp != null ? ammo_comp.ammo_in_mag : 0;
-    public int ammo_carried => ammo_comp != null ? ammo_comp.ammo_carried : 0;
-    public int ammo_carried_max => ammo_comp != null ? ammo_comp.ammo_carried_max : 0;
-    public int active_consumable_slot => consumable_inv != null ? consumable_inv.active_consumable_slot : 1;
-    public GameObject soap_bomb_prefab => consumable_inv != null ? consumable_inv.soap_bomb_prefab : null;
-    public GameObject sonar_batarang_prefab => consumable_inv != null ? consumable_inv.sonar_batarang_prefab : null;
-    public GameObject[] consumable_prefabs
-    {
-        get => consumable_inv != null ? consumable_inv.consumable_prefabs : null;
-        set { if (consumable_inv != null) consumable_inv.consumable_prefabs = value; }
-    }
-    public UnityEngine.Events.UnityEvent<int, string, int> on_consumable_updated => consumable_inv != null ? consumable_inv.on_consumable_updated : null;
-
+    // Weapon Instances
     private GameObject current_weapon_instance;
+    private RangedWeapon active_ranged_comp;
+    private MeleeWeapon active_melee_comp;
+
     private float next_fire_time = 0f;
     private float next_melee_time = 0f;
     private Camera main_camera;
@@ -176,7 +165,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void ShootRanged()
     {
-        if (ranged_weapon == null) return;
+        if (ranged_weapon == null || active_ranged_comp == null) return;
         if (ammo_comp == null || !ammo_comp.CanShoot())
         {
             Reload();
@@ -196,46 +185,13 @@ public class PlayerCombat : MonoBehaviour
         mouse_pos.z = 0f;
         Vector3 origin = fire_point != null ? fire_point.position : transform.position;
         Vector2 aim_dir = (mouse_pos - origin).normalized;
-        float base_angle = Mathf.Atan2(aim_dir.y, aim_dir.x) * Mathf.Rad2Deg;
 
-        RangedWeapon ranged_comp = current_weapon_instance != null ? current_weapon_instance.GetComponent<RangedWeapon>() : null;
-        if (ranged_comp != null)
-        {
-            ranged_comp.Fire(aim_dir, weapon_damage_bonus);
-        }
-        else
-        {
-            int pellets = Mathf.Max(1, ranged_weapon.pellet_count);
-            for (int i = 0; i < pellets; i++)
-            {
-                float angle = base_angle;
-                if (pellets > 1)
-                {
-                    float offset = (i - (pellets - 1) / 2f) * (ranged_weapon.spread_angle / pellets);
-                    angle += offset;
-                }
-
-                Quaternion rot = Quaternion.Euler(0f, 0f, angle);
-                if (ranged_weapon.projectile_prefab != null)
-                {
-                    GameObject proj_obj = Instantiate(ranged_weapon.projectile_prefab, origin, rot);
-                    Projectile proj = proj_obj.GetComponent<Projectile>();
-                    if (proj != null)
-                    {
-                        proj.damage = ranged_weapon.damage + weapon_damage_bonus;
-                        proj.speed = ranged_weapon.projectile_speed;
-                        proj.lifetime = ranged_weapon.projectile_lifetime;
-                        proj.is_floating_bubble = ranged_weapon.is_floating_bubble;
-                        proj.is_enemy_projectile = false;
-                    }
-                }
-            }
-        }
+        active_ranged_comp.Fire(aim_dir, weapon_damage_bonus);
     }
 
     private void PerformMelee()
     {
-        if (melee_weapon == null) return;
+        if (melee_weapon == null || active_melee_comp == null) return;
 
         next_melee_time = Time.time + melee_weapon.attack_rate;
 
@@ -245,49 +201,7 @@ public class PlayerCombat : MonoBehaviour
         }
 
         Vector3 origin = melee_point != null ? melee_point.position : transform.position;
-
-        MeleeWeapon melee_comp = current_weapon_instance != null ? current_weapon_instance.GetComponent<MeleeWeapon>() : null;
-        if (melee_comp != null)
-        {
-            melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
-        }
-        else
-        {
-            Collider2D[] hit_enemies = Physics2D.OverlapCircleAll(origin, melee_weapon.attack_range, enemy_layer);
-            for (int i = 0; i < hit_enemies.Length; i++)
-            {
-                Health enemy_health = hit_enemies[i].GetComponent<Health>();
-                if (enemy_health != null)
-                {
-                    enemy_health.TakeDamage(melee_weapon.damage + weapon_damage_bonus);
-                }
-            }
-        }
-
-        StartCoroutine(MeleeSwingCoroutine());
-    }
-
-    private IEnumerator MeleeSwingCoroutine()
-    {
-        if (current_weapon_instance == null) yield break;
-        Transform w_trans = current_weapon_instance.transform;
-        float duration = 0.12f;
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-            float angle = Mathf.Sin(t * Mathf.PI) * -50f;
-            if (w_trans != null)
-            {
-                w_trans.localRotation = Quaternion.Euler(0f, 0f, angle);
-            }
-            yield return null;
-        }
-        if (w_trans != null)
-        {
-            w_trans.localRotation = Quaternion.identity;
-        }
+        active_melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
     }
 
     public void Reload()
@@ -333,6 +247,8 @@ public class PlayerCombat : MonoBehaviour
         {
             Destroy(current_weapon_instance);
             current_weapon_instance = null;
+            active_ranged_comp = null;
+            active_melee_comp = null;
         }
 
         WeaponData active_data = active_weapon_type == WeaponType.Melee ? melee_weapon : ranged_weapon;
@@ -348,6 +264,9 @@ public class PlayerCombat : MonoBehaviour
             WeaponBase wb = current_weapon_instance.GetComponent<WeaponBase>();
             if (wb != null) wb.Initialize(active_data);
 
+            active_ranged_comp = current_weapon_instance.GetComponent<RangedWeapon>();
+            active_melee_comp = current_weapon_instance.GetComponent<MeleeWeapon>();
+
             Transform fp = current_weapon_instance.transform.Find("FirePoint");
             if (fp != null) fire_point = fp;
 
@@ -355,10 +274,4 @@ public class PlayerCombat : MonoBehaviour
             if (mp != null) melee_point = mp;
         }
     }
-
-    // Backward-compatible consumable proxies
-    public string GetActiveConsumableName() => consumable_inv != null ? consumable_inv.GetActiveConsumableName() : "";
-    public int GetActiveConsumableCount() => consumable_inv != null ? consumable_inv.GetActiveConsumableCount() : 0;
-    public void UseActiveConsumable() { if (consumable_inv != null) consumable_inv.UseActiveConsumable(); }
-    public void NotifyConsumableChanged() { if (consumable_inv != null) consumable_inv.NotifyConsumableChanged(); }
 }

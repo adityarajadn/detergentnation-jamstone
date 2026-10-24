@@ -15,7 +15,7 @@ public class ConsumableSoapBomb : ConsumableBase
     {
         if (combat == null) return false;
 
-        GameObject prefab = soap_bomb_projectile_prefab != null ? soap_bomb_projectile_prefab : combat.soap_bomb_prefab;
+        GameObject prefab = soap_bomb_projectile_prefab;
         if (prefab == null) return false;
 
         Vector3 origin = combat.fire_point != null ? combat.fire_point.position : combat.transform.position;

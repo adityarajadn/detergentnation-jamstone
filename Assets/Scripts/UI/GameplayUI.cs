@@ -72,6 +72,8 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Color defense_btn_normal_color = new Color(0.18f, 0.22f, 0.32f, 0.95f);
 
     private PlayerCombat player_combat;
+    private PlayerAmmo player_ammo;
+    private PlayerConsumableInventory player_consumable_inv;
     private Health player_health;
 
     private void Start()
@@ -232,6 +234,8 @@ public class GameplayUI : MonoBehaviour
         if (PlayerCombat.Instance != null)
         {
             player_combat = PlayerCombat.Instance;
+            player_ammo = PlayerCombat.Instance.GetComponent<PlayerAmmo>();
+            player_consumable_inv = PlayerCombat.Instance.GetComponent<PlayerConsumableInventory>();
             player_health = PlayerCombat.Instance.GetComponent<Health>();
             return;
         }
@@ -240,6 +244,8 @@ public class GameplayUI : MonoBehaviour
         if (player != null)
         {
             player_combat = player.GetComponent<PlayerCombat>();
+            player_ammo = player.GetComponent<PlayerAmmo>();
+            player_consumable_inv = player.GetComponent<PlayerConsumableInventory>();
             player_health = player.GetComponent<Health>();
         }
     }
@@ -266,7 +272,9 @@ public class GameplayUI : MonoBehaviour
             }
             else
             {
-                ammo_text.text = player_combat.ammo_in_mag + " / " + player_combat.ammo_carried;
+                int inMag = player_ammo != null ? player_ammo.ammo_in_mag : 0;
+                int carried = player_ammo != null ? player_ammo.ammo_carried : 0;
+                ammo_text.text = inMag + " / " + carried;
             }
         }
 
@@ -293,7 +301,7 @@ public class GameplayUI : MonoBehaviour
         int c1_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c1_name) : 0;
         int c2_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c2_name) : 0;
 
-        int active_slot = player_combat != null ? player_combat.active_consumable_slot : 1;
+        int active_slot = player_consumable_inv != null ? player_consumable_inv.active_consumable_slot : 1;
 
         if (consumable_slot1_text != null)
         {

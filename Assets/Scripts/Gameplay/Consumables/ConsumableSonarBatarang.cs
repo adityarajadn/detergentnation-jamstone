@@ -14,7 +14,7 @@ public class ConsumableSonarBatarang : ConsumableBase
     {
         if (combat == null) return false;
 
-        GameObject prefab = batarang_projectile_prefab != null ? batarang_projectile_prefab : combat.sonar_batarang_prefab;
+        GameObject prefab = batarang_projectile_prefab;
         if (prefab == null) return false;
 
         Vector3 origin = combat.fire_point != null ? combat.fire_point.position : combat.transform.position;
