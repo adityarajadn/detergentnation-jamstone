@@ -20,7 +20,7 @@ MonoBehaviour:
   attack_rate: 0.4
   magazine_capacity: 50
   carried_ammo_base: 150
-  projectile_speed: 12
+  projectile_speed: 1
   attack_range: 1.5
   pellet_count: 1
   spread_angle: 0

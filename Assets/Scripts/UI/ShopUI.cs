@@ -21,6 +21,7 @@ public class EquipmentShopEntry
     public string description;
     public Sprite preview_sprite;
     public Color preview_color = Color.white;
+    public GameObject item_prefab;
     public Button action_button;
     public TMP_Text action_button_text;
     public TMP_Text price_text;
@@ -32,6 +33,8 @@ public class ConsumableShopEntry
     public string item_name;
     public int price;
     public string description;
+    public Sprite preview_sprite;
+    public GameObject item_prefab;
     public Button buy_button;
     public TMP_Text count_text;
     public TMP_Text price_text;
