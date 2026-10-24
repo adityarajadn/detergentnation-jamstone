@@ -14,6 +14,9 @@ GameObject:
   - component: {fileID: 214445082400085785}
   - component: {fileID: 3576745841409192444}
   - component: {fileID: 4457560856761669318}
+  - component: {fileID: 6175465853273094075}
+  - component: {fileID: 7323487797412768186}
+  - component: {fileID: 1180769818817615373}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -184,16 +187,55 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4705ec410a68d184f8945f38c3ddfbbf, type: 2}
   - {fileID: 11400000, guid: 3b6ac683b9aaca84985f0344d4b12c9a, type: 2}
   active_weapon_type: 0
-  ammo_in_mag: 12
-  ammo_carried: 64
-  ammo_carried_max: 64
-  repair_points: 0
   fire_point: {fileID: 5418977798161990374}
   melee_point: {fileID: 4312746201154289150}
   weapon_mount: {fileID: 0}
   enemy_layer:
     serializedVersion: 2
     m_Bits: 0
+  repair_points: 0
+  damage_bonus_per_level: 3
+--- !u!114 &6175465853273094075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406634774072433190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885d5087e73dafa44813e2e1a064ea7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponAim
+  weapon_mount: {fileID: 0}
+--- !u!114 &7323487797412768186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406634774072433190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24d6098e73dafa44813e2e1a064ea7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAmmo
+  ammo_in_mag: 12
+  ammo_carried: 64
+  ammo_carried_max: 64
+  ammo_bonus_per_level: 6
+--- !u!114 &1180769818817615373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406634774072433190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35d7109e73dafa44813e2e1a064ea7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerConsumableInventory
   active_consumable_slot: 1
   soap_bomb_prefab: {fileID: 88275635079728158, guid: 9ad958ec61fdcc14aae9c9002b8b98f2, type: 3}
   sonar_batarang_prefab: {fileID: 9219127814142506823, guid: 88c5994c84201784394a087456db55da, type: 3}
@@ -214,8 +256,6 @@ MonoBehaviour:
   tools_box_repair: 50
   tools_box_minimarket_heal: 50
   bomb_throw_impulse: {x: 12, y: 4}
-  damage_bonus_per_level: 3
-  ammo_bonus_per_level: 6
 --- !u!1 &3423289796852355721
 GameObject:
   m_ObjectHideFlags: 0

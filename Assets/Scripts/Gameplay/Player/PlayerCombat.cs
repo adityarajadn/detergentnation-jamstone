@@ -1,45 +1,51 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
+[RequireComponent(typeof(PlayerWeaponAim))]
+[RequireComponent(typeof(PlayerAmmo))]
+[RequireComponent(typeof(PlayerConsumableInventory))]
 public class PlayerCombat : MonoBehaviour
 {
     public static PlayerCombat Instance { get; private set; }
 
+    [Header("Weapons")]
     public WeaponData ranged_weapon;
     public WeaponData melee_weapon;
     public WeaponData[] available_ranged_weapons;
     public WeaponData[] available_melee_weapons;
     public WeaponType active_weapon_type = WeaponType.Ranged;
 
-    public int ammo_in_mag = 12;
-    public int ammo_carried = 64;
-    public int ammo_carried_max = 64;
-    public int repair_points = 0;
-
+    [Header("Mount & Targeting")]
     public Transform fire_point;
     public Transform melee_point;
     public Transform weapon_mount;
     public LayerMask enemy_layer;
 
-    public int active_consumable_slot = 1;
-    public GameObject soap_bomb_prefab;
-    public GameObject sonar_batarang_prefab;
-    [Header("Consumable Prefabs")]
-    public GameObject[] consumable_prefabs;
-    public UnityEngine.Events.UnityEvent<int, string, int> on_consumable_updated;
-
-    [Header("Consumable Balance")]
-    [SerializeField] private int first_aid_heal = 50;
-    [SerializeField] private float energy_drink_speed_boost = 1.5f;
-    [SerializeField] private float energy_drink_duration = 8.0f;
-    [SerializeField] private int soap_bucket_shields = 3;
-    [SerializeField] private int tools_box_repair = 50;
-    [SerializeField] private int tools_box_minimarket_heal = 50;
-    [SerializeField] private Vector2 bomb_throw_impulse = new Vector2(12f, 4f);
+    [Header("Resources")]
+    public int repair_points = 0;
 
     [Header("Upgrade Scaling")]
     [SerializeField] private int damage_bonus_per_level = 3;
-    [SerializeField] private int ammo_bonus_per_level = 6;
+
+    // Component References
+    private PlayerWeaponAim weapon_aim;
+    private PlayerAmmo ammo_comp;
+    private PlayerConsumableInventory consumable_inv;
+
+    // Backward compatibility proxies
+    public int ammo_in_mag => ammo_comp != null ? ammo_comp.ammo_in_mag : 0;
+    public int ammo_carried => ammo_comp != null ? ammo_comp.ammo_carried : 0;
+    public int ammo_carried_max => ammo_comp != null ? ammo_comp.ammo_carried_max : 0;
+    public int active_consumable_slot => consumable_inv != null ? consumable_inv.active_consumable_slot : 1;
+    public GameObject soap_bomb_prefab => consumable_inv != null ? consumable_inv.soap_bomb_prefab : null;
+    public GameObject sonar_batarang_prefab => consumable_inv != null ? consumable_inv.sonar_batarang_prefab : null;
+    public GameObject[] consumable_prefabs
+    {
+        get => consumable_inv != null ? consumable_inv.consumable_prefabs : null;
+        set { if (consumable_inv != null) consumable_inv.consumable_prefabs = value; }
+    }
+    public UnityEngine.Events.UnityEvent<int, string, int> on_consumable_updated => consumable_inv != null ? consumable_inv.on_consumable_updated : null;
 
     private GameObject current_weapon_instance;
     private float next_fire_time = 0f;
@@ -55,17 +61,31 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
         Instance = this;
-    }
 
-    private void OnDestroy()
-    {
-        if (Instance == this) Instance = null;
+        weapon_aim = GetComponent<PlayerWeaponAim>();
+        ammo_comp = GetComponent<PlayerAmmo>();
+        consumable_inv = GetComponent<PlayerConsumableInventory>();
+        main_camera = Camera.main;
+
+        if (weapon_mount == null)
+        {
+            Transform found = transform.Find("Visuals/GunArm");
+            if (found != null) weapon_mount = found;
+            else if (fire_point != null) weapon_mount = fire_point.parent;
+        }
+        if (weapon_aim != null && weapon_aim.weapon_mount == null)
+        {
+            weapon_aim.weapon_mount = weapon_mount;
+        }
     }
 
     private void Start()
     {
-        main_camera = Camera.main;
+        InitializeEquipment();
+    }
 
+    private void InitializeEquipment()
+    {
         string eq_ranged = GameManager.instance != null ? GameManager.instance.equipped_ranged_weapon : GameConstants.EquipmentNames.DefaultRanged;
         if (!string.IsNullOrEmpty(eq_ranged) && available_ranged_weapons != null)
         {
@@ -95,80 +115,23 @@ public class PlayerCombat : MonoBehaviour
         int dmg_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(GameConstants.UpgradeKeys.WeaponDamage) : 1;
         weapon_damage_bonus = (dmg_level - 1) * damage_bonus_per_level;
 
-        int ammo_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(GameConstants.UpgradeKeys.WeaponAmmo) : 1;
-        int ammo_bonus = (ammo_level - 1) * ammo_bonus_per_level;
-
-        if (ranged_weapon != null)
+        if (ammo_comp != null)
         {
-            ammo_in_mag = ranged_weapon.magazine_capacity;
-            ammo_carried_max = ranged_weapon.carried_ammo_base + ammo_bonus;
-            ammo_carried = ammo_carried_max;
+            ammo_comp.Initialize(ranged_weapon);
         }
 
         active_weapon_type = GameManager.instance != null ? GameManager.instance.active_weapon_type : WeaponType.Ranged;
         UpdateWeaponVisual();
-        NotifyConsumableChanged();
     }
 
     private void Update()
     {
-        AimWeapon();
         HandleCombatInput();
-    }
-
-    private void AimWeapon()
-    {
-        if (weapon_mount == null || main_camera == null || Mouse.current == null) return;
-
-        Vector3 mouse_screen = Mouse.current.position.ReadValue();
-        Vector3 mouse_world = main_camera.ScreenToWorldPoint(mouse_screen);
-        Vector2 aim_delta = mouse_world - weapon_mount.position;
-        float aim_angle = Mathf.Atan2(aim_delta.y, aim_delta.x) * Mathf.Rad2Deg;
-        weapon_mount.rotation = Quaternion.Euler(0f, 0f, aim_angle);
-        weapon_mount.localScale = new Vector3(1f, aim_delta.x < 0f ? -1f : 1f, 1f);
     }
 
     private void HandleCombatInput()
     {
-        Mouse mouse = Mouse.current;
-        Keyboard kb = Keyboard.current;
-        if (mouse == null || kb == null) return;
-
         bool is_combat = LevelManager.instance == null || LevelManager.instance.current_phase == GamePhase.Combat;
-
-        // Consumable Slot Selection: Scroll wheel or numbers 1 & 2
-        float scroll_y = mouse.scroll.ReadValue().y;
-        if (scroll_y > 0.1f)
-        {
-            active_consumable_slot = 1;
-            NotifyConsumableChanged();
-        }
-        else if (scroll_y < -0.1f)
-        {
-            active_consumable_slot = 2;
-            NotifyConsumableChanged();
-        }
-
-        if (is_combat)
-        {
-            if (KeybindManager.WasPressedThisFrame(KeyAction.Slot1) || (kb != null && kb.numpad1Key.wasPressedThisFrame))
-            {
-                active_consumable_slot = 1;
-                NotifyConsumableChanged();
-            }
-            else if (KeybindManager.WasPressedThisFrame(KeyAction.Slot2) || (kb != null && kb.numpad2Key.wasPressedThisFrame))
-            {
-                active_consumable_slot = 2;
-                NotifyConsumableChanged();
-            }
-        }
-
-        // Use Consumable via configured keybind
-        if (KeybindManager.WasPressedThisFrame(KeyAction.UseConsumable))
-        {
-            UseActiveConsumable();
-        }
-
         if (!is_combat) return;
 
         // Attack -> Auto-switch to Ranged and Shoot
@@ -211,156 +174,16 @@ public class PlayerCombat : MonoBehaviour
         UpdateWeaponVisual();
     }
 
-    public string GetActiveConsumableName()
-    {
-        if (active_consumable_slot == 1)
-        {
-            return GameManager.instance != null ? GameManager.instance.equipped_consumable_1 : GameConstants.EquipmentNames.DefaultConsumable1;
-        }
-        else
-        {
-            return GameManager.instance != null ? GameManager.instance.equipped_consumable_2 : GameConstants.EquipmentNames.DefaultConsumable2;
-        }
-    }
-
-    public int GetActiveConsumableCount()
-    {
-        string item_name = GetActiveConsumableName();
-        if (string.IsNullOrEmpty(item_name) || item_name == GameConstants.EquipmentNames.None) return 0;
-        return GameManager.instance != null ? GameManager.instance.GetConsumableCount(item_name) : 0;
-    }
-
-    public void UseActiveConsumable()
-    {
-        string item_name = GetActiveConsumableName();
-        int count = GetActiveConsumableCount();
-        if (string.IsNullOrEmpty(item_name) || item_name == GameConstants.EquipmentNames.None || count <= 0) return;
-
-        bool success = ExecuteConsumableEffect(item_name);
-        if (success)
-        {
-            int new_count = count - 1;
-            if (GameManager.instance != null)
-            {
-                GameManager.instance.SetConsumableCount(item_name, new_count);
-            }
-            NotifyConsumableChanged();
-        }
-    }
-
-    private bool ExecuteConsumableEffect(string item_name)
-    {
-        Vector3 mouse_pos = main_camera != null && Mouse.current != null ? main_camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : transform.position;
-        mouse_pos.z = 0f;
-
-        if (consumable_prefabs != null)
-        {
-            for (int i = 0; i < consumable_prefabs.Length; i++)
-            {
-                if (consumable_prefabs[i] == null) continue;
-                ConsumableBase cb = consumable_prefabs[i].GetComponent<ConsumableBase>();
-                if (cb != null)
-                {
-                    bool match = cb.consumable_name.Equals(item_name, System.StringComparison.OrdinalIgnoreCase) ||
-                        (cb.consumable_name == "Soap Water Bucket" && (item_name == "Soap Water Bucket" || item_name == "Soap Bucket")) ||
-                        (cb.consumable_name == "Tools Box" && (item_name == "Tools Box" || item_name == "Tool Box"));
-                    if (match)
-                    {
-                        return cb.Use(this, mouse_pos);
-                    }
-                }
-            }
-        }
-
-        if (item_name == "Soap Bomb")
-        {
-            Vector3 origin = fire_point != null ? fire_point.position : transform.position;
-            GameObject prefab = soap_bomb_prefab;
-            if (prefab != null)
-            {
-                GameObject bomb = Instantiate(prefab, origin, Quaternion.identity);
-                SoapBombProjectile sbp = bomb.GetComponent<SoapBombProjectile>();
-                Vector2 throw_dir = ((Vector2)(mouse_pos - origin)).normalized * bomb_throw_impulse.x + Vector2.up * bomb_throw_impulse.y;
-                if (sbp != null) sbp.Launch(throw_dir);
-                else
-                {
-                    Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
-                    if (rb != null) rb.linearVelocity = throw_dir;
-                }
-                return true;
-            }
-        }
-        else if (item_name == "First Aid Kit")
-        {
-            Health health = GetComponent<Health>();
-            if (health != null)
-            {
-                health.Heal(first_aid_heal);
-                return true;
-            }
-        }
-        else if (item_name == "Energy Drink")
-        {
-            PlayerController pc = GetComponent<PlayerController>();
-            if (pc != null)
-            {
-                pc.ApplySpeedBoost(energy_drink_speed_boost, energy_drink_duration);
-                return true;
-            }
-        }
-        else if (item_name == "Soap Water Bucket" || item_name == "Soap Bucket")
-        {
-            Health health = GetComponent<Health>();
-            if (health != null)
-            {
-                health.shield_charges = soap_bucket_shields;
-                return true;
-            }
-        }
-        else if (item_name == "Tools Box" || item_name == "Tool Box")
-        {
-            AddRepairPoints(tools_box_repair);
-            if (Minimarket.instance != null && Minimarket.instance.health != null)
-            {
-                Minimarket.instance.health.Heal(tools_box_minimarket_heal);
-            }
-            return true;
-        }
-        else if (item_name == "Sonar Batarang")
-        {
-            Vector3 origin = fire_point != null ? fire_point.position : transform.position;
-            GameObject prefab = sonar_batarang_prefab;
-            if (prefab != null)
-            {
-                GameObject bat = Instantiate(prefab, origin, Quaternion.identity);
-                SonarBatarangProjectile sbp = bat.GetComponent<SonarBatarangProjectile>();
-                Vector2 fly_dir = ((Vector2)(mouse_pos - origin)).normalized;
-                if (sbp != null) sbp.Launch(fly_dir);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void NotifyConsumableChanged()
-    {
-        if (on_consumable_updated != null)
-        {
-            on_consumable_updated.Invoke(active_consumable_slot, GetActiveConsumableName(), GetActiveConsumableCount());
-        }
-    }
-
     private void ShootRanged()
     {
         if (ranged_weapon == null) return;
-        if (ammo_in_mag <= 0)
+        if (ammo_comp == null || !ammo_comp.CanShoot())
         {
             Reload();
             return;
         }
 
-        ammo_in_mag--;
+        ammo_comp.ConsumeBullet();
         next_fire_time = Time.time + ranged_weapon.fire_rate;
 
         if (ranged_weapon.attack_sound != null)
@@ -368,7 +191,8 @@ public class PlayerCombat : MonoBehaviour
             AudioManager.PlaySFX(ranged_weapon.attack_sound);
         }
 
-        Vector3 mouse_pos = main_camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        if (main_camera == null) main_camera = Camera.main;
+        Vector3 mouse_pos = main_camera != null && Mouse.current != null ? main_camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : transform.position;
         mouse_pos.z = 0f;
         Vector3 origin = fire_point != null ? fire_point.position : transform.position;
         Vector2 aim_dir = (mouse_pos - origin).normalized;
@@ -421,6 +245,7 @@ public class PlayerCombat : MonoBehaviour
         }
 
         Vector3 origin = melee_point != null ? melee_point.position : transform.position;
+
         MeleeWeapon melee_comp = current_weapon_instance != null ? current_weapon_instance.GetComponent<MeleeWeapon>() : null;
         if (melee_comp != null)
         {
@@ -442,7 +267,7 @@ public class PlayerCombat : MonoBehaviour
         StartCoroutine(MeleeSwingCoroutine());
     }
 
-    private System.Collections.IEnumerator MeleeSwingCoroutine()
+    private IEnumerator MeleeSwingCoroutine()
     {
         if (current_weapon_instance == null) yield break;
         Transform w_trans = current_weapon_instance.transform;
@@ -467,18 +292,18 @@ public class PlayerCombat : MonoBehaviour
 
     public void Reload()
     {
-        if (ranged_weapon == null) return;
-        if (ammo_in_mag >= ranged_weapon.magazine_capacity || ammo_carried <= 0) return;
-
-        int needed = ranged_weapon.magazine_capacity - ammo_in_mag;
-        int take = Mathf.Min(needed, ammo_carried);
-        ammo_in_mag += take;
-        ammo_carried -= take;
+        if (ranged_weapon != null && ammo_comp != null)
+        {
+            ammo_comp.Reload(ranged_weapon.magazine_capacity);
+        }
     }
 
     public void Restock()
     {
-        ammo_carried = ammo_carried_max;
+        if (ammo_comp != null)
+        {
+            ammo_comp.Restock();
+        }
     }
 
     public void AddRepairPoints(int amount)
@@ -530,4 +355,10 @@ public class PlayerCombat : MonoBehaviour
             if (mp != null) melee_point = mp;
         }
     }
+
+    // Backward-compatible consumable proxies
+    public string GetActiveConsumableName() => consumable_inv != null ? consumable_inv.GetActiveConsumableName() : "";
+    public int GetActiveConsumableCount() => consumable_inv != null ? consumable_inv.GetActiveConsumableCount() : 0;
+    public void UseActiveConsumable() { if (consumable_inv != null) consumable_inv.UseActiveConsumable(); }
+    public void NotifyConsumableChanged() { if (consumable_inv != null) consumable_inv.NotifyConsumableChanged(); }
 }
