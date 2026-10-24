@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd040dddd9ec1f47ad67cdd5b36b69a, type: 3}
+  m_Name: SoapHammer
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weapon_name: Soap Hammer
+  weapon_type: 1
+  price: 100
+  damage: 45
+  fire_rate: 0.3
+  attack_rate: 0.6
+  magazine_capacity: 12
+  carried_ammo_base: 64
+  projectile_speed: 12
+  attack_range: 1.8
+  pellet_count: 1
+  spread_angle: 0
+  is_floating_bubble: 0
+  projectile_lifetime: 3
+  projectile_prefab: {fileID: 0}
+  weapon_prefab: {fileID: 7922205477950919431, guid: 2112ef242035df04fb8ec59e2191408d, type: 3}
+  attack_sound: {fileID: 0}

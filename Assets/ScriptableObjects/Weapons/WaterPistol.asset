@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd040dddd9ec1f47ad67cdd5b36b69a, type: 3}
+  m_Name: WaterPistol
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weapon_name: Water Pistol
+  weapon_type: 0
+  price: 0
+  damage: 15
+  fire_rate: 0.35
+  attack_rate: 0.4
+  magazine_capacity: 12
+  carried_ammo_base: 64
+  projectile_speed: 14
+  attack_range: 1.5
+  pellet_count: 1
+  spread_angle: 0
+  is_floating_bubble: 0
+  projectile_lifetime: 3
+  projectile_prefab: {fileID: 3204489108142594181, guid: 57b32c7606050b34d97f3c9e6d35aa4e, type: 3}
+  weapon_prefab: {fileID: 4533019077097233615, guid: 225279941004e804a9013f4bfe03f6cd, type: 3}
+  attack_sound: {fileID: 0}

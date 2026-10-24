@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba97302036aa35a4da8fea144e170f36, type: 3}
+  m_Name: MoshiMos
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemy_name: MoshiMos
+  enemy_type: 4
+  attack_type: 0
+  is_flying: 0
+  health_max: 250
+  move_speed: 1.2
+  attack_damage: 15
+  attack_rate: 2
+  attack_range: 1.6
+  aggro_range: 6
+  candy_reward_min: 5
+  candy_reward_max: 10
+  projectile_prefab: {fileID: 0}
+  body_color: {r: 0.5, g: 0.85, b: 0.5, a: 1}

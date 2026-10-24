@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ff1a4693772dca45a9d0238589d7f0d, type: 3}
+  m_Name: Level_4
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  level_number: 4
+  defense_points_start: 10
+  max_restocks_for_star: 3
+  max_defense_points_for_star: 6
+  min_minimarket_hp_percent_for_star: 50
+  target_kill_streak_for_star: 10
+  waves:
+  - wave_number: 1
+    is_huge_wave: 0
+    start_condition: 0
+    spawns:
+    - enemy_data: {fileID: 11400000, guid: df83e8c80f5d22349919e32648fc1b34, type: 2}
+      count: 8
+      spawn_location: 0
+      delay_before: 5
+      delay_between: 1
+  - wave_number: 2
+    is_huge_wave: 0
+    start_condition: 1
+    spawns:
+    - enemy_data: {fileID: 11400000, guid: 43015b27cff7dbd428ea5a307cba3c58, type: 2}
+      count: 3
+      spawn_location: 1
+      delay_before: 2
+      delay_between: 0
+  - wave_number: 3
+    is_huge_wave: 0
+    start_condition: 1
+    spawns:
+    - enemy_data: {fileID: 11400000, guid: a82278e8770c6bf4896d2d00deb40336, type: 2}
+      count: 14
+      spawn_location: 0
+      delay_before: 4
+      delay_between: 0.5
+  - wave_number: 4
+    is_huge_wave: 0
+    start_condition: 1
+    spawns:
+    - enemy_data: {fileID: 11400000, guid: 78c2b11b10911044a94a863199389176, type: 2}
+      count: 2
+      spawn_location: 3
+      delay_before: 2
+      delay_between: 0
+  - wave_number: 5
+    is_huge_wave: 0
+    start_condition: 1
+    spawns:
+    - enemy_data: {fileID: 11400000, guid: df83e8c80f5d22349919e32648fc1b34, type: 2}
+      count: 10
+      spawn_location: 0
+      delay_before: 4
+      delay_between: 1
+  - wave_number: 6
+    is_huge_wave: 0
+    start_condition: 1
+    spawns:
+    - enemy_data: {fileID: 11400000, guid: 43015b27cff7dbd428ea5a307cba3c58, type: 2}
+      count: 3
+      spawn_location: 2
+      delay_before: 3
+      delay_between: 0
+  - wave_number: 7
+    is_huge_wave: 1
+    start_condition: 2
+    spawns:
+    - enemy_data: {fileID: 11400000, guid: 9b72ea3057ecdf8428c82d134900139e, type: 2}
+      count: 2
+      spawn_location: 3
+      delay_before: 5
+      delay_between: 2
+    - enemy_data: {fileID: 11400000, guid: a82278e8770c6bf4896d2d00deb40336, type: 2}
+      count: 8
+      spawn_location: 0
+      delay_before: 0
+      delay_between: 1
+    - enemy_data: {fileID: 11400000, guid: df83e8c80f5d22349919e32648fc1b34, type: 2}
+      count: 8
+      spawn_location: 0
+      delay_before: 0
+      delay_between: 1
