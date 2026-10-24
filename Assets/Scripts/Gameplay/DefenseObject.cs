@@ -189,9 +189,6 @@ public class DefenseObject : MonoBehaviour
                 proj.is_enemy_projectile = false;
             }
         }
-                proj.is_enemy_projectile = false;
-            }
-        }
 
         StartCoroutine(RecoilRoutine());
 
