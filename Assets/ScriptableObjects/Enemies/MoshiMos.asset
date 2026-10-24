@@ -16,13 +16,14 @@ MonoBehaviour:
   enemy_type: 4
   attack_type: 0
   is_flying: 0
-  health_max: 250
-  move_speed: 1.2
-  attack_damage: 15
-  attack_rate: 2
-  attack_range: 1.6
+  health_max: 160
+  move_speed: 1
+  attack_damage: 10
+  attack_rate: 1.5
+  attack_range: 1.4
   aggro_range: 6
-  candy_reward_min: 5
-  candy_reward_max: 10
+  candy_reward_min: 4
+  candy_reward_max: 6
   projectile_prefab: {fileID: 0}
+  enemy_prefab: {fileID: 3052050383841313415, guid: 468f80965b8b46f182421b0cc2b98549, type: 3}
   body_color: {r: 0.5, g: 0.85, b: 0.5, a: 1}

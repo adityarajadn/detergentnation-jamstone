@@ -55,7 +55,7 @@ public class SonarBatarangProjectile : MonoBehaviour
         {
             if (colliders[i] != null && colliders[i].CompareTag(GameConstants.Tags.Enemy))
             {
-                EnemyController enemy = colliders[i].GetComponent<EnemyController>();
+                EnemyBase enemy = colliders[i].GetComponent<EnemyBase>();
                 if (enemy != null)
                 {
                     enemy.ApplyStun(stun_duration);

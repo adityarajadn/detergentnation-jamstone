@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class EnemyAggroDetector : MonoBehaviour
 {
-    private EnemyController enemy_controller;
+    private EnemyBase enemy_base;
 
     private void Awake()
     {
-        enemy_controller = GetComponentInParent<EnemyController>();
+        enemy_base = GetComponentInParent<EnemyBase>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (enemy_controller != null && collision.CompareTag(GameConstants.Tags.Player))
+        if (enemy_base != null && collision.CompareTag(GameConstants.Tags.Player))
         {
-            enemy_controller.OnPlayerEnteredAggro(collision.transform);
+            enemy_base.OnPlayerEnteredAggro(collision.transform);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (enemy_controller != null && collision.CompareTag(GameConstants.Tags.Player))
+        if (enemy_base != null && collision.CompareTag(GameConstants.Tags.Player))
         {
-            enemy_controller.OnPlayerExitedAggro(collision.transform);
+            enemy_base.OnPlayerExitedAggro(collision.transform);
         }
     }
 }

@@ -101,18 +101,21 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnEnemy(EnemyData data, SpawnLocation location)
     {
-        if (data == null || enemy_prefab == null) return;
+        if (data == null) return;
+
+        GameObject prefab = data.enemy_prefab != null ? data.enemy_prefab : enemy_prefab;
+        if (prefab == null) return;
 
         Vector3 spawn_pos = GetSpawnPosition(location, data.is_flying);
-        GameObject obj = Instantiate(enemy_prefab, spawn_pos, Quaternion.identity);
+        GameObject obj = Instantiate(prefab, spawn_pos, Quaternion.identity);
 
-        EnemyController enemy = obj.GetComponent<EnemyController>();
+        EnemyBase enemy = obj.GetComponent<EnemyBase>();
         if (enemy != null)
         {
             enemy.enemy_data = data;
         }
 
-        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = obj.GetComponentInChildren<SpriteRenderer>();
         if (sr != null)
         {
             sr.color = data.body_color;
@@ -136,7 +139,7 @@ public class WaveManager : MonoBehaviour
         return Vector3.zero;
     }
 
-    public void OnEnemyKilled(EnemyController enemy)
+    public void OnEnemyKilled(EnemyBase enemy)
     {
         active_enemies_count--;
         if (active_enemies_count < 0) active_enemies_count = 0;
