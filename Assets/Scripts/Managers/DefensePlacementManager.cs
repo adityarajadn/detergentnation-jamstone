@@ -100,6 +100,10 @@ public class DefensePlacementManager : MonoBehaviour
         points_spent_total += data.point_cost;
 
         GameObject obj = Instantiate(data.prefab, position, Quaternion.identity, parent);
+        if (data.prefab != null)
+        {
+            obj.transform.localScale = data.prefab.transform.localScale;
+        }
         DefenseObject defense = obj.GetComponent<DefenseObject>();
         if (defense != null)
         {

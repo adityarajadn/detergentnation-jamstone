@@ -11,10 +11,12 @@ public class DefensePlacementSlot : MonoBehaviour
     [SerializeField] private Color idle_color = new Color(0.2f, 0.7f, 1f, 0.5f);
 
     private SpriteRenderer indicator;
+    private Collider2D slot_collider;
 
     private void Awake()
     {
         indicator = GetComponent<SpriteRenderer>();
+        slot_collider = GetComponent<Collider2D>();
         if (spawn_point == null) spawn_point = transform;
     }
 
@@ -89,17 +91,41 @@ public class DefensePlacementSlot : MonoBehaviour
 
         if (DefensePlacementManager.instance != null && DefensePlacementManager.instance.CanAfford(data))
         {
-            GameObject obj = DefensePlacementManager.instance.PlaceDefense(data, spawn_point.position, transform);
+            GameObject obj = DefensePlacementManager.instance.PlaceDefense(data, spawn_point.position, null);
             if (obj != null)
             {
+                obj.transform.localScale = data.prefab.transform.localScale;
                 current_defense_instance = obj;
                 current_defense_data = data;
+
+                DefenseObject def_obj = obj.GetComponent<DefenseObject>();
+                if (def_obj != null)
+                {
+                    def_obj.on_destroyed += OnPlacedDefenseDestroyed;
+                }
+
                 if (indicator != null) indicator.enabled = false;
+                if (slot_collider != null) slot_collider.enabled = false;
                 return true;
             }
         }
 
         return false;
+    }
+
+    private void OnPlacedDefenseDestroyed()
+    {
+        current_defense_instance = null;
+        current_defense_data = null;
+        if (indicator != null)
+        {
+            indicator.enabled = true;
+            indicator.color = idle_color;
+        }
+        if (slot_collider != null)
+        {
+            slot_collider.enabled = true;
+        }
     }
 
     public void RemoveDefense()
@@ -111,13 +137,26 @@ public class DefensePlacementSlot : MonoBehaviour
             DefensePlacementManager.instance.RefundDefense(current_defense_data);
         }
 
-        Destroy(current_defense_instance);
+        if (current_defense_instance != null)
+        {
+            DefenseObject def_obj = current_defense_instance.GetComponent<DefenseObject>();
+            if (def_obj != null)
+            {
+                def_obj.on_destroyed -= OnPlacedDefenseDestroyed;
+            }
+            Destroy(current_defense_instance);
+        }
+
         current_defense_instance = null;
         current_defense_data = null;
         if (indicator != null)
         {
             indicator.enabled = true;
             indicator.color = idle_color;
+        }
+        if (slot_collider != null)
+        {
+            slot_collider.enabled = true;
         }
     }
 }

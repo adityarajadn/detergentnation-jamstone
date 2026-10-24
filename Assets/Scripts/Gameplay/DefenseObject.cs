@@ -283,8 +283,18 @@ public class DefenseObject : MonoBehaviour
         }
     }
 
+    public System.Action on_destroyed;
+
     private void OnDestroyed()
     {
+        on_destroyed?.Invoke();
+        on_destroyed = null;
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        on_destroyed?.Invoke();
+        on_destroyed = null;
     }
 }
