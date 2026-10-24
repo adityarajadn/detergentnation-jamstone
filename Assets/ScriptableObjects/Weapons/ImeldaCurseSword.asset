@@ -15,7 +15,7 @@ MonoBehaviour:
   weapon_name: Curse Sword Imelda
   weapon_type: 1
   price: 400
-  damage: 200
+  damage: 99999
   fire_rate: 0.3
   attack_rate: 0.35
   magazine_capacity: 12

@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     public int health_current;
     public int shield_charges = 0;
     public bool is_dead = false;
+    public ArmorBase equipped_armor;
 
     public UnityEvent<int, int> on_health_changed;
     public UnityEvent on_death;
@@ -15,6 +16,15 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         health_current = health_max;
+        if (equipped_armor == null)
+        {
+            equipped_armor = GetComponentInChildren<ArmorBase>();
+        }
+    }
+
+    public void SetArmor(ArmorBase armor)
+    {
+        equipped_armor = armor;
     }
 
     public void TakeDamage(int amount)
@@ -25,6 +35,12 @@ public class Health : MonoBehaviour
         {
             shield_charges--;
             return;
+        }
+
+        if (equipped_armor != null)
+        {
+            amount = equipped_armor.MitigateDamage(amount);
+            equipped_armor.OnDamageTaken(amount, transform);
         }
 
         health_current -= amount;

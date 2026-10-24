@@ -2868,6 +2868,9 @@ MonoBehaviour:
     category: 0
     price: 0
     description: Default Ranged (12 Mag)
+    preview_sprite: {fileID: 5155931684246573122, guid: 4f285a607cc975a4d809c7560f1c20fa, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 4533019077097233615, guid: 225279941004e804a9013f4bfe03f6cd, type: 3}
     action_button: {fileID: 154449583}
     action_button_text: {fileID: 1556680639}
     price_text: {fileID: 1311234568}
@@ -2875,6 +2878,9 @@ MonoBehaviour:
     category: 0
     price: 140
     description: Semi-auto Rifle (30 Mag)
+    preview_sprite: {fileID: -4063907178696340972, guid: 656462060d7ff8349823c7f0f72d297a, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 4458002152450059228, guid: ceb61f47bf9a0a94887c85f7c7f6c00e, type: 3}
     action_button: {fileID: 624055984}
     action_button_text: {fileID: 1697637019}
     price_text: {fileID: 1162121388}
@@ -2882,6 +2888,9 @@ MonoBehaviour:
     category: 0
     price: 220
     description: Shotgun Burst (4 Mag)
+    preview_sprite: {fileID: -8101358149945422605, guid: 3990fd47d2e174c4ba576d285e22546c, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 7021825839117331225, guid: 4d14ac4d983004640b9d8a1e410dcf75, type: 3}
     action_button: {fileID: 1545304928}
     action_button_text: {fileID: 433360211}
     price_text: {fileID: 1205422484}
@@ -2889,6 +2898,9 @@ MonoBehaviour:
     category: 0
     price: 140
     description: Bubble Mines (50 Mag)
+    preview_sprite: {fileID: 7063848755993852908, guid: 5ff2f6c6d9197ae4387b8b72abc339a8, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 2934509524686386171, guid: f54f67f6e8a769a44b8aea6e1368a68c, type: 3}
     action_button: {fileID: 650250357}
     action_button_text: {fileID: 729186364}
     price_text: {fileID: 1288143243}
@@ -2896,6 +2908,9 @@ MonoBehaviour:
     category: 1
     price: 0
     description: Default Melee
+    preview_sprite: {fileID: -1623473015967106143, guid: e781704b8b883894db60925505dee581, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 2971810226363376946, guid: da45bf4bca2729a4eb7a163ff37eef12, type: 3}
     action_button: {fileID: 1922354385}
     action_button_text: {fileID: 339389412}
     price_text: {fileID: 188659125}
@@ -2903,6 +2918,9 @@ MonoBehaviour:
     category: 1
     price: 100
     description: Heavy Soap Hammer
+    preview_sprite: {fileID: 3501964041665983907, guid: f8530e649a563e64b80c116a22297cd5, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 7922205477950919431, guid: 2112ef242035df04fb8ec59e2191408d, type: 3}
     action_button: {fileID: 894352910}
     action_button_text: {fileID: 520578696}
     price_text: {fileID: 106075760}
@@ -2910,6 +2928,9 @@ MonoBehaviour:
     category: 1
     price: 200
     description: Fast Loofah Mace
+    preview_sprite: {fileID: -4407156738309008878, guid: 9a82bdddd63331949a5458d0a637a90f, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 7349915262368154906, guid: 29d07fd805d346541b16f884b838d466, type: 3}
     action_button: {fileID: 1443541625}
     action_button_text: {fileID: 568819622}
     price_text: {fileID: 1660470293}
@@ -2917,41 +2938,59 @@ MonoBehaviour:
     category: 1
     price: 400
     description: Legendary Foodo Sword
+    preview_sprite: {fileID: 4903066360460400065, guid: 5e1690ed1e6825a4e97bb486cebb9574, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 3505045930079584322, guid: 93dce9d4951c8fa4c9bbce08e0f47240, type: 3}
     action_button: {fileID: 298561569}
     action_button_text: {fileID: 763108364}
     price_text: {fileID: 363812575}
   - item_name: Worker's Hat
     category: 2
-    price: 150
+    price: 75
     description: Sturdy Hard Hat (+25 HP)
+    preview_sprite: {fileID: 4462932120348938567, guid: da9a66a69a81937459e1d1bc72c3e9f3, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 952811605271317070, guid: 1858e1d74995dde44b311d0c21a6570b, type: 3}
     action_button: {fileID: 1601983422}
     action_button_text: {fileID: 1223857739}
     price_text: {fileID: 694472969}
   - item_name: I am Number One
     category: 2
-    price: 250
+    price: 125
     description: Hero Blue Jacket (+50 HP)
+    preview_sprite: {fileID: -8664401213119919609, guid: bedc7a33d4384224cb1cb994ebd8e6e0, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 2536242800281441453, guid: 724cdad8f043a934dba808150501aaf0, type: 3}
     action_button: {fileID: 73358261}
     action_button_text: {fileID: 104836346}
     price_text: {fileID: 1503977580}
   - item_name: Octosoap
     category: 2
-    price: 350
+    price: 400
     description: Nano Soap Shield (+75 HP)
+    preview_sprite: {fileID: 236204173789307413, guid: c7637cb7c98929d45abcf14a1b2b3fb8, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 2593992333671676861, guid: 15c9c15d92293ef4eb8d7e1ab7d94afd, type: 3}
     action_button: {fileID: 576047578}
     action_button_text: {fileID: 1990453661}
     price_text: {fileID: 37930693}
   - item_name: Joyride
     category: 3
-    price: 200
+    price: 100
     description: Double Jump Jetpack
+    preview_sprite: {fileID: -7559335286566603207, guid: 9270a01c7d9b85c43a883c85b7fe88bf, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 815028583766794621, guid: d99fb1f3d5d79884a8ca2ed2d5e99dea, type: 3}
     action_button: {fileID: 838173234}
     action_button_text: {fileID: 1938225815}
     price_text: {fileID: 1619086514}
   - item_name: I am Vengeance
     category: 3
-    price: 300
+    price: 400
     description: Glide & Boost Jetpack
+    preview_sprite: {fileID: -8951251301511139612, guid: 3f97434863678f34195eea5abb8b5669, type: 3}
+    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    item_prefab: {fileID: 5320631636654170665, guid: f43a3943b50747d439673d6a7f104797, type: 3}
     action_button: {fileID: 1710039478}
     action_button_text: {fileID: 1227955288}
     price_text: {fileID: 802013086}

@@ -9,6 +9,15 @@ public class PlayerController : MonoBehaviour
     public float move_speed = 6f;
     public float jump_force = 12.5f;
     public string equipped_jetpack = GameConstants.EquipmentNames.None;
+    public string equipped_armor = GameConstants.EquipmentNames.None;
+
+    [Header("Equipment Prefabs")]
+    public GameObject[] armor_prefabs;
+    public GameObject[] jetpack_prefabs;
+
+    [Header("Active Equipment")]
+    public ArmorBase active_armor;
+    public JetpackBase active_jetpack;
 
     [Header("Jetpack Modifiers")]
     [SerializeField] private float joyride_speed_multiplier = 1.1f;
@@ -57,7 +66,74 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance != null)
         {
             equipped_jetpack = GameManager.instance.equipped_jetpack;
+            equipped_armor = GameManager.instance.equipped_armor;
         }
+
+        InitializeEquipment();
+    }
+
+    private void InitializeEquipment()
+    {
+        // 1. Armor
+        if (!string.IsNullOrEmpty(equipped_armor) && equipped_armor != GameConstants.EquipmentNames.None)
+        {
+            GameObject armor_prefab = FindPrefabByName(armor_prefabs, equipped_armor);
+            if (armor_prefab != null)
+            {
+                Transform cap_point = transform.Find("Visuals/Head/Cap");
+                Transform parent_point = cap_point != null ? cap_point : transform.Find("Visuals/Head");
+                if (parent_point == null) parent_point = transform;
+
+                GameObject armor_obj = Instantiate(armor_prefab, parent_point);
+                armor_obj.transform.localPosition = Vector3.zero;
+                armor_obj.transform.localRotation = Quaternion.identity;
+                active_armor = armor_obj.GetComponent<ArmorBase>();
+
+                Health hp = GetComponent<Health>();
+                if (hp != null) hp.SetArmor(active_armor);
+
+                if (cap_point != null)
+                {
+                    SpriteRenderer cap_sr = cap_point.GetComponent<SpriteRenderer>();
+                    if (cap_sr != null) cap_sr.enabled = false;
+                }
+            }
+        }
+
+        // 2. Jetpack
+        if (!string.IsNullOrEmpty(equipped_jetpack) && equipped_jetpack != GameConstants.EquipmentNames.None)
+        {
+            GameObject jetpack_prefab = FindPrefabByName(jetpack_prefabs, equipped_jetpack);
+            if (jetpack_prefab != null)
+            {
+                Transform body_point = transform.Find("Visuals/Body");
+                if (body_point == null) body_point = transform;
+
+                GameObject jetpack_obj = Instantiate(jetpack_prefab, body_point);
+                jetpack_obj.transform.localPosition = new Vector3(-0.2f, 0f, 0f);
+                jetpack_obj.transform.localRotation = Quaternion.identity;
+                active_jetpack = jetpack_obj.GetComponent<JetpackBase>();
+            }
+        }
+    }
+
+    private GameObject FindPrefabByName(GameObject[] list, string match_name)
+    {
+        if (list == null) return null;
+        for (int i = 0; i < list.Length; i++)
+        {
+            if (list[i] == null) continue;
+            string n = list[i].name.Replace("Armor_", "").Replace("Jetpack_", "").Replace("_", " ");
+            if (n.Equals(match_name, System.StringComparison.OrdinalIgnoreCase) || list[i].name.Contains(match_name))
+            {
+                return list[i];
+            }
+            ArmorBase ab = list[i].GetComponent<ArmorBase>();
+            if (ab != null && ab.armor_name == match_name) return list[i];
+            JetpackBase jb = list[i].GetComponent<JetpackBase>();
+            if (jb != null && jb.jetpack_name == match_name) return list[i];
+        }
+        return null;
     }
 
     private void Update()
@@ -90,11 +166,11 @@ public class PlayerController : MonoBehaviour
         {
             if (is_grounded)
             {
-                float boost = equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride ? joyride_speed_multiplier : (equipped_jetpack == GameConstants.EquipmentNames.JetpackVengeance ? vengeance_speed_multiplier : 1f);
+                float boost = active_jetpack != null ? active_jetpack.GetJumpForceMultiplier() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride ? joyride_speed_multiplier : (equipped_jetpack == GameConstants.EquipmentNames.JetpackVengeance ? vengeance_speed_multiplier : 1f));
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * boost);
-                can_double_jump = (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
+                can_double_jump = active_jetpack != null ? active_jetpack.AllowsDoubleJump() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
             }
-            else if (can_double_jump && equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride)
+            else if (can_double_jump && (active_jetpack != null ? active_jetpack.AllowsDoubleJump() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride)))
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * 1.05f);
                 can_double_jump = false;
@@ -131,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
         if (is_grounded && !was_grounded)
         {
-            can_double_jump = (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
+            can_double_jump = active_jetpack != null ? active_jetpack.AllowsDoubleJump() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
         }
     }
 
@@ -168,6 +244,12 @@ public class PlayerController : MonoBehaviour
 
     private void HandleGliding()
     {
+        if (active_jetpack != null)
+        {
+            active_jetpack.HandleGliding(rb, is_grounded);
+            return;
+        }
+
         if (equipped_jetpack != GameConstants.EquipmentNames.JetpackVengeance || is_grounded) return;
 
         Keyboard kb = Keyboard.current;

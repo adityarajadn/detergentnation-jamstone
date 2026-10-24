@@ -353,28 +353,36 @@ public class PlayerCombat : MonoBehaviour
         Vector2 aim_dir = (mouse_pos - origin).normalized;
         float base_angle = Mathf.Atan2(aim_dir.y, aim_dir.x) * Mathf.Rad2Deg;
 
-        int pellets = Mathf.Max(1, ranged_weapon.pellet_count);
-        for (int i = 0; i < pellets; i++)
+        RangedWeapon ranged_comp = current_weapon_instance != null ? current_weapon_instance.GetComponent<RangedWeapon>() : null;
+        if (ranged_comp != null)
         {
-            float angle = base_angle;
-            if (pellets > 1)
+            ranged_comp.Fire(aim_dir, weapon_damage_bonus);
+        }
+        else
+        {
+            int pellets = Mathf.Max(1, ranged_weapon.pellet_count);
+            for (int i = 0; i < pellets; i++)
             {
-                float offset = (i - (pellets - 1) / 2f) * (ranged_weapon.spread_angle / pellets);
-                angle += offset;
-            }
-
-            Quaternion rot = Quaternion.Euler(0f, 0f, angle);
-            if (ranged_weapon.projectile_prefab != null)
-            {
-                GameObject proj_obj = Instantiate(ranged_weapon.projectile_prefab, origin, rot);
-                Projectile proj = proj_obj.GetComponent<Projectile>();
-                if (proj != null)
+                float angle = base_angle;
+                if (pellets > 1)
                 {
-                    proj.damage = ranged_weapon.damage + weapon_damage_bonus;
-                    proj.speed = ranged_weapon.projectile_speed;
-                    proj.lifetime = ranged_weapon.projectile_lifetime;
-                    proj.is_floating_bubble = ranged_weapon.is_floating_bubble;
-                    proj.is_enemy_projectile = false;
+                    float offset = (i - (pellets - 1) / 2f) * (ranged_weapon.spread_angle / pellets);
+                    angle += offset;
+                }
+
+                Quaternion rot = Quaternion.Euler(0f, 0f, angle);
+                if (ranged_weapon.projectile_prefab != null)
+                {
+                    GameObject proj_obj = Instantiate(ranged_weapon.projectile_prefab, origin, rot);
+                    Projectile proj = proj_obj.GetComponent<Projectile>();
+                    if (proj != null)
+                    {
+                        proj.damage = ranged_weapon.damage + weapon_damage_bonus;
+                        proj.speed = ranged_weapon.projectile_speed;
+                        proj.lifetime = ranged_weapon.projectile_lifetime;
+                        proj.is_floating_bubble = ranged_weapon.is_floating_bubble;
+                        proj.is_enemy_projectile = false;
+                    }
                 }
             }
         }
@@ -392,14 +400,21 @@ public class PlayerCombat : MonoBehaviour
         }
 
         Vector3 origin = melee_point != null ? melee_point.position : transform.position;
-        Collider2D[] hit_enemies = Physics2D.OverlapCircleAll(origin, melee_weapon.attack_range, enemy_layer);
-
-        for (int i = 0; i < hit_enemies.Length; i++)
+        MeleeWeapon melee_comp = current_weapon_instance != null ? current_weapon_instance.GetComponent<MeleeWeapon>() : null;
+        if (melee_comp != null)
         {
-            Health enemy_health = hit_enemies[i].GetComponent<Health>();
-            if (enemy_health != null)
+            melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
+        }
+        else
+        {
+            Collider2D[] hit_enemies = Physics2D.OverlapCircleAll(origin, melee_weapon.attack_range, enemy_layer);
+            for (int i = 0; i < hit_enemies.Length; i++)
             {
-                enemy_health.TakeDamage(melee_weapon.damage + weapon_damage_bonus);
+                Health enemy_health = hit_enemies[i].GetComponent<Health>();
+                if (enemy_health != null)
+                {
+                    enemy_health.TakeDamage(melee_weapon.damage + weapon_damage_bonus);
+                }
             }
         }
 
@@ -483,6 +498,9 @@ public class PlayerCombat : MonoBehaviour
             current_weapon_instance = Instantiate(active_data.weapon_prefab, weapon_mount);
             current_weapon_instance.transform.localPosition = new Vector3(0.25f, 0f, 0f);
             current_weapon_instance.transform.localRotation = Quaternion.identity;
+
+            WeaponBase wb = current_weapon_instance.GetComponent<WeaponBase>();
+            if (wb != null) wb.Initialize(active_data);
 
             Transform fp = current_weapon_instance.transform.Find("FirePoint");
             if (fp != null) fire_point = fp;

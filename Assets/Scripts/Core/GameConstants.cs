@@ -52,6 +52,21 @@ public static class GameConstants
         public const string None = "None";
         public const string DefaultConsumable1 = "Soap Bomb";
         public const string DefaultConsumable2 = "First Aid Kit";
+
+        public const string WaterPistol = "Water Pistol";
+        public const string WaterRifle = "Water Rifle";
+        public const string WaterPlasma = "Water Plasma";
+        public const string BubbleGun = "Bubble Gun";
+
+        public const string BubbleStick = "Bubble Stick";
+        public const string SoapHammer = "Soap Hammer";
+        public const string LoofahMace = "Loofah Mace";
+        public const string CurseSwordImelda = "Curse Sword Imelda";
+
+        public const string ArmorWorkersHat = "Worker's Hat";
+        public const string ArmorIAmNumberOne = "I am Number One";
+        public const string ArmorOctosoap = "Octosoap";
+
         public const string JetpackJoyride = "Joyride";
         public const string JetpackVengeance = "I am Vengeance";
     }

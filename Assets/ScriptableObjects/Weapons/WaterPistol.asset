@@ -16,7 +16,7 @@ MonoBehaviour:
   weapon_type: 0
   price: 0
   damage: 15
-  fire_rate: 0.35
+  fire_rate: 0.3
   attack_rate: 0.4
   magazine_capacity: 12
   carried_ammo_base: 64

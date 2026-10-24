@@ -26,6 +26,6 @@ MonoBehaviour:
   spread_angle: 0
   is_floating_bubble: 0
   projectile_lifetime: 3
-  projectile_prefab: {fileID: 0}
+  projectile_prefab: {fileID: 3204489108142594181, guid: 57b32c7606050b34d97f3c9e6d35aa4e, type: 3}
   weapon_prefab: {fileID: 2971810226363376946, guid: da45bf4bca2729a4eb7a163ff37eef12, type: 3}
   attack_sound: {fileID: 0}

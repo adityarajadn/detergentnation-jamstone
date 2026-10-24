@@ -120,6 +120,7 @@ MonoBehaviour:
   health_current: 100
   shield_charges: 0
   is_dead: 0
+  equipped_armor: {fileID: 0}
   on_health_changed:
     m_PersistentCalls:
       m_Calls: []
@@ -141,6 +142,18 @@ MonoBehaviour:
   move_speed: 6
   jump_force: 12.5
   equipped_jetpack: None
+  equipped_armor: None
+  armor_prefabs:
+  - {fileID: 952811605271317070, guid: 1858e1d74995dde44b311d0c21a6570b, type: 3}
+  - {fileID: 2536242800281441453, guid: 724cdad8f043a934dba808150501aaf0, type: 3}
+  - {fileID: 2593992333671676861, guid: 15c9c15d92293ef4eb8d7e1ab7d94afd, type: 3}
+  jetpack_prefabs:
+  - {fileID: 815028583766794621, guid: d99fb1f3d5d79884a8ca2ed2d5e99dea, type: 3}
+  - {fileID: 5320631636654170665, guid: f43a3943b50747d439673d6a7f104797, type: 3}
+  active_armor: {fileID: 0}
+  active_jetpack: {fileID: 0}
+  joyride_speed_multiplier: 1.1
+  vengeance_speed_multiplier: 1.25
   ground_check: {fileID: 4472128486095287192}
   ground_layer:
     serializedVersion: 2
@@ -187,6 +200,15 @@ MonoBehaviour:
   on_consumable_updated:
     m_PersistentCalls:
       m_Calls: []
+  first_aid_heal: 50
+  energy_drink_speed_boost: 1.5
+  energy_drink_duration: 8
+  soap_bucket_shields: 3
+  tools_box_repair: 50
+  tools_box_minimarket_heal: 50
+  bomb_throw_impulse: {x: 12, y: 4}
+  damage_bonus_per_level: 3
+  ammo_bonus_per_level: 6
 --- !u!1 &3111931533209273960
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +243,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2008353202415381069
 SpriteRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -278,7 +300,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
-  m_BlendShapeWeights: []
 --- !u!1 &3129847390745137298
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +334,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2144074698016670521
 SpriteRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -370,7 +391,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
-  m_BlendShapeWeights: []
 --- !u!1 &3423289796852355721
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +456,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5288727464119063468
 SpriteRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -493,7 +513,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
-  m_BlendShapeWeights: []
 --- !u!1 &4572342183096487043
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +578,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1028871215939414626
 SpriteRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -616,7 +635,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
-  m_BlendShapeWeights: []
 --- !u!1 &5668300549190255831
 GameObject:
   m_ObjectHideFlags: 0
