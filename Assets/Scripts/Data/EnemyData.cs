@@ -31,5 +31,6 @@ public class EnemyData : ScriptableObject
     public int candy_reward_min = 1;
     public int candy_reward_max = 3;
     public GameObject projectile_prefab;
+    public GameObject enemy_prefab;
     public Color body_color = Color.white;
 }
