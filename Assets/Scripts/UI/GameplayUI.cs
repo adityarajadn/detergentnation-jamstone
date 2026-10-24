@@ -16,6 +16,14 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private TMP_Text consumable_slot2_text;
     [SerializeField] private Image consumable_slot1_bg;
     [SerializeField] private Image consumable_slot2_bg;
+    [SerializeField] private Image consumable_slot1_icon;
+    [SerializeField] private Image consumable_slot2_icon;
+    [SerializeField] private Sprite icon_soap_bomb;
+    [SerializeField] private Sprite icon_first_aid;
+    [SerializeField] private Sprite icon_tools_box;
+    [SerializeField] private Sprite icon_energy_drink;
+    [SerializeField] private Sprite icon_soap_bucket;
+    [SerializeField] private Sprite icon_sonar_batarang;
 
     [Header("Minimarket")]
     [SerializeField] private Slider minimarket_health_slider;
@@ -256,25 +264,49 @@ public class GameplayUI : MonoBehaviour
 
         if (consumable_slot1_text != null)
         {
-            string prefix = active_slot == 1 ? "▶ [1] " : "  [1] ";
-            consumable_slot1_text.text = prefix + (string.IsNullOrEmpty(c1_name) ? "None" : c1_name) + " x" + c1_count;
+            consumable_slot1_text.text = c1_count.ToString();
         }
 
         if (consumable_slot2_text != null)
         {
-            string prefix = active_slot == 2 ? "▶ [2] " : "  [2] ";
-            consumable_slot2_text.text = prefix + (string.IsNullOrEmpty(c2_name) ? "None" : c2_name) + " x" + c2_count;
+            consumable_slot2_text.text = c2_count.ToString();
+        }
+
+        if (consumable_slot1_icon != null)
+        {
+            Sprite s1 = GetConsumableSprite(c1_name);
+            consumable_slot1_icon.sprite = s1;
+            consumable_slot1_icon.enabled = s1 != null;
+        }
+
+        if (consumable_slot2_icon != null)
+        {
+            Sprite s2 = GetConsumableSprite(c2_name);
+            consumable_slot2_icon.sprite = s2;
+            consumable_slot2_icon.enabled = s2 != null;
         }
 
         if (consumable_slot1_bg != null)
         {
-            consumable_slot1_bg.color = active_slot == 1 ? new Color(0.2f, 0.7f, 0.9f, 0.85f) : new Color(0.12f, 0.14f, 0.2f, 0.65f);
+            consumable_slot1_bg.color = active_slot == 1 ? new Color(0.2f, 0.7f, 0.9f, 0.9f) : new Color(0.12f, 0.14f, 0.2f, 0.75f);
         }
 
         if (consumable_slot2_bg != null)
         {
-            consumable_slot2_bg.color = active_slot == 2 ? new Color(0.2f, 0.7f, 0.9f, 0.85f) : new Color(0.12f, 0.14f, 0.2f, 0.65f);
+            consumable_slot2_bg.color = active_slot == 2 ? new Color(0.2f, 0.7f, 0.9f, 0.9f) : new Color(0.12f, 0.14f, 0.2f, 0.75f);
         }
+    }
+
+    public Sprite GetConsumableSprite(string itemName)
+    {
+        if (string.IsNullOrEmpty(itemName)) return null;
+        if (itemName == "Soap Bomb") return icon_soap_bomb;
+        if (itemName == "First Aid Kit") return icon_first_aid;
+        if (itemName == "Tools Box" || itemName == "Tool Box") return icon_tools_box;
+        if (itemName == "Energy Drink") return icon_energy_drink;
+        if (itemName == "Soap Water Bucket" || itemName == "Soap Bucket") return icon_soap_bucket;
+        if (itemName == "Sonar Batarang") return icon_sonar_batarang;
+        return null;
     }
 
     private void UpdateMinimarketUI()
