@@ -33,6 +33,8 @@ public class ConsumableShopEntry
     public string item_name;
     public int price;
     public string description;
+    public Sprite preview_sprite;
+    public GameObject item_prefab;
     public Button buy_button;
     public TMP_Text count_text;
     public TMP_Text price_text;

@@ -24,6 +24,8 @@ public class PlayerCombat : MonoBehaviour
     public int active_consumable_slot = 1;
     public GameObject soap_bomb_prefab;
     public GameObject sonar_batarang_prefab;
+    [Header("Consumable Prefabs")]
+    public GameObject[] consumable_prefabs;
     public UnityEngine.Events.UnityEvent<int, string, int> on_consumable_updated;
 
     [Header("Consumable Balance")]
@@ -250,6 +252,25 @@ public class PlayerCombat : MonoBehaviour
     {
         Vector3 mouse_pos = main_camera != null && Mouse.current != null ? main_camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : transform.position;
         mouse_pos.z = 0f;
+
+        if (consumable_prefabs != null)
+        {
+            for (int i = 0; i < consumable_prefabs.Length; i++)
+            {
+                if (consumable_prefabs[i] == null) continue;
+                ConsumableBase cb = consumable_prefabs[i].GetComponent<ConsumableBase>();
+                if (cb != null)
+                {
+                    bool match = cb.consumable_name.Equals(item_name, System.StringComparison.OrdinalIgnoreCase) ||
+                        (cb.consumable_name == "Soap Water Bucket" && (item_name == "Soap Water Bucket" || item_name == "Soap Bucket")) ||
+                        (cb.consumable_name == "Tools Box" && (item_name == "Tools Box" || item_name == "Tool Box"));
+                    if (match)
+                    {
+                        return cb.Use(this, mouse_pos);
+                    }
+                }
+            }
+        }
 
         if (item_name == "Soap Bomb")
         {
