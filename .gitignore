@@ -59,3 +59,13 @@ crashlytics-build.properties
 # OS generated
 .DS_Store
 Thumbs.db
+
+# AI Assistant & tools
+.opencode/
+opencode.json
+base.md
+.ai-assistant/
+ai-assistant/
+.assistant/
+*ai-assistant*
+*ai_assistant*
