@@ -76,18 +76,17 @@ public class PlayerController : MonoBehaviour
     {
         move_input = 0f;
         Keyboard kb = Keyboard.current;
-        if (kb == null) return;
 
-        if (kb.aKey.isPressed || kb.leftArrowKey.isPressed)
+        if (KeybindManager.IsPressed(KeyAction.MoveLeft) || (kb != null && kb.leftArrowKey.isPressed))
         {
             move_input -= 1f;
         }
-        if (kb.dKey.isPressed || kb.rightArrowKey.isPressed)
+        if (KeybindManager.IsPressed(KeyAction.MoveRight) || (kb != null && kb.rightArrowKey.isPressed))
         {
             move_input += 1f;
         }
 
-        if (kb.spaceKey.wasPressedThisFrame)
+        if (KeybindManager.WasPressedThisFrame(KeyAction.Jump))
         {
             if (is_grounded)
             {
@@ -102,7 +101,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if ((kb.sKey.wasPressedThisFrame || kb.downArrowKey.wasPressedThisFrame) && is_grounded)
+        if ((KeybindManager.WasPressedThisFrame(KeyAction.DropPlatform) || (kb != null && kb.downArrowKey.wasPressedThisFrame)) && is_grounded)
         {
             StartCoroutine(DropThroughPlatformCoroutine());
         }

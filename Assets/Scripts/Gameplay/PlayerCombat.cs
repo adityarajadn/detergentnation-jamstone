@@ -149,28 +149,28 @@ public class PlayerCombat : MonoBehaviour
 
         if (is_combat)
         {
-            if (kb.digit1Key.wasPressedThisFrame || kb.numpad1Key.wasPressedThisFrame)
+            if (KeybindManager.WasPressedThisFrame(KeyAction.Slot1) || (kb != null && kb.numpad1Key.wasPressedThisFrame))
             {
                 active_consumable_slot = 1;
                 NotifyConsumableChanged();
             }
-            else if (kb.digit2Key.wasPressedThisFrame || kb.numpad2Key.wasPressedThisFrame)
+            else if (KeybindManager.WasPressedThisFrame(KeyAction.Slot2) || (kb != null && kb.numpad2Key.wasPressedThisFrame))
             {
                 active_consumable_slot = 2;
                 NotifyConsumableChanged();
             }
         }
 
-        // Use Consumable via Q
-        if (kb.qKey.wasPressedThisFrame)
+        // Use Consumable via configured keybind
+        if (KeybindManager.WasPressedThisFrame(KeyAction.UseConsumable))
         {
             UseActiveConsumable();
         }
 
         if (!is_combat) return;
 
-        // Left Click -> Auto-switch to Ranged and Shoot
-        if (mouse.leftButton.isPressed)
+        // Attack -> Auto-switch to Ranged and Shoot
+        if (KeybindManager.IsPressed(KeyAction.Attack))
         {
             if (active_weapon_type != WeaponType.Ranged)
             {
@@ -182,8 +182,8 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        // Right Click -> Auto-switch to Melee and Strike
-        if (mouse.rightButton.isPressed)
+        // Melee Attack -> Auto-switch to Melee and Strike
+        if (KeybindManager.IsPressed(KeyAction.MeleeAttack))
         {
             if (active_weapon_type != WeaponType.Melee)
             {
@@ -195,7 +195,7 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        if (kb.rKey.wasPressedThisFrame)
+        if (KeybindManager.WasPressedThisFrame(KeyAction.Reload))
         {
             Reload();
         }
