@@ -8,6 +8,8 @@ public class EnemyController : MonoBehaviour
     private Health health;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    [SerializeField] private Color freeze_tint_color = new Color(0.4f, 0.8f, 1f, 1f);
+
     private Transform target_transform;
     private Health target_health;
     private Transform player_target;
@@ -22,8 +24,8 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
 
-        int en_layer = LayerMask.NameToLayer("Enemy");
-        int pl_layer = LayerMask.NameToLayer("Player");
+        int en_layer = LayerMask.NameToLayer(GameConstants.Layers.Enemy);
+        int pl_layer = LayerMask.NameToLayer(GameConstants.Layers.Player);
         if (en_layer != -1)
         {
             Physics2D.IgnoreLayerCollision(en_layer, en_layer, true);
@@ -108,7 +110,7 @@ public class EnemyController : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(check_pos, 0.7f);
         for (int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].CompareTag("Defense"))
+            if (hits[i].CompareTag(GameConstants.Tags.Defense))
             {
                 Health def_health = hits[i].GetComponent<Health>();
                 if (def_health != null && !def_health.is_dead)
@@ -137,7 +139,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = PlayerController.Instance != null ? PlayerController.Instance.gameObject : GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
         if (player != null)
         {
             target_transform = player.transform;
@@ -165,7 +167,7 @@ public class EnemyController : MonoBehaviour
         is_stunned = true;
         stun_timer = Mathf.Max(stun_timer, duration);
         rb.linearVelocity = Vector2.zero;
-        if (sr != null) sr.color = new Color(0.4f, 0.8f, 1f, 1f);
+        if (sr != null) sr.color = freeze_tint_color;
     }
 
     private void MoveTowardsTarget()
@@ -245,7 +247,7 @@ public class EnemyController : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             Collider2D hit = hits[i];
-            if (hit.CompareTag("Player") || hit.CompareTag("Minimarket") || hit.CompareTag("Defense"))
+            if (hit.CompareTag(GameConstants.Tags.Player) || hit.CompareTag(GameConstants.Tags.Minimarket) || hit.CompareTag(GameConstants.Tags.Defense))
             {
                 Health target_h = hit.GetComponent<Health>();
                 if (target_h != null && !target_h.is_dead)

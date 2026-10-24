@@ -11,13 +11,13 @@ public class SettingsUI : MonoBehaviour
     {
         if (music_volume_slider != null)
         {
-            music_volume_slider.value = PlayerPrefs.GetFloat("music_volume", 0.8f);
+            music_volume_slider.value = PlayerPrefs.GetFloat(GameConstants.PrefKeys.MusicVolume, 0.8f);
             music_volume_slider.onValueChanged.AddListener(OnMusicVolumeChanged);
         }
 
         if (sfx_volume_slider != null)
         {
-            sfx_volume_slider.value = PlayerPrefs.GetFloat("sfx_volume", 1f);
+            sfx_volume_slider.value = PlayerPrefs.GetFloat(GameConstants.PrefKeys.SfxVolume, 1f);
             sfx_volume_slider.onValueChanged.AddListener(OnSfxVolumeChanged);
         }
 
@@ -30,14 +30,14 @@ public class SettingsUI : MonoBehaviour
     private void OnMusicVolumeChanged(float val)
     {
         AudioManager.SetMusicVolume(val);
-        PlayerPrefs.SetFloat("music_volume", val);
+        PlayerPrefs.SetFloat(GameConstants.PrefKeys.MusicVolume, val);
         PlayerPrefs.Save();
     }
 
     private void OnSfxVolumeChanged(float val)
     {
         AudioManager.SetSFXVolume(val);
-        PlayerPrefs.SetFloat("sfx_volume", val);
+        PlayerPrefs.SetFloat(GameConstants.PrefKeys.SfxVolume, val);
         PlayerPrefs.Save();
     }
 }

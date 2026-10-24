@@ -11,7 +11,7 @@ public class EnemyAggroDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (enemy_controller != null && collision.CompareTag("Player"))
+        if (enemy_controller != null && collision.CompareTag(GameConstants.Tags.Player))
         {
             enemy_controller.OnPlayerEnteredAggro(collision.transform);
         }
@@ -19,7 +19,7 @@ public class EnemyAggroDetector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (enemy_controller != null && collision.CompareTag("Player"))
+        if (enemy_controller != null && collision.CompareTag(GameConstants.Tags.Player))
         {
             enemy_controller.OnPlayerExitedAggro(collision.transform);
         }

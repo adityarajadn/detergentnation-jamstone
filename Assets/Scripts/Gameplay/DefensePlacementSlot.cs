@@ -6,6 +6,10 @@ public class DefensePlacementSlot : MonoBehaviour
     public GameObject current_defense_instance;
     public DefenseData current_defense_data;
 
+    [Header("Indicator Colors")]
+    [SerializeField] private Color hover_color = new Color(0.3f, 1f, 0.4f, 0.9f);
+    [SerializeField] private Color idle_color = new Color(0.2f, 0.7f, 1f, 0.5f);
+
     private SpriteRenderer indicator;
 
     private void Awake()
@@ -19,7 +23,7 @@ public class DefensePlacementSlot : MonoBehaviour
         UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
         if (kb != null && kb.eKey.wasPressedThisFrame)
         {
-            GameObject player = GameObject.FindWithTag("Player");
+            GameObject player = PlayerController.Instance != null ? PlayerController.Instance.gameObject : GameObject.FindWithTag(GameConstants.Tags.Player);
             if (player != null && Vector2.Distance(player.transform.position, transform.position) <= 2.2f)
             {
                 HandleInteraction();
@@ -36,7 +40,7 @@ public class DefensePlacementSlot : MonoBehaviour
     {
         if (indicator != null && !HasDefense())
         {
-            indicator.color = new Color(0.3f, 1f, 0.4f, 0.9f);
+            indicator.color = hover_color;
         }
     }
 
@@ -44,7 +48,7 @@ public class DefensePlacementSlot : MonoBehaviour
     {
         if (indicator != null && !HasDefense())
         {
-            indicator.color = new Color(0.2f, 0.7f, 1f, 0.5f);
+            indicator.color = idle_color;
         }
     }
 
@@ -113,7 +117,7 @@ public class DefensePlacementSlot : MonoBehaviour
         if (indicator != null)
         {
             indicator.enabled = true;
-            indicator.color = new Color(0.2f, 0.7f, 1f, 0.5f);
+            indicator.color = idle_color;
         }
     }
 }

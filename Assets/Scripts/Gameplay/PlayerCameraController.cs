@@ -20,7 +20,13 @@ public class PlayerCameraController : MonoBehaviour
     {
         if (target == null)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (PlayerController.Instance != null)
+            {
+                target = PlayerController.Instance.transform;
+                return;
+            }
+
+            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
             if (player != null)
             {
                 target = player.transform;

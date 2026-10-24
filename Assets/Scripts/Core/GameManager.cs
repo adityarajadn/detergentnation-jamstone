@@ -10,12 +10,12 @@ public class GameManager : MonoBehaviour
     public int highest_unlocked_level = 1;
     public int[] level_stars = new int[5];
 
-    public string equipped_ranged_weapon = "Water Pistol";
-    public string equipped_melee_weapon = "Bubble Stick";
-    public string equipped_armor = "None";
-    public string equipped_jetpack = "None";
-    public string equipped_consumable_1 = "Soap Bomb";
-    public string equipped_consumable_2 = "First Aid Kit";
+    public string equipped_ranged_weapon = GameConstants.EquipmentNames.DefaultRanged;
+    public string equipped_melee_weapon = GameConstants.EquipmentNames.DefaultMelee;
+    public string equipped_armor = GameConstants.EquipmentNames.None;
+    public string equipped_jetpack = GameConstants.EquipmentNames.None;
+    public string equipped_consumable_1 = GameConstants.EquipmentNames.DefaultConsumable1;
+    public string equipped_consumable_2 = GameConstants.EquipmentNames.DefaultConsumable2;
     public WeaponType active_weapon_type = WeaponType.Ranged;
 
     public UnityEvent<int> on_candy_changed;
@@ -73,12 +73,12 @@ public class GameManager : MonoBehaviour
     public bool IsEquipmentOwned(string item_name, int price)
     {
         if (price == 0) return true;
-        return PlayerPrefs.GetInt("owned_eq_" + item_name, 0) == 1;
+        return PlayerPrefs.GetInt(GameConstants.PrefKeys.OwnedEquipmentPrefix + item_name, 0) == 1;
     }
 
     public void SetEquipmentOwned(string item_name)
     {
-        PlayerPrefs.SetInt("owned_eq_" + item_name, 1);
+        PlayerPrefs.SetInt(GameConstants.PrefKeys.OwnedEquipmentPrefix + item_name, 1);
         PlayerPrefs.Save();
     }
 
@@ -87,15 +87,15 @@ public class GameManager : MonoBehaviour
         if (is_ranged)
         {
             equipped_ranged_weapon = item_name;
-            PlayerPrefs.SetString("equipped_ranged_weapon", item_name);
+            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedRangedWeapon, item_name);
         }
         else
         {
             equipped_melee_weapon = item_name;
-            PlayerPrefs.SetString("equipped_melee_weapon", item_name);
+            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedMeleeWeapon, item_name);
         }
         active_weapon_type = is_ranged ? WeaponType.Ranged : WeaponType.Melee;
-        PlayerPrefs.SetInt("active_weapon_type", (int)active_weapon_type);
+        PlayerPrefs.SetInt(GameConstants.PrefKeys.ActiveWeaponType, (int)active_weapon_type);
         PlayerPrefs.Save();
         if (on_equipment_changed != null)
         {
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
     public void EquipArmor(string item_name)
     {
         equipped_armor = item_name;
-        PlayerPrefs.SetString("equipped_armor", item_name);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedArmor, item_name);
         PlayerPrefs.Save();
         if (on_armor_changed != null)
         {
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
     public void EquipJetpack(string item_name)
     {
         equipped_jetpack = item_name;
-        PlayerPrefs.SetString("equipped_jetpack", item_name);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedJetpack, item_name);
         PlayerPrefs.Save();
         if (on_jetpack_changed != null)
         {
@@ -130,12 +130,12 @@ public class GameManager : MonoBehaviour
         if (slot == 1)
         {
             equipped_consumable_1 = item_name;
-            PlayerPrefs.SetString("equipped_consumable_1", item_name);
+            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable1, item_name);
         }
         else if (slot == 2)
         {
             equipped_consumable_2 = item_name;
-            PlayerPrefs.SetString("equipped_consumable_2", item_name);
+            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable2, item_name);
         }
         PlayerPrefs.Save();
         if (on_consumable_equipped != null)
@@ -146,23 +146,23 @@ public class GameManager : MonoBehaviour
 
     public int GetUpgradeLevel(string upgrade_id)
     {
-        return PlayerPrefs.GetInt("upgrade_" + upgrade_id, 1);
+        return PlayerPrefs.GetInt(GameConstants.PrefKeys.UpgradePrefix + upgrade_id, 1);
     }
 
     public void SetUpgradeLevel(string upgrade_id, int level)
     {
-        PlayerPrefs.SetInt("upgrade_" + upgrade_id, level);
+        PlayerPrefs.SetInt(GameConstants.PrefKeys.UpgradePrefix + upgrade_id, level);
         PlayerPrefs.Save();
     }
 
     public int GetConsumableCount(string item_name)
     {
-        return PlayerPrefs.GetInt("consumable_" + item_name, 0);
+        return PlayerPrefs.GetInt(GameConstants.PrefKeys.ConsumablePrefix + item_name, 0);
     }
 
     public void SetConsumableCount(string item_name, int count)
     {
-        PlayerPrefs.SetInt("consumable_" + item_name, count);
+        PlayerPrefs.SetInt(GameConstants.PrefKeys.ConsumablePrefix + item_name, count);
         PlayerPrefs.Save();
     }
 
@@ -187,36 +187,36 @@ public class GameManager : MonoBehaviour
 
     public void SaveData()
     {
-        PlayerPrefs.SetInt("candy_total", candy_total);
-        PlayerPrefs.SetInt("unlocked_level", highest_unlocked_level);
+        PlayerPrefs.SetInt(GameConstants.PrefKeys.CandyTotal, candy_total);
+        PlayerPrefs.SetInt(GameConstants.PrefKeys.UnlockedLevel, highest_unlocked_level);
         for (int i = 0; i < level_stars.Length; i++)
         {
-            PlayerPrefs.SetInt("level_stars_" + i, level_stars[i]);
+            PlayerPrefs.SetInt(GameConstants.PrefKeys.LevelStarsPrefix + i, level_stars[i]);
         }
-        PlayerPrefs.SetString("equipped_ranged_weapon", equipped_ranged_weapon);
-        PlayerPrefs.SetString("equipped_melee_weapon", equipped_melee_weapon);
-        PlayerPrefs.SetString("equipped_armor", equipped_armor);
-        PlayerPrefs.SetString("equipped_jetpack", equipped_jetpack);
-        PlayerPrefs.SetString("equipped_consumable_1", equipped_consumable_1);
-        PlayerPrefs.SetString("equipped_consumable_2", equipped_consumable_2);
-        PlayerPrefs.SetInt("active_weapon_type", (int)active_weapon_type);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedRangedWeapon, equipped_ranged_weapon);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedMeleeWeapon, equipped_melee_weapon);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedArmor, equipped_armor);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedJetpack, equipped_jetpack);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable1, equipped_consumable_1);
+        PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable2, equipped_consumable_2);
+        PlayerPrefs.SetInt(GameConstants.PrefKeys.ActiveWeaponType, (int)active_weapon_type);
         PlayerPrefs.Save();
     }
 
     public void LoadData()
     {
-        candy_total = PlayerPrefs.GetInt("candy_total", 0);
-        highest_unlocked_level = PlayerPrefs.GetInt("unlocked_level", 1);
+        candy_total = PlayerPrefs.GetInt(GameConstants.PrefKeys.CandyTotal, 0);
+        highest_unlocked_level = PlayerPrefs.GetInt(GameConstants.PrefKeys.UnlockedLevel, 1);
         for (int i = 0; i < level_stars.Length; i++)
         {
-            level_stars[i] = PlayerPrefs.GetInt("level_stars_" + i, 0);
+            level_stars[i] = PlayerPrefs.GetInt(GameConstants.PrefKeys.LevelStarsPrefix + i, 0);
         }
-        equipped_ranged_weapon = PlayerPrefs.GetString("equipped_ranged_weapon", "Water Pistol");
-        equipped_melee_weapon = PlayerPrefs.GetString("equipped_melee_weapon", "Bubble Stick");
-        equipped_armor = PlayerPrefs.GetString("equipped_armor", "None");
-        equipped_jetpack = PlayerPrefs.GetString("equipped_jetpack", "None");
-        equipped_consumable_1 = PlayerPrefs.GetString("equipped_consumable_1", "Soap Bomb");
-        equipped_consumable_2 = PlayerPrefs.GetString("equipped_consumable_2", "First Aid Kit");
-        active_weapon_type = (WeaponType)PlayerPrefs.GetInt("active_weapon_type", (int)WeaponType.Ranged);
+        equipped_ranged_weapon = PlayerPrefs.GetString(GameConstants.PrefKeys.EquippedRangedWeapon, GameConstants.EquipmentNames.DefaultRanged);
+        equipped_melee_weapon = PlayerPrefs.GetString(GameConstants.PrefKeys.EquippedMeleeWeapon, GameConstants.EquipmentNames.DefaultMelee);
+        equipped_armor = PlayerPrefs.GetString(GameConstants.PrefKeys.EquippedArmor, GameConstants.EquipmentNames.None);
+        equipped_jetpack = PlayerPrefs.GetString(GameConstants.PrefKeys.EquippedJetpack, GameConstants.EquipmentNames.None);
+        equipped_consumable_1 = PlayerPrefs.GetString(GameConstants.PrefKeys.EquippedConsumable1, GameConstants.EquipmentNames.DefaultConsumable1);
+        equipped_consumable_2 = PlayerPrefs.GetString(GameConstants.PrefKeys.EquippedConsumable2, GameConstants.EquipmentNames.DefaultConsumable2);
+        active_weapon_type = (WeaponType)PlayerPrefs.GetInt(GameConstants.PrefKeys.ActiveWeaponType, (int)WeaponType.Ranged);
     }
 }

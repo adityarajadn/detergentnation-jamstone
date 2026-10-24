@@ -4,9 +4,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance { get; private set; }
+
     public float move_speed = 6f;
     public float jump_force = 12.5f;
-    public string equipped_jetpack = "None";
+    public string equipped_jetpack = GameConstants.EquipmentNames.None;
+
+    [Header("Jetpack Modifiers")]
+    [SerializeField] private float joyride_speed_multiplier = 1.1f;
+    [SerializeField] private float vengeance_speed_multiplier = 1.25f;
 
     [SerializeField] private Transform ground_check;
     [SerializeField] private LayerMask ground_layer;
@@ -21,17 +27,29 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 3.5f;
 
         if (ground_layer.value == 0)
         {
-            ground_layer = LayerMask.GetMask("Ground", "Default", "OneWayPlatform");
+            ground_layer = LayerMask.GetMask(GameConstants.Layers.Ground, GameConstants.Layers.Default, GameConstants.Layers.OneWayPlatform);
             if (ground_layer.value == 0)
             {
-                ground_layer = ~LayerMask.GetMask("Player", "Enemy", "Ignore Raycast");
+                ground_layer = ~LayerMask.GetMask(GameConstants.Layers.Player, GameConstants.Layers.Enemy, GameConstants.Layers.IgnoreRaycast);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 
     private void Start()
@@ -39,10 +57,6 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance != null)
         {
             equipped_jetpack = GameManager.instance.equipped_jetpack;
-        }
-        else
-        {
-            equipped_jetpack = PlayerPrefs.GetString("equipped_jetpack", "None");
         }
     }
 
@@ -77,11 +91,11 @@ public class PlayerController : MonoBehaviour
         {
             if (is_grounded)
             {
-                float boost = equipped_jetpack == "Joyride" ? 1.1f : (equipped_jetpack == "I am Vengeance" ? 1.25f : 1f);
+                float boost = equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride ? joyride_speed_multiplier : (equipped_jetpack == GameConstants.EquipmentNames.JetpackVengeance ? vengeance_speed_multiplier : 1f);
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * boost);
-                can_double_jump = (equipped_jetpack == "Joyride");
+                can_double_jump = (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
             }
-            else if (can_double_jump && equipped_jetpack == "Joyride")
+            else if (can_double_jump && equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * 1.05f);
                 can_double_jump = false;
@@ -118,7 +132,7 @@ public class PlayerController : MonoBehaviour
 
         if (is_grounded && !was_grounded)
         {
-            can_double_jump = (equipped_jetpack == "Joyride");
+            can_double_jump = (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
         }
     }
 
@@ -155,7 +169,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleGliding()
     {
-        if (equipped_jetpack != "I am Vengeance" || is_grounded) return;
+        if (equipped_jetpack != GameConstants.EquipmentNames.JetpackVengeance || is_grounded) return;
 
         Keyboard kb = Keyboard.current;
         if (kb != null && kb.spaceKey.isPressed && rb.linearVelocity.y < 0f)
@@ -169,7 +183,7 @@ public class PlayerController : MonoBehaviour
         Collider2D player_col = GetComponent<Collider2D>();
         if (player_col == null) yield break;
 
-        int platform_layer = LayerMask.NameToLayer("OneWayPlatform");
+        int platform_layer = LayerMask.NameToLayer(GameConstants.Layers.OneWayPlatform);
         if (platform_layer != -1)
         {
             Physics2D.IgnoreLayerCollision(gameObject.layer, platform_layer, true);

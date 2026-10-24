@@ -39,7 +39,7 @@ public class SonarBatarangProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (has_detonated) return;
-        if (collision.CompareTag("Enemy") || collision.CompareTag("Ground"))
+        if (collision.CompareTag(GameConstants.Tags.Enemy) || collision.CompareTag(GameConstants.Tags.Ground))
         {
             Detonate();
         }
@@ -53,7 +53,7 @@ public class SonarBatarangProjectile : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, stun_radius);
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i] != null && colliders[i].CompareTag("Enemy"))
+            if (colliders[i] != null && colliders[i].CompareTag(GameConstants.Tags.Enemy))
             {
                 EnemyController enemy = colliders[i].GetComponent<EnemyController>();
                 if (enemy != null)

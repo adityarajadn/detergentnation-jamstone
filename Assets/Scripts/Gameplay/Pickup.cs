@@ -18,7 +18,13 @@ public class Pickup : MonoBehaviour
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (PlayerController.Instance != null)
+        {
+            player_transform = PlayerController.Instance.transform;
+            return;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
         if (player != null)
         {
             player_transform = player.transform;
@@ -38,7 +44,7 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag(GameConstants.Tags.Player))
         {
             if (pickup_sound != null)
             {

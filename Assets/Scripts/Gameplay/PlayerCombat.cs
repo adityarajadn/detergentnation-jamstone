@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
+    public static PlayerCombat Instance { get; private set; }
+
     public WeaponData ranged_weapon;
     public WeaponData melee_weapon;
     public WeaponData[] available_ranged_weapons;
@@ -24,17 +26,45 @@ public class PlayerCombat : MonoBehaviour
     public GameObject sonar_batarang_prefab;
     public UnityEngine.Events.UnityEvent<int, string, int> on_consumable_updated;
 
+    [Header("Consumable Balance")]
+    [SerializeField] private int first_aid_heal = 50;
+    [SerializeField] private float energy_drink_speed_boost = 1.5f;
+    [SerializeField] private float energy_drink_duration = 8.0f;
+    [SerializeField] private int soap_bucket_shields = 3;
+    [SerializeField] private int tools_box_repair = 50;
+    [SerializeField] private int tools_box_minimarket_heal = 50;
+    [SerializeField] private Vector2 bomb_throw_impulse = new Vector2(12f, 4f);
+
+    [Header("Upgrade Scaling")]
+    [SerializeField] private int damage_bonus_per_level = 3;
+    [SerializeField] private int ammo_bonus_per_level = 6;
+
     private GameObject current_weapon_instance;
     private float next_fire_time = 0f;
     private float next_melee_time = 0f;
     private Camera main_camera;
     private int weapon_damage_bonus = 0;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     private void Start()
     {
         main_camera = Camera.main;
 
-        string eq_ranged = GameManager.instance != null ? GameManager.instance.equipped_ranged_weapon : PlayerPrefs.GetString("equipped_ranged_weapon", "Water Pistol");
+        string eq_ranged = GameManager.instance != null ? GameManager.instance.equipped_ranged_weapon : GameConstants.EquipmentNames.DefaultRanged;
         if (!string.IsNullOrEmpty(eq_ranged) && available_ranged_weapons != null)
         {
             for (int i = 0; i < available_ranged_weapons.Length; i++)
@@ -47,7 +77,7 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        string eq_melee = GameManager.instance != null ? GameManager.instance.equipped_melee_weapon : PlayerPrefs.GetString("equipped_melee_weapon", "Bubble Stick");
+        string eq_melee = GameManager.instance != null ? GameManager.instance.equipped_melee_weapon : GameConstants.EquipmentNames.DefaultMelee;
         if (!string.IsNullOrEmpty(eq_melee) && available_melee_weapons != null)
         {
             for (int i = 0; i < available_melee_weapons.Length; i++)
@@ -60,11 +90,11 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        int dmg_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel("weapon_damage") : PlayerPrefs.GetInt("upgrade_weapon_damage", 1);
-        weapon_damage_bonus = (dmg_level - 1) * 3;
+        int dmg_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(GameConstants.UpgradeKeys.WeaponDamage) : 1;
+        weapon_damage_bonus = (dmg_level - 1) * damage_bonus_per_level;
 
-        int ammo_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel("weapon_ammo") : PlayerPrefs.GetInt("upgrade_weapon_ammo", 1);
-        int ammo_bonus = (ammo_level - 1) * 6;
+        int ammo_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(GameConstants.UpgradeKeys.WeaponAmmo) : 1;
+        int ammo_bonus = (ammo_level - 1) * ammo_bonus_per_level;
 
         if (ranged_weapon != null)
         {
@@ -73,7 +103,7 @@ public class PlayerCombat : MonoBehaviour
             ammo_carried = ammo_carried_max;
         }
 
-        active_weapon_type = GameManager.instance != null ? GameManager.instance.active_weapon_type : (WeaponType)PlayerPrefs.GetInt("active_weapon_type", (int)WeaponType.Ranged);
+        active_weapon_type = GameManager.instance != null ? GameManager.instance.active_weapon_type : WeaponType.Ranged;
         UpdateWeaponVisual();
         NotifyConsumableChanged();
     }
@@ -176,8 +206,6 @@ public class PlayerCombat : MonoBehaviour
         if (active_weapon_type == new_type) return;
         active_weapon_type = new_type;
         if (GameManager.instance != null) GameManager.instance.active_weapon_type = active_weapon_type;
-        PlayerPrefs.SetInt("active_weapon_type", (int)active_weapon_type);
-        PlayerPrefs.Save();
         UpdateWeaponVisual();
     }
 
@@ -185,26 +213,26 @@ public class PlayerCombat : MonoBehaviour
     {
         if (active_consumable_slot == 1)
         {
-            return GameManager.instance != null ? GameManager.instance.equipped_consumable_1 : PlayerPrefs.GetString("equipped_consumable_1", "Soap Bomb");
+            return GameManager.instance != null ? GameManager.instance.equipped_consumable_1 : GameConstants.EquipmentNames.DefaultConsumable1;
         }
         else
         {
-            return GameManager.instance != null ? GameManager.instance.equipped_consumable_2 : PlayerPrefs.GetString("equipped_consumable_2", "First Aid Kit");
+            return GameManager.instance != null ? GameManager.instance.equipped_consumable_2 : GameConstants.EquipmentNames.DefaultConsumable2;
         }
     }
 
     public int GetActiveConsumableCount()
     {
         string item_name = GetActiveConsumableName();
-        if (string.IsNullOrEmpty(item_name) || item_name == "None") return 0;
-        return GameManager.instance != null ? GameManager.instance.GetConsumableCount(item_name) : PlayerPrefs.GetInt("consumable_" + item_name, 0);
+        if (string.IsNullOrEmpty(item_name) || item_name == GameConstants.EquipmentNames.None) return 0;
+        return GameManager.instance != null ? GameManager.instance.GetConsumableCount(item_name) : 0;
     }
 
     public void UseActiveConsumable()
     {
         string item_name = GetActiveConsumableName();
         int count = GetActiveConsumableCount();
-        if (string.IsNullOrEmpty(item_name) || item_name == "None" || count <= 0) return;
+        if (string.IsNullOrEmpty(item_name) || item_name == GameConstants.EquipmentNames.None || count <= 0) return;
 
         bool success = ExecuteConsumableEffect(item_name);
         if (success)
@@ -213,11 +241,6 @@ public class PlayerCombat : MonoBehaviour
             if (GameManager.instance != null)
             {
                 GameManager.instance.SetConsumableCount(item_name, new_count);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("consumable_" + item_name, new_count);
-                PlayerPrefs.Save();
             }
             NotifyConsumableChanged();
         }
@@ -232,12 +255,11 @@ public class PlayerCombat : MonoBehaviour
         {
             Vector3 origin = fire_point != null ? fire_point.position : transform.position;
             GameObject prefab = soap_bomb_prefab;
-            if (prefab == null) prefab = Resources.Load<GameObject>("Prefabs/SoapBomb");
             if (prefab != null)
             {
                 GameObject bomb = Instantiate(prefab, origin, Quaternion.identity);
                 SoapBombProjectile sbp = bomb.GetComponent<SoapBombProjectile>();
-                Vector2 throw_dir = ((Vector2)(mouse_pos - origin)).normalized * 12f + Vector2.up * 4f;
+                Vector2 throw_dir = ((Vector2)(mouse_pos - origin)).normalized * bomb_throw_impulse.x + Vector2.up * bomb_throw_impulse.y;
                 if (sbp != null) sbp.Launch(throw_dir);
                 else
                 {
@@ -252,7 +274,7 @@ public class PlayerCombat : MonoBehaviour
             Health health = GetComponent<Health>();
             if (health != null)
             {
-                health.Heal(50);
+                health.Heal(first_aid_heal);
                 return true;
             }
         }
@@ -261,7 +283,7 @@ public class PlayerCombat : MonoBehaviour
             PlayerController pc = GetComponent<PlayerController>();
             if (pc != null)
             {
-                pc.ApplySpeedBoost(1.5f, 8.0f);
+                pc.ApplySpeedBoost(energy_drink_speed_boost, energy_drink_duration);
                 return true;
             }
         }
@@ -270,16 +292,16 @@ public class PlayerCombat : MonoBehaviour
             Health health = GetComponent<Health>();
             if (health != null)
             {
-                health.shield_charges = 3;
+                health.shield_charges = soap_bucket_shields;
                 return true;
             }
         }
         else if (item_name == "Tools Box" || item_name == "Tool Box")
         {
-            AddRepairPoints(50);
+            AddRepairPoints(tools_box_repair);
             if (Minimarket.instance != null && Minimarket.instance.health != null)
             {
-                Minimarket.instance.health.Heal(50);
+                Minimarket.instance.health.Heal(tools_box_minimarket_heal);
             }
             return true;
         }
@@ -287,7 +309,6 @@ public class PlayerCombat : MonoBehaviour
         {
             Vector3 origin = fire_point != null ? fire_point.position : transform.position;
             GameObject prefab = sonar_batarang_prefab;
-            if (prefab == null) prefab = Resources.Load<GameObject>("Prefabs/SonarBatarang");
             if (prefab != null)
             {
                 GameObject bat = Instantiate(prefab, origin, Quaternion.identity);

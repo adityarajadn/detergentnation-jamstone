@@ -5,10 +5,26 @@ public class KillStreakManager : MonoBehaviour
 {
     public static KillStreakManager instance;
 
+    [System.Serializable]
+    public struct StreakReward
+    {
+        public int count;
+        public int bonus_candy;
+    }
+
     public int streak_count = 0;
     public float streak_timeout = 5f;
     public UnityEvent<int, int> on_streak_changed; // current_streak, bonus_candy
     public UnityEvent on_streak_reset;
+
+    [Header("Streak Rewards")]
+    [SerializeField] private StreakReward[] streak_tiers = new StreakReward[]
+    {
+        new StreakReward { count = 5, bonus_candy = 50 },
+        new StreakReward { count = 10, bonus_candy = 150 },
+        new StreakReward { count = 20, bonus_candy = 400 },
+        new StreakReward { count = 40, bonus_candy = 1000 }
+    };
 
     private float timer = 0f;
     private int highest_streak_achieved = 0;
@@ -20,14 +36,16 @@ public class KillStreakManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        Health player_health = PlayerController.Instance != null ? PlayerController.Instance.GetComponent<Health>() : null;
+        if (player_health == null)
         {
-            Health player_health = player.GetComponent<Health>();
-            if (player_health != null)
-            {
-                player_health.on_health_changed.AddListener(OnPlayerHealthChanged);
-            }
+            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
+            if (player != null) player_health = player.GetComponent<Health>();
+        }
+
+        if (player_health != null)
+        {
+            player_health.on_health_changed.AddListener(OnPlayerHealthChanged);
         }
     }
 
@@ -67,10 +85,13 @@ public class KillStreakManager : MonoBehaviour
 
     private int CalculateKillStreakBonus(int count)
     {
-        if (count == 5) return 50;
-        if (count == 10) return 150;
-        if (count == 20) return 400;
-        if (count == 40) return 1000;
+        if (streak_tiers != null)
+        {
+            for (int i = 0; i < streak_tiers.Length; i++)
+            {
+                if (streak_tiers[i].count == count) return streak_tiers[i].bonus_candy;
+            }
+        }
         return 0;
     }
 

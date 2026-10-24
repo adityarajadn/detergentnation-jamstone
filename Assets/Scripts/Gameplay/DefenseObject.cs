@@ -11,6 +11,8 @@ public class DefenseObject : MonoBehaviour
     [SerializeField] private GameObject projectile_prefab;
     [SerializeField] private float roll_speed = 9f;
     [SerializeField] private TMP_Text prompt_text;
+    [SerializeField] private Transform visuals;
+    [SerializeField] private int fence_repair_heal = 30;
 
     private bool is_rolling = false;
     private float roll_direction = 1f;
@@ -20,8 +22,12 @@ public class DefenseObject : MonoBehaviour
     private void Awake()
     {
         health = GetComponent<Health>();
-        Transform vis = transform.Find("Visuals");
-        if (vis != null) visuals_container = vis.gameObject;
+        if (visuals != null) visuals_container = visuals.gameObject;
+        else
+        {
+            Transform vis = transform.Find("Visuals");
+            if (vis != null) visuals_container = vis.gameObject;
+        }
         if (prompt_text == null) prompt_text = GetComponentInChildren<TMP_Text>();
     }
 
@@ -67,7 +73,7 @@ public class DefenseObject : MonoBehaviour
             return;
         }
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = PlayerController.Instance != null ? PlayerController.Instance.gameObject : GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
         if (player == null)
         {
             if (prompt_text != null) prompt_text.gameObject.SetActive(false);
@@ -137,7 +143,7 @@ public class DefenseObject : MonoBehaviour
                 UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
                 if (kb != null && (kb.eKey.wasPressedThisFrame || kb.fKey.wasPressedThisFrame))
                 {
-                    health.Heal(30);
+                    health.Heal(fence_repair_heal);
                 }
             }
             else
@@ -156,7 +162,7 @@ public class DefenseObject : MonoBehaviour
 
         // Determine target direction (outwards towards enemy flank or nearest enemy)
         Vector2 fire_dir = transform.position.x < 0 ? Vector2.left : Vector2.right;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(GameConstants.Tags.Enemy);
         float closest_dist = 12f;
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -170,8 +176,6 @@ public class DefenseObject : MonoBehaviour
 
         float angle = Mathf.Atan2(fire_dir.y, fire_dir.x) * Mathf.Rad2Deg;
         GameObject proj_prefab = projectile_prefab;
-        if (proj_prefab == null) proj_prefab = Resources.Load<GameObject>("Prefabs/Projectile");
-        if (proj_prefab == null) proj_prefab = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Projectile.prefab", typeof(GameObject));
 
         if (proj_prefab != null)
         {
@@ -182,6 +186,9 @@ public class DefenseObject : MonoBehaviour
                 proj.damage = defense_data != null ? defense_data.damage : 45;
                 proj.splash_radius = 2.5f;
                 proj.speed = 16f;
+                proj.is_enemy_projectile = false;
+            }
+        }
                 proj.is_enemy_projectile = false;
             }
         }
@@ -231,7 +238,7 @@ public class DefenseObject : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
         for (int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].CompareTag("Enemy"))
+            if (hits[i].CompareTag(GameConstants.Tags.Enemy))
             {
                 Health enemy_health = hits[i].GetComponent<Health>();
                 if (enemy_health != null && !enemy_health.is_dead)
@@ -249,7 +256,7 @@ public class DefenseObject : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
         for (int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].CompareTag("Enemy"))
+            if (hits[i].CompareTag(GameConstants.Tags.Enemy))
             {
                 Health enemy_health = hits[i].GetComponent<Health>();
                 if (enemy_health != null && !enemy_health.is_dead)
@@ -265,14 +272,14 @@ public class DefenseObject : MonoBehaviour
     {
         if (defense_data != null && defense_data.defense_type == DefenseType.SingleUse)
         {
-            if (collision.CompareTag("Enemy") || collision.CompareTag("Projectile"))
+            if (collision.CompareTag(GameConstants.Tags.Enemy) || collision.CompareTag(GameConstants.Tags.Projectile))
             {
                 TriggerTrap();
             }
         }
         else if (is_rolling)
         {
-            if (collision.CompareTag("Enemy"))
+            if (collision.CompareTag(GameConstants.Tags.Enemy))
             {
                 ExplodeBarrel();
             }

@@ -44,7 +44,7 @@ public class SoapBombProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (has_exploded) return;
-        if (collision.CompareTag("Enemy") || collision.CompareTag("Ground"))
+        if (collision.CompareTag(GameConstants.Tags.Enemy) || collision.CompareTag(GameConstants.Tags.Ground))
         {
             Explode();
         }
@@ -58,7 +58,7 @@ public class SoapBombProjectile : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosion_radius);
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i] != null && colliders[i].CompareTag("Enemy"))
+            if (colliders[i] != null && colliders[i].CompareTag(GameConstants.Tags.Enemy))
             {
                 Health health = colliders[i].GetComponent<Health>();
                 if (health != null)

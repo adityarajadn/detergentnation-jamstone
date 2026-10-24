@@ -40,7 +40,7 @@ public class Projectile : MonoBehaviour
     {
         if (is_enemy_projectile)
         {
-            if (collision.CompareTag("Player") || collision.CompareTag("Minimarket") || collision.CompareTag("Defense"))
+            if (collision.CompareTag(GameConstants.Tags.Player) || collision.CompareTag(GameConstants.Tags.Minimarket) || collision.CompareTag(GameConstants.Tags.Defense))
             {
                 ApplyDamage(collision);
                 ExplodeAndDestroy();
@@ -48,7 +48,7 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            if (collision.CompareTag("Enemy"))
+            if (collision.CompareTag(GameConstants.Tags.Enemy))
             {
                 ApplyDamage(collision);
                 ExplodeAndDestroy();
@@ -63,12 +63,12 @@ public class Projectile : MonoBehaviour
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, splash_radius);
             for (int i = 0; i < hits.Length; i++)
             {
-                if (is_enemy_projectile && (hits[i].CompareTag("Player") || hits[i].CompareTag("Minimarket") || hits[i].CompareTag("Defense")))
+                if (is_enemy_projectile && (hits[i].CompareTag(GameConstants.Tags.Player) || hits[i].CompareTag(GameConstants.Tags.Minimarket) || hits[i].CompareTag(GameConstants.Tags.Defense)))
                 {
                     Health target_health = hits[i].GetComponent<Health>();
                     if (target_health != null) target_health.TakeDamage(damage);
                 }
-                else if (!is_enemy_projectile && hits[i].CompareTag("Enemy"))
+                else if (!is_enemy_projectile && hits[i].CompareTag(GameConstants.Tags.Enemy))
                 {
                     Health target_health = hits[i].GetComponent<Health>();
                     if (target_health != null) target_health.TakeDamage(damage);

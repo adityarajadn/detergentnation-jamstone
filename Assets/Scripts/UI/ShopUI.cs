@@ -19,6 +19,8 @@ public class EquipmentShopEntry
     public EquipmentCategory category;
     public int price;
     public string description;
+    public Sprite preview_sprite;
+    public Color preview_color = Color.white;
     public Button action_button;
     public TMP_Text action_button_text;
     public TMP_Text price_text;
@@ -141,7 +143,7 @@ public class ShopUI : MonoBehaviour
 
     private void OnEquipmentAction(EquipmentShopEntry entry)
     {
-        bool is_owned = GameManager.instance != null ? GameManager.instance.IsEquipmentOwned(entry.item_name, entry.price) : (entry.price == 0 || PlayerPrefs.GetInt("owned_eq_" + entry.item_name, 0) == 1);
+        bool is_owned = GameManager.instance != null && GameManager.instance.IsEquipmentOwned(entry.item_name, entry.price);
 
         if (!is_owned)
         {
@@ -179,17 +181,48 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    private EquipmentShopEntry FindEntry(string itemName)
+    {
+        if (equipment_entries == null || string.IsNullOrEmpty(itemName)) return null;
+        for (int i = 0; i < equipment_entries.Count; i++)
+        {
+            if (equipment_entries[i] != null && equipment_entries[i].item_name == itemName)
+                return equipment_entries[i];
+        }
+        return null;
+    }
+
+    private Color GetEntryPreviewColor(EquipmentShopEntry entry)
+    {
+        if (entry == null) return Color.white;
+        if (entry.preview_color != Color.white) return entry.preview_color;
+
+        switch (entry.item_name)
+        {
+            case "Worker's Hat": return new Color(0.95f, 0.75f, 0.1f);
+            case "I am Number One": return new Color(0.2f, 0.6f, 0.95f);
+            case "Octosoap": return new Color(0.95f, 0.35f, 0.5f);
+            case "Joyride": return new Color(0.3f, 0.85f, 0.95f);
+            case "I am Vengeance": return new Color(0.2f, 0.15f, 0.25f);
+            case "Water Pistol": return new Color(0.3f, 0.8f, 1f);
+            case "Water Rifle": return new Color(0.2f, 0.5f, 0.9f);
+            case "Water Plasma": return new Color(0.9f, 0.4f, 1f);
+            case "Bubble Gun": return new Color(0.4f, 0.95f, 0.7f);
+            default: return entry.preview_color;
+        }
+    }
+
     private void RefreshEquipmentDisplay()
     {
-        string equipped_ranged = GameManager.instance != null ? GameManager.instance.equipped_ranged_weapon : PlayerPrefs.GetString("equipped_ranged_weapon", "Water Pistol");
-        string equipped_melee = GameManager.instance != null ? GameManager.instance.equipped_melee_weapon : PlayerPrefs.GetString("equipped_melee_weapon", "Bubble Stick");
-        string equipped_armor = GameManager.instance != null ? GameManager.instance.equipped_armor : PlayerPrefs.GetString("equipped_armor", "None");
-        string equipped_jetpack = GameManager.instance != null ? GameManager.instance.equipped_jetpack : PlayerPrefs.GetString("equipped_jetpack", "None");
+        string equipped_ranged = GameManager.instance != null ? GameManager.instance.equipped_ranged_weapon : GameConstants.EquipmentNames.DefaultRanged;
+        string equipped_melee = GameManager.instance != null ? GameManager.instance.equipped_melee_weapon : GameConstants.EquipmentNames.DefaultMelee;
+        string equipped_armor = GameManager.instance != null ? GameManager.instance.equipped_armor : GameConstants.EquipmentNames.None;
+        string equipped_jetpack = GameManager.instance != null ? GameManager.instance.equipped_jetpack : GameConstants.EquipmentNames.None;
 
         for (int i = 0; i < equipment_entries.Count; i++)
         {
             EquipmentShopEntry entry = equipment_entries[i];
-            bool is_owned = GameManager.instance != null ? GameManager.instance.IsEquipmentOwned(entry.item_name, entry.price) : (entry.price == 0 || PlayerPrefs.GetInt("owned_eq_" + entry.item_name, 0) == 1);
+            bool is_owned = GameManager.instance != null && GameManager.instance.IsEquipmentOwned(entry.item_name, entry.price);
 
             bool is_equipped = false;
             switch (entry.category)
@@ -242,25 +275,34 @@ public class ShopUI : MonoBehaviour
 
         if (preview_armor_img != null)
         {
-            preview_armor_img.enabled = equipped_armor != "None";
-            if (equipped_armor == "Worker's Hat") preview_armor_img.color = new Color(0.95f, 0.75f, 0.1f);
-            else if (equipped_armor == "I am Number One") preview_armor_img.color = new Color(0.2f, 0.6f, 0.95f);
-            else if (equipped_armor == "Octosoap") preview_armor_img.color = new Color(0.95f, 0.35f, 0.5f);
+            preview_armor_img.enabled = equipped_armor != GameConstants.EquipmentNames.None;
+            EquipmentShopEntry entry = FindEntry(equipped_armor);
+            if (entry != null)
+            {
+                if (entry.preview_sprite != null) preview_armor_img.sprite = entry.preview_sprite;
+                preview_armor_img.color = GetEntryPreviewColor(entry);
+            }
         }
 
         if (preview_jetpack_img != null)
         {
-            preview_jetpack_img.enabled = equipped_jetpack != "None";
-            if (equipped_jetpack == "Joyride") preview_jetpack_img.color = new Color(0.3f, 0.85f, 0.95f);
-            else if (equipped_jetpack == "I am Vengeance") preview_jetpack_img.color = new Color(0.2f, 0.15f, 0.25f);
+            preview_jetpack_img.enabled = equipped_jetpack != GameConstants.EquipmentNames.None;
+            EquipmentShopEntry entry = FindEntry(equipped_jetpack);
+            if (entry != null)
+            {
+                if (entry.preview_sprite != null) preview_jetpack_img.sprite = entry.preview_sprite;
+                preview_jetpack_img.color = GetEntryPreviewColor(entry);
+            }
         }
 
         if (preview_weapon_img != null)
         {
-            if (equipped_ranged == "Water Pistol") preview_weapon_img.color = new Color(0.3f, 0.8f, 1f);
-            else if (equipped_ranged == "Water Rifle") preview_weapon_img.color = new Color(0.2f, 0.5f, 0.9f);
-            else if (equipped_ranged == "Water Plasma") preview_weapon_img.color = new Color(0.9f, 0.4f, 1f);
-            else if (equipped_ranged == "Bubble Gun") preview_weapon_img.color = new Color(0.4f, 0.95f, 0.7f);
+            EquipmentShopEntry entry = FindEntry(equipped_ranged);
+            if (entry != null)
+            {
+                if (entry.preview_sprite != null) preview_weapon_img.sprite = entry.preview_sprite;
+                preview_weapon_img.color = GetEntryPreviewColor(entry);
+            }
         }
     }
 
@@ -307,7 +349,7 @@ public class ShopUI : MonoBehaviour
         for (int i = 0; i < consumable_entries.Count; i++)
         {
             ConsumableShopEntry entry = consumable_entries[i];
-            int count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(entry.item_name) : PlayerPrefs.GetInt("consumable_" + entry.item_name, 0);
+            int count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(entry.item_name) : 0;
 
             if (entry.count_text != null)
             {
@@ -336,7 +378,7 @@ public class ShopUI : MonoBehaviour
 
     private void OnUpgradeAction(UpgradeShopEntry entry)
     {
-        int current_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(entry.upgrade_id) : PlayerPrefs.GetInt("upgrade_" + entry.upgrade_id, 1);
+        int current_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(entry.upgrade_id) : 1;
         if (current_level >= entry.max_level) return;
 
         int cost = (current_level - 1) * entry.cost_multiplier;
@@ -354,7 +396,7 @@ public class ShopUI : MonoBehaviour
         for (int i = 0; i < upgrade_entries.Count; i++)
         {
             UpgradeShopEntry entry = upgrade_entries[i];
-            int current_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(entry.upgrade_id) : PlayerPrefs.GetInt("upgrade_" + entry.upgrade_id, 1);
+            int current_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(entry.upgrade_id) : 1;
 
             if (entry.level_text != null)
             {

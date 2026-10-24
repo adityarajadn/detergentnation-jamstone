@@ -64,6 +64,12 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button pause_settings_button;
     [SerializeField] private Button pause_menu_button;
 
+    [Header("UI Theme Colors")]
+    [SerializeField] private Color slot_active_color = new Color(0.2f, 0.7f, 0.9f, 0.9f);
+    [SerializeField] private Color slot_inactive_color = new Color(0.12f, 0.14f, 0.2f, 0.75f);
+    [SerializeField] private Color defense_btn_selected_color = new Color(1f, 0.85f, 0.2f, 1f);
+    [SerializeField] private Color defense_btn_normal_color = new Color(0.18f, 0.22f, 0.32f, 0.95f);
+
     private PlayerCombat player_combat;
     private Health player_health;
 
@@ -203,7 +209,14 @@ public class GameplayUI : MonoBehaviour
 
     private void FindPlayerReferences()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (PlayerCombat.Instance != null)
+        {
+            player_combat = PlayerCombat.Instance;
+            player_health = PlayerCombat.Instance.GetComponent<Health>();
+            return;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
         if (player != null)
         {
             player_combat = player.GetComponent<PlayerCombat>();
@@ -254,11 +267,11 @@ public class GameplayUI : MonoBehaviour
     {
         if (consumable_panel == null) return;
 
-        string c1_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_1 : PlayerPrefs.GetString("equipped_consumable_1", "Soap Bomb");
-        string c2_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_2 : PlayerPrefs.GetString("equipped_consumable_2", "First Aid Kit");
+        string c1_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_1 : GameConstants.EquipmentNames.DefaultConsumable1;
+        string c2_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_2 : GameConstants.EquipmentNames.DefaultConsumable2;
 
-        int c1_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c1_name) : PlayerPrefs.GetInt("consumable_" + c1_name, 0);
-        int c2_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c2_name) : PlayerPrefs.GetInt("consumable_" + c2_name, 0);
+        int c1_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c1_name) : 0;
+        int c2_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c2_name) : 0;
 
         int active_slot = player_combat != null ? player_combat.active_consumable_slot : 1;
 
@@ -288,12 +301,12 @@ public class GameplayUI : MonoBehaviour
 
         if (consumable_slot1_bg != null)
         {
-            consumable_slot1_bg.color = active_slot == 1 ? new Color(0.2f, 0.7f, 0.9f, 0.9f) : new Color(0.12f, 0.14f, 0.2f, 0.75f);
+            consumable_slot1_bg.color = active_slot == 1 ? slot_active_color : slot_inactive_color;
         }
 
         if (consumable_slot2_bg != null)
         {
-            consumable_slot2_bg.color = active_slot == 2 ? new Color(0.2f, 0.7f, 0.9f, 0.9f) : new Color(0.12f, 0.14f, 0.2f, 0.75f);
+            consumable_slot2_bg.color = active_slot == 2 ? slot_active_color : slot_inactive_color;
         }
     }
 
@@ -383,7 +396,7 @@ public class GameplayUI : MonoBehaviour
         Image img = btn.GetComponent<Image>();
         if (img != null)
         {
-            img.color = is_selected ? new Color(1f, 0.85f, 0.2f, 1f) : new Color(0.18f, 0.22f, 0.32f, 0.95f);
+            img.color = is_selected ? defense_btn_selected_color : defense_btn_normal_color;
         }
     }
 

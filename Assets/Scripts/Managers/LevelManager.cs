@@ -52,14 +52,16 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        Health player_health = PlayerController.Instance != null ? PlayerController.Instance.GetComponent<Health>() : null;
+        if (player_health == null)
         {
-            Health player_health = player.GetComponent<Health>();
-            if (player_health != null)
-            {
-                player_health.on_death.AddListener(OnLevelDefeat);
-            }
+            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
+            if (player != null) player_health = player.GetComponent<Health>();
+        }
+
+        if (player_health != null)
+        {
+            player_health.on_death.AddListener(OnLevelDefeat);
         }
 
         if (Minimarket.instance != null && Minimarket.instance.health != null)
