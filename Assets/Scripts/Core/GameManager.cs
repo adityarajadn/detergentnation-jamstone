@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public static int selected_level = 1;
-    public int candy_total = 0;
+    public int candy_total = 1000;
     public int highest_unlocked_level = 1;
     public int[] level_stars = new int[5];
 
