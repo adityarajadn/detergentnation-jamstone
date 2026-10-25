@@ -84,8 +84,9 @@ public class PlayerController : MonoBehaviour
             GameObject armor_prefab = FindPrefabByName(armor_prefabs, equipped_armor);
             if (armor_prefab != null)
             {
+                Transform armor_mount = transform.Find("Visuals/ArmorMount");
                 Transform cap_point = transform.Find("Visuals/Head/Cap");
-                Transform parent_point = cap_point != null ? cap_point : transform.Find("Visuals/Head");
+                Transform parent_point = armor_mount != null ? armor_mount : (cap_point != null ? cap_point : transform.Find("Visuals/Head"));
                 if (parent_point == null) parent_point = transform;
 
                 GameObject armor_obj = Instantiate(armor_prefab, parent_point);
@@ -110,11 +111,12 @@ public class PlayerController : MonoBehaviour
             GameObject jetpack_prefab = FindPrefabByName(jetpack_prefabs, equipped_jetpack);
             if (jetpack_prefab != null)
             {
-                Transform body_point = transform.Find("Visuals/Body");
+                Transform jetpack_mount = transform.Find("Visuals/JetpackMount");
+                Transform body_point = jetpack_mount != null ? jetpack_mount : transform.Find("Visuals/Body");
                 if (body_point == null) body_point = transform;
 
                 GameObject jetpack_obj = Instantiate(jetpack_prefab, body_point);
-                jetpack_obj.transform.localPosition = new Vector3(-0.2f, 0f, 0f);
+                jetpack_obj.transform.localPosition = jetpack_mount != null ? Vector3.zero : new Vector3(-0.2f, 0f, 0f);
                 jetpack_obj.transform.localRotation = Quaternion.identity;
                 active_jetpack = jetpack_obj.GetComponent<JetpackBase>();
             }
