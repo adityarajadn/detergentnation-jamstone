@@ -74,6 +74,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private TMP_Text preview_armor_text;
     [SerializeField] private TMP_Text preview_jetpack_text;
     [SerializeField] private Image preview_weapon_img;
+    [SerializeField] private Image preview_melee_img;
     [SerializeField] private Image preview_armor_img;
     [SerializeField] private Image preview_jetpack_img;
 
@@ -305,6 +306,17 @@ public class ShopUI : MonoBehaviour
             {
                 if (entry.preview_sprite != null) preview_weapon_img.sprite = entry.preview_sprite;
                 preview_weapon_img.color = GetEntryPreviewColor(entry);
+            }
+        }
+
+        if (preview_melee_img != null)
+        {
+            preview_melee_img.enabled = !string.IsNullOrEmpty(equipped_melee) && equipped_melee != GameConstants.EquipmentNames.None;
+            EquipmentShopEntry entry = FindEntry(equipped_melee);
+            if (entry != null)
+            {
+                if (entry.preview_sprite != null) preview_melee_img.sprite = entry.preview_sprite;
+                preview_melee_img.color = GetEntryPreviewColor(entry);
             }
         }
     }
