@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private bool is_grounded = false;
     private bool can_double_jump = false;
     private float move_input = 0f;
+    public float MoveInput => move_input;
     private float speed_boost_multiplier = 1f;
     private Coroutine speed_boost_coroutine = null;
 

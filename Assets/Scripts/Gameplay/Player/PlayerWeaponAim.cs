@@ -9,10 +9,12 @@ public class PlayerWeaponAim : MonoBehaviour
     [SerializeField] private float mount_offset_y = -0.05f;
 
     private Camera main_camera;
+    private PlayerController player_controller;
 
     private void Awake()
     {
         main_camera = Camera.main;
+        player_controller = GetComponent<PlayerController>();
         if (visuals == null)
         {
             visuals = transform.Find("Visuals");
@@ -72,11 +74,20 @@ public class PlayerWeaponAim : MonoBehaviour
         // Keep player body completely upright (0 rotation)
         transform.rotation = Quaternion.identity;
 
-        // Flip visuals horizontally based on aim direction
+        // Flip visuals horizontally: prioritize movement input over aim direction
         if (visuals != null)
         {
             float vx = Mathf.Abs(visuals.localScale.x);
-            visuals.localScale = new Vector3(aim_left ? -vx : vx, visuals.localScale.y, visuals.localScale.z);
+            bool face_left;
+            if (player_controller != null && Mathf.Abs(player_controller.MoveInput) > 0.05f)
+            {
+                face_left = player_controller.MoveInput < 0f;
+            }
+            else
+            {
+                face_left = aim_left;
+            }
+            visuals.localScale = new Vector3(face_left ? -vx : vx, visuals.localScale.y, visuals.localScale.z);
         }
     }
 }
