@@ -52,7 +52,8 @@ public class ArmorOctosoap : ArmorBase
 
         Vector2 throw_dir = Vector2.right;
         Transform player = transform.root;
-        if (player != null && player.localScale.x < 0)
+        Transform visuals = player != null ? player.Find("Visuals") : null;
+        if ((visuals != null && visuals.localScale.x < 0) || (player != null && player.localScale.x < 0))
         {
             throw_dir = Vector2.left;
         }

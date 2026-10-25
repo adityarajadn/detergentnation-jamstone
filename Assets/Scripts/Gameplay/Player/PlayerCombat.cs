@@ -56,15 +56,26 @@ public class PlayerCombat : MonoBehaviour
         consumable_inv = GetComponent<PlayerConsumableInventory>();
         main_camera = Camera.main;
 
+        if (weapon_mount == transform)
+        {
+            weapon_mount = null;
+        }
+
         if (weapon_mount == null)
         {
-            Transform found = transform.Find("Visuals/GunArm");
-            if (found != null) weapon_mount = found;
-            else if (fire_point != null) weapon_mount = fire_point.parent;
+            Transform found = transform.Find("WeaponMount");
+            if (found == null) found = transform.Find("Visuals/GunArm");
+            if (found == null && weapon_aim != null)
+            {
+                weapon_aim.EnsureWeaponMount();
+                found = weapon_aim.weapon_mount;
+            }
+            weapon_mount = found;
         }
-        if (weapon_aim != null && weapon_aim.weapon_mount == null)
+        if (weapon_aim != null)
         {
-            weapon_aim.weapon_mount = weapon_mount;
+            if (weapon_mount != null) weapon_aim.weapon_mount = weapon_mount;
+            else weapon_mount = weapon_aim.weapon_mount;
         }
     }
 
@@ -234,14 +245,24 @@ public class PlayerCombat : MonoBehaviour
 
     public void UpdateWeaponVisual()
     {
-        if (weapon_mount == null)
+        if (weapon_mount == transform)
         {
-            Transform found = transform.Find("Visuals/GunArm");
-            if (found != null) weapon_mount = found;
-            else if (fire_point != null) weapon_mount = fire_point.parent;
+            weapon_mount = null;
         }
 
-        if (weapon_mount == null) return;
+        if (weapon_mount == null)
+        {
+            Transform found = transform.Find("WeaponMount");
+            if (found == null) found = transform.Find("Visuals/GunArm");
+            if (found == null && weapon_aim != null)
+            {
+                weapon_aim.EnsureWeaponMount();
+                found = weapon_aim.weapon_mount;
+            }
+            weapon_mount = found;
+        }
+
+        if (weapon_mount == null || weapon_mount == transform) return;
 
         if (current_weapon_instance != null)
         {

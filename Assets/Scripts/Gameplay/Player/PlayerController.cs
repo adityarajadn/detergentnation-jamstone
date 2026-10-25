@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float vengeance_speed_multiplier = 1.25f;
 
     [SerializeField] private Transform ground_check;
+    [SerializeField] private Transform visuals;
     [SerializeField] private LayerMask ground_layer;
     [SerializeField] private float ground_radius = 0.22f;
 
@@ -45,6 +46,9 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 3.5f;
+        transform.localScale = Vector3.one;
+
+        if (visuals == null) visuals = transform.Find("Visuals");
 
         if (ground_layer.value == 0)
         {
@@ -214,14 +218,18 @@ public class PlayerController : MonoBehaviour
     private void ApplyMovement()
     {
         rb.linearVelocity = new Vector2(move_input * move_speed * speed_boost_multiplier, rb.linearVelocity.y);
+        transform.localScale = Vector3.one;
 
-        if (move_input > 0.05f)
+        if (visuals != null && GetComponent<PlayerWeaponAim>() == null)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-        }
-        else if (move_input < -0.05f)
-        {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            if (move_input > 0.05f)
+            {
+                visuals.localScale = new Vector3(Mathf.Abs(visuals.localScale.x), visuals.localScale.y, visuals.localScale.z);
+            }
+            else if (move_input < -0.05f)
+            {
+                visuals.localScale = new Vector3(-Mathf.Abs(visuals.localScale.x), visuals.localScale.y, visuals.localScale.z);
+            }
         }
     }
 
