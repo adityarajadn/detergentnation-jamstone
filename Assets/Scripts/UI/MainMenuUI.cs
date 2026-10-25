@@ -30,7 +30,7 @@ public class MainMenuUI : MonoBehaviour
     {
         if (candy_text != null)
         {
-            int candies = GameManager.instance != null ? GameManager.instance.candy_balance : PlayerPrefs.GetInt(GameConstants.PrefKeys.CandyBalance, 0);
+            int candies = GameManager.instance != null ? GameManager.instance.candy_total : PlayerPrefs.GetInt(GameConstants.PrefKeys.CandyTotal, 0);
             candy_text.text = "CANDY: " + candies;
         }
     }
