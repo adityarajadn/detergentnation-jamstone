@@ -7,9 +7,11 @@ public class PlayerWeaponAim : MonoBehaviour
     [SerializeField] private Transform visuals;
     [SerializeField] private float mount_offset_x = 0.2f;
     [SerializeField] private float mount_offset_y = -0.05f;
+    [SerializeField] private float aim_deadzone = 0.25f;
 
     private Camera main_camera;
     private PlayerController player_controller;
+    private bool last_aim_left = false;
 
     private void Awake()
     {
@@ -59,17 +61,26 @@ public class PlayerWeaponAim : MonoBehaviour
 
         Vector3 mouse_screen = Mouse.current.position.ReadValue();
         Vector3 mouse_world = main_camera.ScreenToWorldPoint(mouse_screen);
-        Vector2 aim_delta = mouse_world - weapon_mount.position;
-        float aim_angle = Mathf.Atan2(aim_delta.y, aim_delta.x) * Mathf.Rad2Deg;
 
-        // ONLY weapon mount rotates
-        weapon_mount.rotation = Quaternion.Euler(0f, 0f, aim_angle);
-
-        bool aim_left = aim_delta.x < 0f;
-        weapon_mount.localScale = new Vector3(1f, aim_left ? -1f : 1f, 1f);
+        // Determine aim direction relative to player center with deadzone hysteresis to prevent jitter
+        float delta_x_from_player = mouse_world.x - transform.position.x;
+        if (Mathf.Abs(delta_x_from_player) > aim_deadzone)
+        {
+            last_aim_left = delta_x_from_player < 0f;
+        }
+        bool aim_left = last_aim_left;
 
         float offset_x = Mathf.Abs(mount_offset_x);
         weapon_mount.localPosition = new Vector3(aim_left ? -offset_x : offset_x, mount_offset_y, 0f);
+
+        Vector2 aim_delta = mouse_world - weapon_mount.position;
+        if (aim_delta.sqrMagnitude > 0.0001f)
+        {
+            float aim_angle = Mathf.Atan2(aim_delta.y, aim_delta.x) * Mathf.Rad2Deg;
+            weapon_mount.rotation = Quaternion.Euler(0f, 0f, aim_angle);
+        }
+
+        weapon_mount.localScale = new Vector3(1f, aim_left ? -1f : 1f, 1f);
 
         // Keep player body completely upright (0 rotation)
         transform.rotation = Quaternion.identity;
