@@ -20,6 +20,49 @@ public class DefensePlacementSlot : MonoBehaviour
         if (spawn_point == null) spawn_point = transform;
     }
 
+    private void Start()
+    {
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.on_phase_changed.AddListener(OnPhaseChanged);
+            UpdateSlotVisibility(LevelManager.instance.current_phase);
+        }
+        else
+        {
+            UpdateSlotVisibility(GamePhase.Planning);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.on_phase_changed.RemoveListener(OnPhaseChanged);
+        }
+    }
+
+    private void OnPhaseChanged(GamePhase phase)
+    {
+        UpdateSlotVisibility(phase);
+    }
+
+    private void UpdateSlotVisibility(GamePhase phase)
+    {
+        bool is_planning = phase == GamePhase.Planning;
+        bool should_show = is_planning && !HasDefense();
+
+        if (indicator != null)
+        {
+            indicator.enabled = should_show;
+            if (should_show) indicator.color = idle_color;
+        }
+
+        if (slot_collider != null)
+        {
+            slot_collider.enabled = should_show;
+        }
+    }
+
     private void Update()
     {
         UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
@@ -117,15 +160,8 @@ public class DefensePlacementSlot : MonoBehaviour
     {
         current_defense_instance = null;
         current_defense_data = null;
-        if (indicator != null)
-        {
-            indicator.enabled = true;
-            indicator.color = idle_color;
-        }
-        if (slot_collider != null)
-        {
-            slot_collider.enabled = true;
-        }
+        GamePhase phase = LevelManager.instance != null ? LevelManager.instance.current_phase : GamePhase.Planning;
+        UpdateSlotVisibility(phase);
     }
 
     public void RemoveDefense()
@@ -149,14 +185,7 @@ public class DefensePlacementSlot : MonoBehaviour
 
         current_defense_instance = null;
         current_defense_data = null;
-        if (indicator != null)
-        {
-            indicator.enabled = true;
-            indicator.color = idle_color;
-        }
-        if (slot_collider != null)
-        {
-            slot_collider.enabled = true;
-        }
+        GamePhase phase = LevelManager.instance != null ? LevelManager.instance.current_phase : GamePhase.Planning;
+        UpdateSlotVisibility(phase);
     }
 }
