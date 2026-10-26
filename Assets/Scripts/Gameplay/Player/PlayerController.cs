@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float ground_radius = 0.22f;
 
     private Rigidbody2D rb;
+    private Animator animator;
     private bool is_grounded = false;
     private bool can_double_jump = false;
     private float move_input = 0f;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
         Instance = this;
 
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         rb.gravityScale = 3.5f;
         transform.localScale = Vector3.one;
 
@@ -147,6 +149,18 @@ public class PlayerController : MonoBehaviour
     {
         ReadInput();
         HandleGliding();
+        UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        if (animator == null) return;
+        animator.SetFloat("speed", Mathf.Abs(move_input));
+        animator.SetBool("is_grounded", is_grounded);
+        if (rb != null)
+        {
+            animator.SetFloat("y_velocity", rb.linearVelocity.y);
+        }
     }
 
     private void FixedUpdate()
