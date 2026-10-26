@@ -31,10 +31,6 @@ public class DefensePlacementManager : MonoBehaviour
         UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
         if (kb == null) return;
 
-        if (kb.digit1Key.wasPressedThisFrame && available_defenses.Count > 0) SelectDefense(available_defenses[0]);
-        if (kb.digit2Key.wasPressedThisFrame && available_defenses.Count > 1) SelectDefense(available_defenses[1]);
-        if (kb.digit3Key.wasPressedThisFrame && available_defenses.Count > 2) SelectDefense(available_defenses[2]);
-        if (kb.digit4Key.wasPressedThisFrame && available_defenses.Count > 3) SelectDefense(available_defenses[3]);
         if (kb.xKey.wasPressedThisFrame) ToggleRefundMode();
         if (kb.escapeKey.wasPressedThisFrame) ClearSelection();
     }

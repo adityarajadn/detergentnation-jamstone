@@ -53,19 +53,16 @@ public class PlayerConsumableInventory : MonoBehaviour
             }
         }
 
-        if (is_combat)
+        if (KeybindManager.WasPressedThisFrame(KeyAction.Slot1) || (kb != null && kb.numpad1Key.wasPressedThisFrame))
         {
-            if (KeybindManager.WasPressedThisFrame(KeyAction.Slot1) || (kb != null && kb.numpad1Key.wasPressedThisFrame))
-            {
-                SelectSlot(1);
-            }
-            else if (KeybindManager.WasPressedThisFrame(KeyAction.Slot2) || (kb != null && kb.numpad2Key.wasPressedThisFrame))
-            {
-                SelectSlot(2);
-            }
+            SelectSlot(1);
+        }
+        else if (KeybindManager.WasPressedThisFrame(KeyAction.Slot2) || (kb != null && kb.numpad2Key.wasPressedThisFrame))
+        {
+            SelectSlot(2);
         }
 
-        if (KeybindManager.WasPressedThisFrame(KeyAction.UseConsumable))
+        if (is_combat && KeybindManager.WasPressedThisFrame(KeyAction.UseConsumable))
         {
             UseActiveConsumable();
         }
