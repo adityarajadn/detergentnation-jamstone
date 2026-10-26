@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerCameraController : MonoBehaviour
 {
     public Transform target;
-    public float smooth_time = 0.25f;
-    public float max_look_ahead_x = 3.5f;
-    public float max_look_ahead_y = 2.0f;
+    public float smooth_time = 0.1f;
+    public float max_look_ahead_x = 2.0f;
+    public float max_look_ahead_y = 1.2f;
     public Vector3 offset = new Vector3(0f, 1f, -10f);
 
     public float min_x = -13f;

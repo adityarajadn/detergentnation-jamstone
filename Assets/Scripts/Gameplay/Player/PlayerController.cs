@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         rb.gravityScale = 3.5f;
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         transform.localScale = Vector3.one;
 
         if (visuals == null) visuals = transform.Find("Visuals");
