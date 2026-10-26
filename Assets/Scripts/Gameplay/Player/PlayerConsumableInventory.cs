@@ -33,6 +33,7 @@ public class PlayerConsumableInventory : MonoBehaviour
 
     private void HandleInput()
     {
+        if (Time.timeScale == 0f) return;
         Mouse mouse = Mouse.current;
         Keyboard kb = Keyboard.current;
         if (mouse == null && kb == null) return;

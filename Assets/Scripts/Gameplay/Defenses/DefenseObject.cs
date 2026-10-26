@@ -85,6 +85,13 @@ public class DefenseObject : MonoBehaviour
 
         if (defense_data == null) return;
 
+        string keyName = "F";
+        ActionBinding binding = KeybindManager.GetBinding(KeyAction.Interact);
+        if (binding.device == InputDeviceType.Keyboard)
+        {
+            keyName = binding.key.ToString();
+        }
+
         if (defense_data.defense_name.Contains("Cannon"))
         {
             if (is_near && ammo_current > 0)
@@ -92,11 +99,10 @@ public class DefenseObject : MonoBehaviour
                 if (prompt_text != null)
                 {
                     prompt_text.gameObject.SetActive(true);
-                    prompt_text.text = "[E] FIRE CANNON (" + ammo_current + "/" + defense_data.max_ammo + ")";
+                    prompt_text.text = "[" + keyName + "] FIRE CANNON (" + ammo_current + "/" + defense_data.max_ammo + ")";
                 }
 
-                UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
-                if (kb != null && (kb.eKey.wasPressedThisFrame || kb.fKey.wasPressedThisFrame))
+                if (KeybindManager.WasPressedThisFrame(KeyAction.Interact) || (UnityEngine.InputSystem.Keyboard.current != null && (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame || UnityEngine.InputSystem.Keyboard.current.fKey.wasPressedThisFrame)))
                 {
                     if (Time.time >= next_cannon_fire_time)
                     {
@@ -116,11 +122,10 @@ public class DefenseObject : MonoBehaviour
                 if (prompt_text != null)
                 {
                     prompt_text.gameObject.SetActive(true);
-                    prompt_text.text = "[E] ROLL BARREL";
+                    prompt_text.text = "[" + keyName + "] ROLL BARREL";
                 }
 
-                UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
-                if (kb != null && (kb.eKey.wasPressedThisFrame || kb.fKey.wasPressedThisFrame))
+                if (KeybindManager.WasPressedThisFrame(KeyAction.Interact) || (UnityEngine.InputSystem.Keyboard.current != null && (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame || UnityEngine.InputSystem.Keyboard.current.fKey.wasPressedThisFrame)))
                 {
                     ReleaseBarrel();
                 }
@@ -137,11 +142,10 @@ public class DefenseObject : MonoBehaviour
                 if (prompt_text != null)
                 {
                     prompt_text.gameObject.SetActive(true);
-                    prompt_text.text = "[E] REPAIR FENCE";
+                    prompt_text.text = "[" + keyName + "] REPAIR FENCE";
                 }
 
-                UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
-                if (kb != null && (kb.eKey.wasPressedThisFrame || kb.fKey.wasPressedThisFrame))
+                if (KeybindManager.WasPressedThisFrame(KeyAction.Interact) || (UnityEngine.InputSystem.Keyboard.current != null && (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame || UnityEngine.InputSystem.Keyboard.current.fKey.wasPressedThisFrame)))
                 {
                     health.Heal(fence_repair_heal);
                 }

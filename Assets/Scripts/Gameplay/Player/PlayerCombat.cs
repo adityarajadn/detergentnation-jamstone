@@ -131,6 +131,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void HandleCombatInput()
     {
+        if (Time.timeScale == 0f) return;
         bool is_combat = LevelManager.instance == null || LevelManager.instance.current_phase == GamePhase.Combat;
         if (!is_combat) return;
 

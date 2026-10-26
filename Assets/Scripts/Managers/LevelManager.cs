@@ -154,11 +154,13 @@ public class LevelManager : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
+        Time.timeScale = 1f;
         SceneLoader.LoadGameplay(GameManager.selected_level);
     }
 
     public void NextLevel()
     {
+        Time.timeScale = 1f;
         int next = GameManager.selected_level + 1;
         if (next > 5) next = 1;
         SceneLoader.LoadGameplay(next);
@@ -166,6 +168,7 @@ public class LevelManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        Time.timeScale = 1f;
         SceneLoader.LoadMainMenu();
     }
 }

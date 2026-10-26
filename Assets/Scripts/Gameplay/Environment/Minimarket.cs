@@ -23,6 +23,33 @@ public class Minimarket : MonoBehaviour
     private void Start()
     {
         ResolvePlayerReferences();
+        SetupInteractable();
+    }
+
+    private void SetupInteractable()
+    {
+        Interactable interactable = GetComponent<Interactable>();
+        if (interactable == null)
+        {
+            interactable = gameObject.AddComponent<Interactable>();
+        }
+        interactable.SetActionLabel("REPAIR & RESTOCK");
+        interactable.SetInteractionRadius(interaction_distance);
+        interactable.SetPromptOffset(new Vector3(0f, 2.5f, 0f));
+        interactable.on_interacted.AddListener(OnInteract);
+    }
+
+    public void OnInteract(PlayerCombat combat)
+    {
+        if (combat == null && player_combat != null) combat = player_combat;
+        if (combat == null) return;
+
+        combat.Restock();
+
+        if (health != null && health.health_current < health.health_max && combat.UseRepairPoints(repair_cost))
+        {
+            health.Heal(repair_heal_amount);
+        }
     }
 
     private void ResolvePlayerReferences()
@@ -44,33 +71,5 @@ public class Minimarket : MonoBehaviour
 
     private void Update()
     {
-        CheckInteraction();
-    }
-
-    private void CheckInteraction()
-    {
-        if (player_transform == null)
-        {
-            ResolvePlayerReferences();
-            return;
-        }
-
-        float dist = Vector2.Distance(player_transform.position, transform.position);
-        if (dist <= interaction_distance)
-        {
-            Keyboard kb = Keyboard.current;
-            if (KeybindManager.WasPressedThisFrame(KeyAction.Interact) || (kb != null && (kb.eKey.wasPressedThisFrame || kb.fKey.wasPressedThisFrame)))
-            {
-                if (player_combat != null)
-                {
-                    player_combat.Restock();
-
-                    if (health.health_current < health.health_max && player_combat.UseRepairPoints(repair_cost))
-                    {
-                        health.Heal(repair_heal_amount);
-                    }
-                }
-            }
-        }
     }
 }

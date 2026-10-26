@@ -447,6 +447,7 @@ public class GameplayUI : MonoBehaviour
 
     private void OnVictory(int stars)
     {
+        Time.timeScale = 0f;
         if (victory_panel != null)
         {
             victory_panel.SetActive(true);
@@ -459,6 +460,7 @@ public class GameplayUI : MonoBehaviour
 
     private void OnDefeat()
     {
+        Time.timeScale = 0f;
         if (defeat_panel != null)
         {
             defeat_panel.SetActive(true);

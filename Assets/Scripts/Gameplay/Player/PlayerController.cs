@@ -158,6 +158,13 @@ public class PlayerController : MonoBehaviour
     private void ReadInput()
     {
         move_input = 0f;
+        if (Time.timeScale == 0f) return;
+        if (LevelManager.instance != null)
+        {
+            GamePhase phase = LevelManager.instance.current_phase;
+            if (phase == GamePhase.Victory || phase == GamePhase.Defeat) return;
+        }
+
         Keyboard kb = Keyboard.current;
 
         if (KeybindManager.IsPressed(KeyAction.MoveLeft) || (kb != null && kb.leftArrowKey.isPressed))
@@ -255,6 +262,13 @@ public class PlayerController : MonoBehaviour
 
     private void HandleGliding()
     {
+        if (Time.timeScale == 0f) return;
+        if (LevelManager.instance != null)
+        {
+            GamePhase phase = LevelManager.instance.current_phase;
+            if (phase == GamePhase.Victory || phase == GamePhase.Defeat) return;
+        }
+
         if (active_jetpack != null)
         {
             active_jetpack.HandleGliding(rb, is_grounded);

@@ -53,6 +53,13 @@ public class PlayerWeaponAim : MonoBehaviour
 
     public void AimWeapon()
     {
+        if (Time.timeScale == 0f) return;
+        if (LevelManager.instance != null)
+        {
+            GamePhase phase = LevelManager.instance.current_phase;
+            if (phase == GamePhase.Victory || phase == GamePhase.Defeat) return;
+        }
+
         EnsureWeaponMount();
         if (weapon_mount == null || weapon_mount == transform) return;
         if (Mouse.current == null) return;
