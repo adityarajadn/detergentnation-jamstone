@@ -51,7 +51,6 @@ public class Minimarket : MonoBehaviour
                 it = restock_station.gameObject.AddComponent<Interactable>();
             }
             it.SetActionLabel("RESTOCK AMMO");
-            it.SetPromptOffset(new Vector3(0f, 1.4f, 0f));
             it.on_interacted.RemoveAllListeners();
             it.on_interacted.AddListener(OnRestockInteract);
         }
@@ -77,7 +76,6 @@ public class Minimarket : MonoBehaviour
                 it = upgrade_station.gameObject.AddComponent<Interactable>();
             }
             it.SetActionLabel("REPAIR BASE");
-            it.SetPromptOffset(new Vector3(0f, 1.4f, 0f));
             it.on_interacted.RemoveAllListeners();
             it.on_interacted.AddListener(OnRepairInteract);
         }
