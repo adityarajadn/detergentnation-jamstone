@@ -42,7 +42,10 @@ public static class GameConstants
     public static class UpgradeKeys
     {
         public const string WeaponDamage = "weapon_damage";
+        public const string WeaponFireRate = "weapon_fire_rate";
         public const string WeaponAmmo = "weapon_ammo";
+        public const string DefenseDamage = "defense_damage";
+        public const string DefenseHealth = "defense_health";
     }
 
     public static class EquipmentNames

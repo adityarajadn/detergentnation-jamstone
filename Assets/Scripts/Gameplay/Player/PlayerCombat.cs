@@ -41,6 +41,7 @@ public class PlayerCombat : MonoBehaviour
     private float next_melee_time = 0f;
     private Camera main_camera;
     private int weapon_damage_bonus = 0;
+    private float fire_rate_mod = 1f;
 
     private void Awake()
     {
@@ -115,6 +116,9 @@ public class PlayerCombat : MonoBehaviour
         int dmg_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(GameConstants.UpgradeKeys.WeaponDamage) : 1;
         weapon_damage_bonus = (dmg_level - 1) * damage_bonus_per_level;
 
+        int fire_rate_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(GameConstants.UpgradeKeys.WeaponFireRate) : 1;
+        fire_rate_mod = Mathf.Max(0.5f, 1f - (fire_rate_level - 1) * 0.05f);
+
         if (ammo_comp != null)
         {
             ammo_comp.Initialize(ranged_weapon);
@@ -185,7 +189,7 @@ public class PlayerCombat : MonoBehaviour
         }
 
         ammo_comp.ConsumeBullet();
-        next_fire_time = Time.time + ranged_weapon.fire_rate;
+        next_fire_time = Time.time + (ranged_weapon.fire_rate * fire_rate_mod);
 
         if (ranged_weapon.attack_sound != null)
         {
