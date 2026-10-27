@@ -36,11 +36,6 @@ public class NotificationToast : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
         instance = this;
 
         if (container == null) container = GetComponent<RectTransform>();
@@ -51,7 +46,6 @@ public class NotificationToast : MonoBehaviour
             base_anchored_pos = container.anchoredPosition;
         }
 
-        // Hide on awake
         if (canvas_group != null)
         {
             canvas_group.alpha = 0f;
@@ -61,20 +55,7 @@ public class NotificationToast : MonoBehaviour
 
     public static void Show(string message, ToastType type = ToastType.Info)
     {
-        if (instance == null)
-        {
-            // Try find in scene
-            instance = FindAnyObjectByType<NotificationToast>();
-        }
-
-        if (instance != null)
-        {
-            instance.TriggerToast(message, type);
-        }
-        else
-        {
-            Debug.Log("[NotificationToast] " + type + ": " + message);
-        }
+        GlobalUIManager.ShowToast(message, type);
     }
 
     public void TriggerToast(string message, ToastType type)
