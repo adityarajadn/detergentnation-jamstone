@@ -130,13 +130,37 @@ public class GameManager : MonoBehaviour
     {
         if (slot == 1)
         {
-            equipped_consumable_1 = item_name;
-            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable1, item_name);
+            if (equipped_consumable_1 == item_name)
+            {
+                equipped_consumable_1 = GameConstants.EquipmentNames.None;
+            }
+            else
+            {
+                if (equipped_consumable_2 == item_name)
+                {
+                    equipped_consumable_2 = GameConstants.EquipmentNames.None;
+                    PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable2, equipped_consumable_2);
+                }
+                equipped_consumable_1 = item_name;
+            }
+            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable1, equipped_consumable_1);
         }
         else if (slot == 2)
         {
-            equipped_consumable_2 = item_name;
-            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable2, item_name);
+            if (equipped_consumable_2 == item_name)
+            {
+                equipped_consumable_2 = GameConstants.EquipmentNames.None;
+            }
+            else
+            {
+                if (equipped_consumable_1 == item_name)
+                {
+                    equipped_consumable_1 = GameConstants.EquipmentNames.None;
+                    PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable1, equipped_consumable_1);
+                }
+                equipped_consumable_2 = item_name;
+            }
+            PlayerPrefs.SetString(GameConstants.PrefKeys.EquippedConsumable2, equipped_consumable_2);
         }
         PlayerPrefs.Save();
         if (on_consumable_equipped != null)

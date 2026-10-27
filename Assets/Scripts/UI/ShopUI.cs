@@ -613,9 +613,43 @@ public class ShopUI : MonoBehaviour
     private void OnEquipConsumableSlot(ConsumableShopEntry entry, int slot)
     {
         if (GameManager.instance == null) return;
+        string prev1 = GameManager.instance.equipped_consumable_1;
+        string prev2 = GameManager.instance.equipped_consumable_2;
+
         GameManager.instance.EquipConsumable(entry.item_name, slot);
         RefreshAllDisplays();
-        NotificationToast.Show("Assigned " + entry.item_name + " to Slot " + slot + "!", ToastType.Success);
+
+        string cur1 = GameManager.instance.equipped_consumable_1;
+        string cur2 = GameManager.instance.equipped_consumable_2;
+
+        if (slot == 1)
+        {
+            if (cur1 == entry.item_name)
+            {
+                if (prev2 == entry.item_name)
+                    NotificationToast.Show("Moved " + entry.item_name + " to Slot 1!", ToastType.Info);
+                else
+                    NotificationToast.Show("Assigned " + entry.item_name + " to Slot 1!", ToastType.Success);
+            }
+            else
+            {
+                NotificationToast.Show("Unequipped " + entry.item_name + " from Slot 1!", ToastType.Warning);
+            }
+        }
+        else
+        {
+            if (cur2 == entry.item_name)
+            {
+                if (prev1 == entry.item_name)
+                    NotificationToast.Show("Moved " + entry.item_name + " to Slot 2!", ToastType.Info);
+                else
+                    NotificationToast.Show("Assigned " + entry.item_name + " to Slot 2!", ToastType.Success);
+            }
+            else
+            {
+                NotificationToast.Show("Unequipped " + entry.item_name + " from Slot 2!", ToastType.Warning);
+            }
+        }
     }
 
     private void OnBuyConsumable(ConsumableShopEntry entry)
@@ -695,7 +729,7 @@ public class ShopUI : MonoBehaviour
 
             if (entry.slot1_button_text != null)
             {
-                entry.slot1_button_text.text = inSlot1 ? "SLOT 1 [ACTIVE]" : "SLOT 1";
+                entry.slot1_button_text.text = inSlot1 ? "SLOT 1 [ON]" : "SLOT 1";
             }
             if (entry.slot1_button != null)
             {
@@ -705,7 +739,7 @@ public class ShopUI : MonoBehaviour
 
             if (entry.slot2_button_text != null)
             {
-                entry.slot2_button_text.text = inSlot2 ? "SLOT 2 [ACTIVE]" : "SLOT 2";
+                entry.slot2_button_text.text = inSlot2 ? "SLOT 2 [ON]" : "SLOT 2";
             }
             if (entry.slot2_button != null)
             {
