@@ -40,6 +40,8 @@ public class PlayerAmmo : MonoBehaviour
         int take = Mathf.Min(needed, ammo_carried);
         ammo_in_mag += take;
         ammo_carried -= take;
+
+        NotificationToast.Show("Weapon Reloaded! (" + ammo_in_mag + "/" + ammo_carried + ")", ToastType.Info);
     }
 
     public void Restock()
