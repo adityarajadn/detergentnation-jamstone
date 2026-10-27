@@ -15,7 +15,7 @@ MonoBehaviour:
   weapon_name: Loofah Mace
   weapon_type: 1
   price: 200
-  damage: 65
+  damage: 40
   fire_rate: 0.3
   attack_rate: 0.5
   magazine_capacity: 12

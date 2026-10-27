@@ -52,14 +52,16 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        Health player_health = PlayerController.Instance != null ? PlayerController.Instance.GetComponent<Health>() : null;
+        if (player_health == null)
         {
-            Health player_health = player.GetComponent<Health>();
-            if (player_health != null)
-            {
-                player_health.on_death.AddListener(OnLevelDefeat);
-            }
+            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
+            if (player != null) player_health = player.GetComponent<Health>();
+        }
+
+        if (player_health != null)
+        {
+            player_health.on_death.AddListener(OnLevelDefeat);
         }
 
         if (Minimarket.instance != null && Minimarket.instance.health != null)
@@ -102,6 +104,7 @@ public class LevelManager : MonoBehaviour
         {
             on_victory.Invoke(stars_earned);
         }
+        AudioEvents.TriggerVictory();
     }
 
     private void OnLevelDefeat()
@@ -113,6 +116,7 @@ public class LevelManager : MonoBehaviour
         {
             on_defeat.Invoke();
         }
+        AudioEvents.TriggerDefeat();
     }
 
     private int CalculateStars()
@@ -152,11 +156,13 @@ public class LevelManager : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
+        Time.timeScale = 1f;
         SceneLoader.LoadGameplay(GameManager.selected_level);
     }
 
     public void NextLevel()
     {
+        Time.timeScale = 1f;
         int next = GameManager.selected_level + 1;
         if (next > 5) next = 1;
         SceneLoader.LoadGameplay(next);
@@ -164,6 +170,7 @@ public class LevelManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        Time.timeScale = 1f;
         SceneLoader.LoadMainMenu();
     }
 }

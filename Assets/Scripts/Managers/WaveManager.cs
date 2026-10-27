@@ -61,10 +61,19 @@ public class WaveManager : MonoBehaviour
                 {
                     AudioManager.PlaySFX(huge_wave_sound);
                 }
+                else
+                {
+                    AudioEvents.TriggerHugeWaveAlarm();
+                }
                 if (on_huge_wave_alert != null)
                 {
                     on_huge_wave_alert.Invoke(true);
                 }
+                NotificationToast.Show("WARNING: Huge Wave Incoming!", ToastType.Warning);
+            }
+            else
+            {
+                NotificationToast.Show("Wave " + (current_wave_index + 1) + " / " + current_level_data.waves.Count + " Started!", ToastType.Info);
             }
 
             if (on_wave_started != null)
@@ -93,6 +102,8 @@ public class WaveManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
+        NotificationToast.Show("All waves cleared!", ToastType.Success);
+
         if (on_all_waves_cleared != null)
         {
             on_all_waves_cleared.Invoke();
@@ -101,18 +112,21 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnEnemy(EnemyData data, SpawnLocation location)
     {
-        if (data == null || enemy_prefab == null) return;
+        if (data == null) return;
+
+        GameObject prefab = data.enemy_prefab != null ? data.enemy_prefab : enemy_prefab;
+        if (prefab == null) return;
 
         Vector3 spawn_pos = GetSpawnPosition(location, data.is_flying);
-        GameObject obj = Instantiate(enemy_prefab, spawn_pos, Quaternion.identity);
+        GameObject obj = Instantiate(prefab, spawn_pos, Quaternion.identity);
 
-        EnemyController enemy = obj.GetComponent<EnemyController>();
+        EnemyBase enemy = obj.GetComponent<EnemyBase>();
         if (enemy != null)
         {
             enemy.enemy_data = data;
         }
 
-        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = obj.GetComponentInChildren<SpriteRenderer>();
         if (sr != null)
         {
             sr.color = data.body_color;
@@ -136,7 +150,7 @@ public class WaveManager : MonoBehaviour
         return Vector3.zero;
     }
 
-    public void OnEnemyKilled(EnemyController enemy)
+    public void OnEnemyKilled(EnemyBase enemy)
     {
         active_enemies_count--;
         if (active_enemies_count < 0) active_enemies_count = 0;

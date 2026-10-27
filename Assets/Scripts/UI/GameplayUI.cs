@@ -16,6 +16,14 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private TMP_Text consumable_slot2_text;
     [SerializeField] private Image consumable_slot1_bg;
     [SerializeField] private Image consumable_slot2_bg;
+    [SerializeField] private Image consumable_slot1_icon;
+    [SerializeField] private Image consumable_slot2_icon;
+    [SerializeField] private Sprite icon_soap_bomb;
+    [SerializeField] private Sprite icon_first_aid;
+    [SerializeField] private Sprite icon_tools_box;
+    [SerializeField] private Sprite icon_energy_drink;
+    [SerializeField] private Sprite icon_soap_bucket;
+    [SerializeField] private Sprite icon_sonar_batarang;
 
     [Header("Minimarket")]
     [SerializeField] private Slider minimarket_health_slider;
@@ -55,8 +63,17 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button pause_resume_button;
     [SerializeField] private Button pause_settings_button;
     [SerializeField] private Button pause_menu_button;
+    [SerializeField] private SettingsUI settings_panel;
+
+    [Header("UI Theme Colors")]
+    [SerializeField] private Color slot_active_color = new Color(0.2f, 0.7f, 0.9f, 0.9f);
+    [SerializeField] private Color slot_inactive_color = new Color(0.12f, 0.14f, 0.2f, 0.75f);
+    [SerializeField] private Color defense_btn_selected_color = new Color(1f, 0.85f, 0.2f, 1f);
+    [SerializeField] private Color defense_btn_normal_color = new Color(0.18f, 0.22f, 0.32f, 0.95f);
 
     private PlayerCombat player_combat;
+    private PlayerAmmo player_ammo;
+    private PlayerConsumableInventory player_consumable_inv;
     private Health player_health;
 
     private void Start()
@@ -158,9 +175,28 @@ public class GameplayUI : MonoBehaviour
         {
             pause_settings_button.onClick.AddListener(() =>
             {
-                Time.timeScale = 1f;
-                SceneLoader.LoadSettings();
+                if (settings_panel != null)
+                {
+                    if (pause_panel != null) pause_panel.SetActive(false);
+                    settings_panel.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Time.timeScale = 1f;
+                    SceneLoader.LoadSettings();
+                }
             });
+        }
+        if (settings_panel != null)
+        {
+            settings_panel.on_closed += () =>
+            {
+                if (pause_panel != null && Time.timeScale == 0f)
+                {
+                    pause_panel.SetActive(true);
+                }
+            };
+            settings_panel.gameObject.SetActive(false);
         }
         if (pause_menu_button != null)
         {
@@ -195,10 +231,21 @@ public class GameplayUI : MonoBehaviour
 
     private void FindPlayerReferences()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (PlayerCombat.Instance != null)
+        {
+            player_combat = PlayerCombat.Instance;
+            player_ammo = PlayerCombat.Instance.GetComponent<PlayerAmmo>();
+            player_consumable_inv = PlayerCombat.Instance.GetComponent<PlayerConsumableInventory>();
+            player_health = PlayerCombat.Instance.GetComponent<Health>();
+            return;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
         if (player != null)
         {
             player_combat = player.GetComponent<PlayerCombat>();
+            player_ammo = player.GetComponent<PlayerAmmo>();
+            player_consumable_inv = player.GetComponent<PlayerConsumableInventory>();
             player_health = player.GetComponent<Health>();
         }
     }
@@ -225,7 +272,9 @@ public class GameplayUI : MonoBehaviour
             }
             else
             {
-                ammo_text.text = player_combat.ammo_in_mag + " / " + player_combat.ammo_carried;
+                int inMag = player_ammo != null ? player_ammo.ammo_in_mag : 0;
+                int carried = player_ammo != null ? player_ammo.ammo_carried : 0;
+                ammo_text.text = inMag + " / " + carried;
             }
         }
 
@@ -246,35 +295,59 @@ public class GameplayUI : MonoBehaviour
     {
         if (consumable_panel == null) return;
 
-        string c1_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_1 : PlayerPrefs.GetString("equipped_consumable_1", "Soap Bomb");
-        string c2_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_2 : PlayerPrefs.GetString("equipped_consumable_2", "First Aid Kit");
+        string c1_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_1 : GameConstants.EquipmentNames.DefaultConsumable1;
+        string c2_name = GameManager.instance != null ? GameManager.instance.equipped_consumable_2 : GameConstants.EquipmentNames.DefaultConsumable2;
 
-        int c1_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c1_name) : PlayerPrefs.GetInt("consumable_" + c1_name, 0);
-        int c2_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c2_name) : PlayerPrefs.GetInt("consumable_" + c2_name, 0);
+        int c1_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c1_name) : 0;
+        int c2_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c2_name) : 0;
 
-        int active_slot = player_combat != null ? player_combat.active_consumable_slot : 1;
+        int active_slot = player_consumable_inv != null ? player_consumable_inv.active_consumable_slot : 1;
 
         if (consumable_slot1_text != null)
         {
-            string prefix = active_slot == 1 ? "▶ [1] " : "  [1] ";
-            consumable_slot1_text.text = prefix + (string.IsNullOrEmpty(c1_name) ? "None" : c1_name) + " x" + c1_count;
+            consumable_slot1_text.text = c1_count.ToString();
         }
 
         if (consumable_slot2_text != null)
         {
-            string prefix = active_slot == 2 ? "▶ [2] " : "  [2] ";
-            consumable_slot2_text.text = prefix + (string.IsNullOrEmpty(c2_name) ? "None" : c2_name) + " x" + c2_count;
+            consumable_slot2_text.text = c2_count.ToString();
+        }
+
+        if (consumable_slot1_icon != null)
+        {
+            Sprite s1 = GetConsumableSprite(c1_name);
+            consumable_slot1_icon.sprite = s1;
+            consumable_slot1_icon.enabled = s1 != null;
+        }
+
+        if (consumable_slot2_icon != null)
+        {
+            Sprite s2 = GetConsumableSprite(c2_name);
+            consumable_slot2_icon.sprite = s2;
+            consumable_slot2_icon.enabled = s2 != null;
         }
 
         if (consumable_slot1_bg != null)
         {
-            consumable_slot1_bg.color = active_slot == 1 ? new Color(0.2f, 0.7f, 0.9f, 0.85f) : new Color(0.12f, 0.14f, 0.2f, 0.65f);
+            consumable_slot1_bg.color = active_slot == 1 ? slot_active_color : slot_inactive_color;
         }
 
         if (consumable_slot2_bg != null)
         {
-            consumable_slot2_bg.color = active_slot == 2 ? new Color(0.2f, 0.7f, 0.9f, 0.85f) : new Color(0.12f, 0.14f, 0.2f, 0.65f);
+            consumable_slot2_bg.color = active_slot == 2 ? slot_active_color : slot_inactive_color;
         }
+    }
+
+    public Sprite GetConsumableSprite(string itemName)
+    {
+        if (string.IsNullOrEmpty(itemName)) return null;
+        if (itemName == "Soap Bomb") return icon_soap_bomb;
+        if (itemName == "First Aid Kit") return icon_first_aid;
+        if (itemName == "Tools Box" || itemName == "Tool Box") return icon_tools_box;
+        if (itemName == "Energy Drink") return icon_energy_drink;
+        if (itemName == "Soap Water Bucket" || itemName == "Soap Bucket") return icon_soap_bucket;
+        if (itemName == "Sonar Batarang") return icon_sonar_batarang;
+        return null;
     }
 
     private void UpdateMinimarketUI()
@@ -351,7 +424,7 @@ public class GameplayUI : MonoBehaviour
         Image img = btn.GetComponent<Image>();
         if (img != null)
         {
-            img.color = is_selected ? new Color(1f, 0.85f, 0.2f, 1f) : new Color(0.18f, 0.22f, 0.32f, 0.95f);
+            img.color = is_selected ? defense_btn_selected_color : defense_btn_normal_color;
         }
     }
 
@@ -374,6 +447,7 @@ public class GameplayUI : MonoBehaviour
 
     private void OnVictory(int stars)
     {
+        Time.timeScale = 0f;
         if (victory_panel != null)
         {
             victory_panel.SetActive(true);
@@ -386,6 +460,7 @@ public class GameplayUI : MonoBehaviour
 
     private void OnDefeat()
     {
+        Time.timeScale = 0f;
         if (defeat_panel != null)
         {
             defeat_panel.SetActive(true);
@@ -394,6 +469,12 @@ public class GameplayUI : MonoBehaviour
 
     public void TogglePause()
     {
+        if (settings_panel != null && settings_panel.gameObject.activeSelf)
+        {
+            settings_panel.Close();
+            return;
+        }
+
         if (pause_panel == null) return;
         bool is_paused = !pause_panel.activeSelf;
         pause_panel.SetActive(is_paused);
@@ -402,6 +483,7 @@ public class GameplayUI : MonoBehaviour
 
     public void ResumeGame()
     {
+        if (settings_panel != null) settings_panel.gameObject.SetActive(false);
         if (pause_panel != null) pause_panel.SetActive(false);
         Time.timeScale = 1f;
     }

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53bf85b5196963e4e8a5431884b99350, type: 3}
+  m_Name: AudioDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::AudioDatabase
+  title_select: {fileID: 0}
+  game_start: {fileID: 0}
+  scene_transition: {fileID: 0}
+  main_menu_bgm: {fileID: 0}
+  shoot_water_pistol: {fileID: 0}
+  shoot_water_rifle: {fileID: 0}
+  shoot_water_plasma: {fileID: 0}
+  shoot_bubble_gun: {fileID: 0}
+  swing_soap_hammer: {fileID: 8300000, guid: 1860c7b4f48ff054e91ff4c78824916d, type: 3}
+  swing_bubble_stick: {fileID: 8300000, guid: 47872943e066ae046afffd703f1d022d, type: 3}
+  swing_curse_sword: {fileID: 8300000, guid: af32861d043704c4a9f2172c80826785, type: 3}
+  hit_soap_hammer: {fileID: 8300000, guid: 8c538d6a7413f714b81f264dab62ec40, type: 3}
+  hit_bubble_stick: {fileID: 8300000, guid: e67381370eddc7845b52368197f7ca45, type: 3}
+  hit_curse_sword: {fileID: 8300000, guid: c186ae8d7dfef3348a8c3e6c3286791c, type: 3}
+  ingame_bgm: {fileID: 0}
+  enemy_death: {fileID: 8300000, guid: 03f437f19c5df7145abb9069095bcb0d, type: 3}
+  enemy_hurt: {fileID: 8300000, guid: f169df2386fe3374fb64091871f96674, type: 3}
+  enemy_walk_heavy: {fileID: 8300000, guid: cc01d5e453d7ff14e93ab30011d1c863, type: 3}
+  enemy_attack: {fileID: 8300000, guid: bcb72d7f161ac624590cf3143656856d, type: 3}
+  fence_break: {fileID: 0}
+  fence_place: {fileID: 0}
+  fence_hurt: {fileID: 0}
+  trap_trigger: {fileID: 0}
+  trap_set: {fileID: 0}
+  soap_barrel_roll: {fileID: 8300000, guid: af0cbb57e8d94d046aca5ff136ae6ebd, type: 3}
+  soap_barrel_break: {fileID: 8300000, guid: 1e976b162c22de340a3e1520c286b75a, type: 3}
+  consumable_healing: {fileID: 0}
+  consumable_drink: {fileID: 0}
+  consumable_whistle: {fileID: 0}
+  consumable_repair: {fileID: 8300000, guid: 0089d7ba36d488040b666052757ebc55, type: 3}
+  victory_jingle: {fileID: 0}
+  defeat_jingle: {fileID: 0}
+  huge_wave_alarm: {fileID: 0}
+  player_damage: {fileID: 8300000, guid: 73419c7dcdbeed443b09454ac0a3d731, type: 3}
+  player_death: {fileID: 8300000, guid: e3647d38f68f2bd48a0b837fd0614ccd, type: 3}
+  purchase_sound: {fileID: 0}
+  cannon_fire: {fileID: 0}
+  cannon_impact: {fileID: 0}
