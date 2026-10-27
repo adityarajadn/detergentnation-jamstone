@@ -7,7 +7,7 @@ public class Minimarket : MonoBehaviour
 
     public Health health;
     public Transform restock_station;
-    public float interaction_distance = 2.5f;
+    public float interaction_distance = 3.2f;
     public int repair_cost = 10;
     public int repair_heal_amount = 25;
 
@@ -44,23 +44,47 @@ public class Minimarket : MonoBehaviour
         if (combat == null && player_combat != null) combat = player_combat;
         if (combat == null) return;
 
-        combat.Restock();
-
-        if (health != null)
+        bool restocked = false;
+        PlayerAmmo ammo = combat.GetComponent<PlayerAmmo>();
+        if (ammo != null && ammo.ammo_carried < ammo.ammo_carried_max)
         {
-            if (health.health_current >= health.health_max)
+            combat.Restock();
+            if (LevelManager.instance != null) LevelManager.instance.RegisterRestock();
+            restocked = true;
+        }
+
+        bool repaired = false;
+        if (health != null && health.health_current < health.health_max)
+        {
+            if (combat.repair_points >= repair_cost)
             {
-                NotificationToast.Show("Minimarket is already at full health!", ToastType.Info);
+                if (combat.UseRepairPoints(repair_cost))
+                {
+                    health.Heal(repair_heal_amount);
+                    repaired = true;
+                }
             }
-            else if (combat.repair_points < repair_cost)
+            else
             {
                 NotificationToast.Show("Need " + repair_cost + " repair points to fix Minimarket! (" + combat.repair_points + "/" + repair_cost + ")", ToastType.Warning);
             }
-            else if (combat.UseRepairPoints(repair_cost))
-            {
-                health.Heal(repair_heal_amount);
-                NotificationToast.Show("Minimarket repaired! +" + repair_heal_amount + " HP", ToastType.Success);
-            }
+        }
+
+        if (repaired && restocked)
+        {
+            NotificationToast.Show("Minimarket repaired (+" + repair_heal_amount + " HP) & Ammo restocked!", ToastType.Success);
+        }
+        else if (repaired)
+        {
+            NotificationToast.Show("Minimarket repaired! +" + repair_heal_amount + " HP", ToastType.Success);
+        }
+        else if (restocked)
+        {
+            NotificationToast.Show("Ammo restocked to MAX!", ToastType.Success);
+        }
+        else if (health != null && health.health_current >= health.health_max && (ammo == null || ammo.ammo_carried >= ammo.ammo_carried_max))
+        {
+            NotificationToast.Show("Minimarket is full health & ammo is already full!", ToastType.Info);
         }
     }
 

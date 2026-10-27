@@ -46,7 +46,7 @@ public class Interactable : MonoBehaviour
         auto_prompt_text.fontSize = 4f;
         auto_prompt_text.alignment = TextAlignmentOptions.Center;
         auto_prompt_text.color = new Color(1f, 0.92f, 0.23f, 1f); // Accent yellow
-        auto_prompt_text.sortingOrder = 50;
+        auto_prompt_text.sortingOrder = 200;
 
         TMP_FontAsset defaultFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
         if (defaultFont != null) auto_prompt_text.font = defaultFont;
@@ -67,7 +67,11 @@ public class Interactable : MonoBehaviour
             return;
         }
 
-        float distance = Vector2.Distance(player_transform.position, transform.position);
+        Collider2D col = GetComponent<Collider2D>();
+        float distance = col != null
+            ? Vector2.Distance(col.ClosestPoint(player_transform.position), player_transform.position)
+            : Vector2.Distance(player_transform.position, transform.position);
+
         is_player_in_range = distance <= interaction_radius;
 
         if (is_player_in_range)
@@ -107,13 +111,8 @@ public class Interactable : MonoBehaviour
 
     private void UpdatePromptText()
     {
-        string keyName = "F";
         ActionBinding binding = KeybindManager.GetBinding(KeyAction.Interact);
-        if (binding.device == InputDeviceType.Keyboard)
-        {
-            keyName = binding.key.ToString();
-        }
-
+        string keyName = binding.GetDisplayName();
         string fullPrompt = "[" + keyName + "] " + action_label.ToUpper();
 
         if (custom_prompt_text != null)

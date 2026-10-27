@@ -44,6 +44,11 @@ public struct ActionBinding
         mouse_button = mouseBtn;
     }
 
+    public string GetDisplayName()
+    {
+        return ToString();
+    }
+
     public override string ToString()
     {
         if (device == InputDeviceType.Mouse)
@@ -189,12 +194,18 @@ public static class KeybindManager
             if (kb == null || b.key == Key.None) return false;
             try
             {
-                return kb[b.key].wasPressedThisFrame;
+                if (kb[b.key].wasPressedThisFrame) return true;
             }
             catch
             {
-                return false;
             }
+
+            if (action == KeyAction.Interact && kb.eKey.wasPressedThisFrame)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
