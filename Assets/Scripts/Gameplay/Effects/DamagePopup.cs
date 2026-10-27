@@ -20,6 +20,12 @@ public class DamagePopup : MonoBehaviour
 
     public static DamagePopup Spawn(Vector3 world_position, int amount, Color? custom_color = null)
     {
+        Color color = custom_color ?? new Color(1f, 0.88f, 0.32f, 1f); // Vibrant Yellow #FFE052
+        return SpawnText(world_position, amount.ToString(), color);
+    }
+
+    public static DamagePopup SpawnText(Vector3 world_position, string message, Color color)
+    {
         if (cached_prefab == null)
         {
             cached_prefab = Resources.Load<GameObject>("Effects/DamagePopup");
@@ -32,17 +38,21 @@ public class DamagePopup : MonoBehaviour
         DamagePopup popup = obj.GetComponent<DamagePopup>();
         if (popup != null)
         {
-            Color color = custom_color ?? new Color(1f, 0.88f, 0.32f, 1f); // Vibrant Yellow #FFE052
-            popup.Setup(amount, color);
+            popup.Setup(message, color);
         }
         return popup;
     }
 
     public void Setup(int amount, Color color)
     {
+        Setup(amount.ToString(), color);
+    }
+
+    public void Setup(string message, Color color)
+    {
         if (text_mesh != null)
         {
-            text_mesh.text = amount.ToString();
+            text_mesh.text = message;
             text_mesh.color = color;
         }
 
