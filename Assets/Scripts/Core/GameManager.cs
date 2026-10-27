@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         {
             on_candy_changed.Invoke(candy_total);
         }
+        AudioEvents.TriggerPurchase();
         return true;
     }
 

@@ -62,6 +62,7 @@ public class EnemyBase : MonoBehaviour
         if (health != null)
         {
             health.on_death.AddListener(OnDeath);
+            health.on_health_changed.AddListener(OnHealthChanged);
         }
 
         FindTarget();
@@ -253,6 +254,7 @@ public class EnemyBase : MonoBehaviour
         }
 
         // 2. Active Strike Hitbox
+        AudioEvents.TriggerEnemyAttack();
         if (enemy_data != null && enemy_data.attack_type == EnemyAttackType.Ranged && enemy_data.projectile_prefab != null)
         {
             PerformRangedStrike();
@@ -310,8 +312,17 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    private void OnHealthChanged(int current, int max)
+    {
+        if (current < max && current > 0)
+        {
+            AudioEvents.TriggerEnemyHurt();
+        }
+    }
+
     protected virtual void OnDeath()
     {
+        AudioEvents.TriggerEnemyDeath();
         if (KillStreakManager.instance != null)
         {
             KillStreakManager.instance.RegisterKill();

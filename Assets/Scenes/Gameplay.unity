@@ -1684,6 +1684,7 @@ GameObject:
   - component: {fileID: 549139227}
   - component: {fileID: 549139226}
   - component: {fileID: 549139225}
+  - component: {fileID: 549139229}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -1899,6 +1900,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   sfx_source: {fileID: 549139226}
   bgm_source: {fileID: 549139225}
+--- !u!114 &549139229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549139224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c39975466a6604aa6d0eca2f6f3225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameAudioObserver
+  database: {fileID: 11400000, guid: e700f17d4880f2b47861d11dbf533b49, type: 2}
 --- !u!4 &549139228
 Transform:
   m_ObjectHideFlags: 0

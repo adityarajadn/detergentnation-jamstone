@@ -71,6 +71,13 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        Health hp = GetComponent<Health>();
+        if (hp != null)
+        {
+            hp.on_health_changed.AddListener((cur, max) => { if (cur < max && cur > 0) AudioEvents.TriggerPlayerHurt(); });
+            hp.on_death.AddListener(() => AudioEvents.TriggerPlayerDeath());
+        }
+
         if (GameManager.instance != null)
         {
             equipped_jetpack = GameManager.instance.equipped_jetpack;

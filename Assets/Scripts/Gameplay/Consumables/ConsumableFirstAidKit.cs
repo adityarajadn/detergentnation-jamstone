@@ -17,6 +17,7 @@ public class ConsumableFirstAidKit : ConsumableBase
         if (hp == null) return false;
 
         hp.Heal(heal_amount);
+        AudioEvents.TriggerConsumableHealing();
         return true;
     }
 }

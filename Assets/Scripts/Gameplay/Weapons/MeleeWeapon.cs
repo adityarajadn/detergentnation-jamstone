@@ -30,6 +30,7 @@ public class MeleeWeapon : WeaponBase
         if (hp != null && !hp.is_dead)
         {
             hp.TakeDamage(damage);
+            AudioEvents.TriggerMeleeHit(weapon_data != null ? weapon_data.weapon_name : gameObject.name);
         }
     }
 }

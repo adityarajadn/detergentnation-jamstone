@@ -106,6 +106,9 @@ public class DefensePlacementManager : MonoBehaviour
             defense.defense_data = data;
         }
 
+        if (data.defense_name.Contains("Fence")) AudioEvents.TriggerFencePlace();
+        else if (data.defense_name.Contains("Trap") || data.defense_name.Contains("Balloon")) AudioEvents.TriggerTrapSet();
+
         if (on_points_changed != null)
         {
             on_points_changed.Invoke(defense_points_current, defense_points_max);

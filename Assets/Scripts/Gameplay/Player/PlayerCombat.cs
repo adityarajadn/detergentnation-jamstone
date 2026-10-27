@@ -191,6 +191,10 @@ public class PlayerCombat : MonoBehaviour
         {
             AudioManager.PlaySFX(ranged_weapon.attack_sound);
         }
+        else
+        {
+            AudioEvents.TriggerWeaponShoot(ranged_weapon.weapon_name);
+        }
 
         if (main_camera == null) main_camera = Camera.main;
         Vector3 mouse_pos = main_camera != null && Mouse.current != null ? main_camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : transform.position;
@@ -210,6 +214,10 @@ public class PlayerCombat : MonoBehaviour
         if (melee_weapon.attack_sound != null)
         {
             AudioManager.PlaySFX(melee_weapon.attack_sound);
+        }
+        else
+        {
+            AudioEvents.TriggerMeleeSwing(melee_weapon.weapon_name);
         }
 
         Vector3 origin = melee_point != null ? melee_point.position : transform.position;

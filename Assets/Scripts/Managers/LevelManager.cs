@@ -104,6 +104,7 @@ public class LevelManager : MonoBehaviour
         {
             on_victory.Invoke(stars_earned);
         }
+        AudioEvents.TriggerVictory();
     }
 
     private void OnLevelDefeat()
@@ -115,6 +116,7 @@ public class LevelManager : MonoBehaviour
         {
             on_defeat.Invoke();
         }
+        AudioEvents.TriggerDefeat();
     }
 
     private int CalculateStars()

@@ -61,6 +61,10 @@ public class WaveManager : MonoBehaviour
                 {
                     AudioManager.PlaySFX(huge_wave_sound);
                 }
+                else
+                {
+                    AudioEvents.TriggerHugeWaveAlarm();
+                }
                 if (on_huge_wave_alert != null)
                 {
                     on_huge_wave_alert.Invoke(true);
