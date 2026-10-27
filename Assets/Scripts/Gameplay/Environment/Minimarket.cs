@@ -1,13 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Minimarket : MonoBehaviour
 {
     public static Minimarket instance;
 
+    [Header("Core References")]
     public Health health;
     public Transform restock_station;
-    public float interaction_distance = 3.2f;
+    public Transform upgrade_station;
+
+    [Header("Repair Configuration")]
     public int repair_cost = 10;
     public int repair_heal_amount = 25;
 
@@ -23,37 +25,87 @@ public class Minimarket : MonoBehaviour
     private void Start()
     {
         ResolvePlayerReferences();
-        SetupInteractable();
+        SetupStations();
     }
 
-    private void SetupInteractable()
+    private void SetupStations()
     {
-        Interactable interactable = GetComponent<Interactable>();
-        if (interactable == null)
+        // 1. Freezer Station (Ammo Restock)
+        if (restock_station == null)
         {
-            interactable = gameObject.AddComponent<Interactable>();
+            restock_station = transform.Find("FreezerStation");
         }
-        interactable.SetActionLabel("REPAIR & RESTOCK");
-        interactable.SetInteractionRadius(interaction_distance);
-        interactable.SetPromptOffset(new Vector3(0f, 2.5f, 0f));
-        interactable.on_interacted.AddListener(OnInteract);
+        if (restock_station != null)
+        {
+            CircleCollider2D col = restock_station.GetComponent<CircleCollider2D>();
+            if (col == null)
+            {
+                col = restock_station.gameObject.AddComponent<CircleCollider2D>();
+            }
+            col.isTrigger = true;
+            col.radius = 1.3f;
+
+            Interactable it = restock_station.GetComponent<Interactable>();
+            if (it == null)
+            {
+                it = restock_station.gameObject.AddComponent<Interactable>();
+            }
+            it.SetActionLabel("RESTOCK AMMO");
+            it.SetPromptOffset(new Vector3(0f, 1.4f, 0f));
+            it.on_interacted.RemoveAllListeners();
+            it.on_interacted.AddListener(OnRestockInteract);
+        }
+
+        // 2. Upgrade / Repair Station (Base Repair)
+        if (upgrade_station == null)
+        {
+            upgrade_station = transform.Find("UpgradeStation");
+        }
+        if (upgrade_station != null)
+        {
+            CircleCollider2D col = upgrade_station.GetComponent<CircleCollider2D>();
+            if (col == null)
+            {
+                col = upgrade_station.gameObject.AddComponent<CircleCollider2D>();
+            }
+            col.isTrigger = true;
+            col.radius = 1.3f;
+
+            Interactable it = upgrade_station.GetComponent<Interactable>();
+            if (it == null)
+            {
+                it = upgrade_station.gameObject.AddComponent<Interactable>();
+            }
+            it.SetActionLabel("REPAIR BASE");
+            it.SetPromptOffset(new Vector3(0f, 1.4f, 0f));
+            it.on_interacted.RemoveAllListeners();
+            it.on_interacted.AddListener(OnRepairInteract);
+        }
     }
 
-    public void OnInteract(PlayerCombat combat)
+    public void OnRestockInteract(PlayerCombat combat)
     {
         if (combat == null && player_combat != null) combat = player_combat;
         if (combat == null) return;
 
-        bool restocked = false;
         PlayerAmmo ammo = combat.GetComponent<PlayerAmmo>();
         if (ammo != null && ammo.ammo_carried < ammo.ammo_carried_max)
         {
             combat.Restock();
             if (LevelManager.instance != null) LevelManager.instance.RegisterRestock();
-            restocked = true;
+            NotificationToast.Show("Ammo restocked to MAX!", ToastType.Success);
         }
+        else
+        {
+            NotificationToast.Show("Ammo is already full!", ToastType.Info);
+        }
+    }
 
-        bool repaired = false;
+    public void OnRepairInteract(PlayerCombat combat)
+    {
+        if (combat == null && player_combat != null) combat = player_combat;
+        if (combat == null) return;
+
         if (health != null && health.health_current < health.health_max)
         {
             if (combat.repair_points >= repair_cost)
@@ -61,7 +113,7 @@ public class Minimarket : MonoBehaviour
                 if (combat.UseRepairPoints(repair_cost))
                 {
                     health.Heal(repair_heal_amount);
-                    repaired = true;
+                    NotificationToast.Show("Minimarket repaired! +" + repair_heal_amount + " HP", ToastType.Success);
                 }
             }
             else
@@ -69,22 +121,9 @@ public class Minimarket : MonoBehaviour
                 NotificationToast.Show("Need " + repair_cost + " repair points to fix Minimarket! (" + combat.repair_points + "/" + repair_cost + ")", ToastType.Warning);
             }
         }
-
-        if (repaired && restocked)
+        else
         {
-            NotificationToast.Show("Minimarket repaired (+" + repair_heal_amount + " HP) & Ammo restocked!", ToastType.Success);
-        }
-        else if (repaired)
-        {
-            NotificationToast.Show("Minimarket repaired! +" + repair_heal_amount + " HP", ToastType.Success);
-        }
-        else if (restocked)
-        {
-            NotificationToast.Show("Ammo restocked to MAX!", ToastType.Success);
-        }
-        else if (health != null && health.health_current >= health.health_max && (ammo == null || ammo.ammo_carried >= ammo.ammo_carried_max))
-        {
-            NotificationToast.Show("Minimarket is full health & ammo is already full!", ToastType.Info);
+            NotificationToast.Show("Minimarket is already at full health!", ToastType.Info);
         }
     }
 
@@ -103,9 +142,5 @@ public class Minimarket : MonoBehaviour
             player_combat = player.GetComponent<PlayerCombat>();
             player_transform = player.transform;
         }
-    }
-
-    private void Update()
-    {
     }
 }

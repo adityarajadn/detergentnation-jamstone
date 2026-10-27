@@ -19,14 +19,36 @@ public class Interactable : MonoBehaviour
     private Transform player_transform;
     private PlayerCombat player_combat;
     private bool is_player_in_range = false;
+    private Collider2D trigger_collider;
 
     private void Awake()
     {
+        trigger_collider = GetComponent<Collider2D>();
         if (custom_prompt_text == null)
         {
             CreateAutoPrompt();
         }
         SetPromptVisible(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(GameConstants.Tags.Player))
+        {
+            ResolvePlayer(other.gameObject);
+            is_player_in_range = true;
+            UpdatePromptText();
+            SetPromptVisible(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag(GameConstants.Tags.Player))
+        {
+            is_player_in_range = false;
+            SetPromptVisible(false);
+        }
     }
 
     private void CreateAutoPrompt()
@@ -60,19 +82,23 @@ public class Interactable : MonoBehaviour
             return;
         }
 
-        ResolvePlayer();
-        if (player_transform == null)
+        bool hasTrigger = trigger_collider != null && trigger_collider.isTrigger;
+        if (!hasTrigger)
         {
-            SetPromptVisible(false);
-            return;
+            ResolvePlayer();
+            if (player_transform == null)
+            {
+                SetPromptVisible(false);
+                return;
+            }
+
+            Collider2D col = GetComponent<Collider2D>();
+            float distance = col != null
+                ? Vector2.Distance(col.ClosestPoint(player_transform.position), player_transform.position)
+                : Vector2.Distance(player_transform.position, transform.position);
+
+            is_player_in_range = distance <= interaction_radius;
         }
-
-        Collider2D col = GetComponent<Collider2D>();
-        float distance = col != null
-            ? Vector2.Distance(col.ClosestPoint(player_transform.position), player_transform.position)
-            : Vector2.Distance(player_transform.position, transform.position);
-
-        is_player_in_range = distance <= interaction_radius;
 
         if (is_player_in_range)
         {
@@ -84,14 +110,25 @@ public class Interactable : MonoBehaviour
                 TriggerInteract();
             }
         }
-        else
+        else if (!hasTrigger)
         {
             SetPromptVisible(false);
         }
     }
 
-    private void ResolvePlayer()
+    private void ResolvePlayer(GameObject source = null)
     {
+        if (source != null)
+        {
+            player_combat = source.GetComponent<PlayerCombat>();
+            if (player_combat == null) player_combat = source.GetComponentInParent<PlayerCombat>();
+            if (player_combat != null)
+            {
+                player_transform = player_combat.transform;
+                return;
+            }
+        }
+
         if (player_transform != null) return;
 
         if (PlayerCombat.Instance != null)
