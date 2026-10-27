@@ -6,6 +6,7 @@ public class GlobalUIManager : MonoBehaviour
 
     [Header("Global UI Modules")]
     [SerializeField] private NotificationToast toast_controller;
+    [SerializeField] private SceneTransition transition_controller;
 
     private const string ResourcePath = "UI/GlobalUI";
 
@@ -24,6 +25,10 @@ public class GlobalUIManager : MonoBehaviour
         if (toast_controller == null)
         {
             toast_controller = GetComponentInChildren<NotificationToast>(true);
+        }
+        if (transition_controller == null)
+        {
+            transition_controller = GetComponentInChildren<SceneTransition>(true);
         }
     }
 

@@ -11,31 +11,31 @@ public static class SceneLoader
     public static void LoadMainMenu()
     {
         AudioEvents.TriggerSceneTransition();
-        SceneManager.LoadScene(SCENE_MAIN_MENU);
+        SceneTransition.LoadScene(SCENE_MAIN_MENU);
     }
 
     public static void LoadLevelSelect()
     {
         AudioEvents.TriggerSceneTransition();
-        SceneManager.LoadScene(SCENE_LEVEL_SELECT);
+        SceneTransition.LoadScene(SCENE_LEVEL_SELECT);
     }
 
     public static void LoadGameplay(int level_number = 1)
     {
         AudioEvents.TriggerSceneTransition();
         GameManager.selected_level = level_number;
-        SceneManager.LoadScene(SCENE_GAMEPLAY);
+        SceneTransition.LoadScene(SCENE_GAMEPLAY);
     }
 
     public static void LoadShop()
     {
         AudioEvents.TriggerSceneTransition();
-        SceneManager.LoadScene(SCENE_SHOP);
+        SceneTransition.LoadScene(SCENE_SHOP);
     }
 
     public static void LoadSettings()
     {
         AudioEvents.TriggerSceneTransition();
-        SceneManager.LoadScene(SCENE_SETTINGS);
+        SceneTransition.LoadScene(SCENE_SETTINGS);
     }
 }

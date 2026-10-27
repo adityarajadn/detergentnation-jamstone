@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &237558516929801413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7117055176761055582}
+  - component: {fileID: 7310571536233912443}
+  - component: {fileID: 437650536759019821}
+  m_Layer: 0
+  m_Name: TransitionOverlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &7117055176761055582
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237558516929801413}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1360734708565998888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7310571536233912443
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237558516929801413}
+  m_CullTransparentMesh: 1
+--- !u!114 &437650536759019821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237558516929801413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.07, g: 0.07, b: 0.11, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1912865024282957954
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +414,7 @@ GameObject:
   - component: {fileID: 3935107565323916093}
   - component: {fileID: 2964068886460348046}
   - component: {fileID: 9219663427547052978}
+  - component: {fileID: 730079158758343452}
   m_Layer: 0
   m_Name: GlobalUI
   m_TagString: Untagged
@@ -359,6 +435,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7977528419337911835}
+  - {fileID: 7117055176761055582}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -443,3 +520,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalUIManager
   toast_controller: {fileID: 6846065617350365249}
+  transition_controller: {fileID: 730079158758343452}
+--- !u!114 &730079158758343452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7079822628071236988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627028432bd82dd4fa84735c81f182a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneTransition
+  transition_image: {fileID: 437650536759019821}
+  close_sprites:
+  - {fileID: 4707154701142819845, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -2919037300162697234, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -2728073174059927288, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -8408699329996017976, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -4666515813386295693, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -6385104698674659803, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -4095287821395276252, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -1950171788417964910, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -1891366282357901575, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -1339939128924563796, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: 3694631955844607988, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -6982137935304071568, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -5523500323558417698, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: 3386367211631994581, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -2641829860357402117, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  open_sprites:
+  - {fileID: -7682988963499540778, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: 728781094364905478, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -5494156189267917625, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -6771555626273261257, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -4343910524058502043, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -8311632389563796913, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -3496662987298767401, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -3739144927346580217, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -2121696213449652948, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: 6230233897159679403, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: 5861108021473342220, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -4592268518086117947, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -5005871899443755695, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: 3481136289868445056, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  - {fileID: -4944643059139928818, guid: 878ecb042f8a9ec49949a85ea8f62a63, type: 3}
+  frame_rate: 30
