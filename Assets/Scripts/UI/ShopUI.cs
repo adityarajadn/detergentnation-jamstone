@@ -329,17 +329,25 @@ public class ShopUI : MonoBehaviour
 
         if (!is_owned)
         {
+            if (GameManager.instance != null && GameManager.instance.candy_total < entry.price)
+            {
+                NotificationToast.Show("Not enough candies to buy " + entry.item_name + "!", ToastType.Warning);
+                return;
+            }
+
             if (GameManager.instance != null && GameManager.instance.SpendCandy(entry.price))
             {
                 GameManager.instance.SetEquipmentOwned(entry.item_name);
                 EquipEntry(entry);
                 RefreshAllDisplays();
+                NotificationToast.Show("Purchased & equipped " + entry.item_name + "!", ToastType.Success);
             }
         }
         else
         {
             EquipEntry(entry);
             RefreshAllDisplays();
+            NotificationToast.Show("Equipped " + entry.item_name + "!", ToastType.Success);
         }
     }
 
@@ -347,15 +355,26 @@ public class ShopUI : MonoBehaviour
     {
         if (stat_up == null) return;
         int current_level = GameManager.instance != null ? GameManager.instance.GetUpgradeLevel(stat_up.upgrade_id) : 1;
-        if (current_level >= stat_up.max_level) return;
+        if (current_level >= stat_up.max_level)
+        {
+            NotificationToast.Show(stat_up.stat_name + " is already at MAX level!", ToastType.Warning);
+            return;
+        }
 
         int cost = (current_level - 1) * stat_up.cost_multiplier;
         if (cost == 0) cost = stat_up.cost_multiplier;
+
+        if (GameManager.instance != null && GameManager.instance.candy_total < cost)
+        {
+            NotificationToast.Show("Need " + cost + " candies to upgrade " + stat_up.stat_name + "!", ToastType.Warning);
+            return;
+        }
 
         if (GameManager.instance != null && GameManager.instance.SpendCandy(cost))
         {
             GameManager.instance.SetUpgradeLevel(stat_up.upgrade_id, current_level + 1);
             RefreshAllDisplays();
+            NotificationToast.Show(stat_up.stat_name + " upgraded to Level " + (current_level + 1) + "!", ToastType.Success);
         }
     }
 
@@ -596,12 +615,23 @@ public class ShopUI : MonoBehaviour
         if (GameManager.instance == null) return;
         GameManager.instance.EquipConsumable(entry.item_name, slot);
         RefreshAllDisplays();
+        NotificationToast.Show("Assigned " + entry.item_name + " to Slot " + slot + "!", ToastType.Success);
     }
 
     private void OnBuyConsumable(ConsumableShopEntry entry)
     {
         int count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(entry.item_name) : PlayerPrefs.GetInt("consumable_" + entry.item_name, 0);
-        if (count >= 5) return;
+        if (count >= 5)
+        {
+            NotificationToast.Show("Max capacity reached for " + entry.item_name + " (5/5)!", ToastType.Warning);
+            return;
+        }
+
+        if (GameManager.instance != null && GameManager.instance.candy_total < entry.price)
+        {
+            NotificationToast.Show("Not enough candies to buy " + entry.item_name + "!", ToastType.Warning);
+            return;
+        }
 
         if (GameManager.instance != null && GameManager.instance.SpendCandy(entry.price))
         {
@@ -620,6 +650,7 @@ public class ShopUI : MonoBehaviour
                 }
             }
             RefreshAllDisplays();
+            NotificationToast.Show("Purchased " + entry.item_name + " (" + (count + 1) + "/5)!", ToastType.Success);
         }
     }
 
