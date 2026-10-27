@@ -20,15 +20,14 @@ public class ArmorIAmNumberOne : ArmorBase
 
     public override void OnDamageTaken(int final_damage, Transform player_transform)
     {
+        if (bubble_prefab == null) return;
         Vector3 origin = player_transform != null ? player_transform.position : transform.position;
-        GameObject prefab = bubble_prefab != null ? bubble_prefab : Resources.Load<GameObject>("Prefabs/Projectiles/Projectile");
-        if (prefab == null) return;
 
         for (int i = 0; i < bubble_count; i++)
         {
             float angle = Random.Range(0f, 360f);
             Vector3 offset = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0f) * 0.4f;
-            GameObject bubble = Instantiate(prefab, origin + offset, Quaternion.identity);
+            GameObject bubble = Instantiate(bubble_prefab, origin + offset, Quaternion.identity);
             Projectile p = bubble.GetComponent<Projectile>();
             if (p != null)
             {

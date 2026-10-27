@@ -47,8 +47,7 @@ public class ArmorOctosoap : ArmorBase
 
     private void ThrowSoap()
     {
-        GameObject prefab = soap_projectile_prefab != null ? soap_projectile_prefab : Resources.Load<GameObject>("Prefabs/Projectiles/SoapBomb");
-        if (prefab == null) return;
+        if (soap_projectile_prefab == null) return;
 
         Vector2 throw_dir = Vector2.right;
         Transform player = transform.root;
@@ -58,7 +57,7 @@ public class ArmorOctosoap : ArmorBase
             throw_dir = Vector2.left;
         }
 
-        GameObject soap = Instantiate(prefab, transform.position, Quaternion.identity);
+        GameObject soap = Instantiate(soap_projectile_prefab, transform.position, Quaternion.identity);
         SoapBombProjectile sbp = soap.GetComponent<SoapBombProjectile>();
         if (sbp != null)
         {

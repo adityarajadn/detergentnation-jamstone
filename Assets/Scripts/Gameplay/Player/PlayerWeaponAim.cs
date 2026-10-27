@@ -35,13 +35,6 @@ public class PlayerWeaponAim : MonoBehaviour
         {
             Transform found = transform.Find("WeaponMount");
             if (found == null) found = transform.Find("Visuals/GunArm");
-            if (found == null)
-            {
-                GameObject mount_go = new GameObject("WeaponMount");
-                mount_go.transform.SetParent(transform, false);
-                mount_go.transform.localPosition = new Vector3(mount_offset_x, mount_offset_y, 0f);
-                found = mount_go.transform;
-            }
             weapon_mount = found;
         }
     }

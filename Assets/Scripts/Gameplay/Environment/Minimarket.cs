@@ -37,22 +37,13 @@ public class Minimarket : MonoBehaviour
         }
         if (restock_station != null)
         {
-            CircleCollider2D col = restock_station.GetComponent<CircleCollider2D>();
-            if (col == null)
-            {
-                col = restock_station.gameObject.AddComponent<CircleCollider2D>();
-            }
-            col.isTrigger = true;
-            col.radius = 1.3f;
-
             Interactable it = restock_station.GetComponent<Interactable>();
-            if (it == null)
+            if (it != null)
             {
-                it = restock_station.gameObject.AddComponent<Interactable>();
+                it.SetActionLabel("RESTOCK AMMO");
+                it.on_interacted.RemoveAllListeners();
+                it.on_interacted.AddListener(OnRestockInteract);
             }
-            it.SetActionLabel("RESTOCK AMMO");
-            it.on_interacted.RemoveAllListeners();
-            it.on_interacted.AddListener(OnRestockInteract);
         }
 
         // 2. Upgrade / Repair Station (Base Repair)
@@ -62,22 +53,13 @@ public class Minimarket : MonoBehaviour
         }
         if (upgrade_station != null)
         {
-            CircleCollider2D col = upgrade_station.GetComponent<CircleCollider2D>();
-            if (col == null)
-            {
-                col = upgrade_station.gameObject.AddComponent<CircleCollider2D>();
-            }
-            col.isTrigger = true;
-            col.radius = 1.3f;
-
             Interactable it = upgrade_station.GetComponent<Interactable>();
-            if (it == null)
+            if (it != null)
             {
-                it = upgrade_station.gameObject.AddComponent<Interactable>();
+                it.SetActionLabel("REPAIR BASE");
+                it.on_interacted.RemoveAllListeners();
+                it.on_interacted.AddListener(OnRepairInteract);
             }
-            it.SetActionLabel("REPAIR BASE");
-            it.on_interacted.RemoveAllListeners();
-            it.on_interacted.AddListener(OnRepairInteract);
         }
     }
 
