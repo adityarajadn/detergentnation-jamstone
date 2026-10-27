@@ -184,6 +184,10 @@ public class PlayerCombat : MonoBehaviour
         if (ranged_weapon == null || active_ranged_comp == null) return;
         if (ammo_comp == null || !ammo_comp.CanShoot())
         {
+            if (ammo_comp != null && ammo_comp.ammo_carried <= 0 && ammo_comp.ammo_in_mag <= 0)
+            {
+                NotificationToast.Show("Out of ammo! Restock at Minimarket!", ToastType.Warning);
+            }
             Reload();
             return;
         }

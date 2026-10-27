@@ -99,7 +99,11 @@ public class DefensePlacementSlot : MonoBehaviour
 
     public void HandleInteraction()
     {
-        if (LevelManager.instance != null && LevelManager.instance.current_phase != GamePhase.Planning) return;
+        if (LevelManager.instance != null && LevelManager.instance.current_phase != GamePhase.Planning)
+        {
+            NotificationToast.Show("Can only place defenses during Planning Phase!", ToastType.Warning);
+            return;
+        }
         if (DefensePlacementManager.instance == null) return;
 
         if (DefensePlacementManager.instance.is_refund_mode)
@@ -112,6 +116,11 @@ public class DefensePlacementSlot : MonoBehaviour
         {
             if (!HasDefense())
             {
+                if (!DefensePlacementManager.instance.CanAfford(DefensePlacementManager.instance.selected_defense))
+                {
+                    NotificationToast.Show("Not enough points to place " + DefensePlacementManager.instance.selected_defense.defense_name + "!", ToastType.Warning);
+                    return;
+                }
                 TryPlace(DefensePlacementManager.instance.selected_defense);
             }
             return;
@@ -149,6 +158,7 @@ public class DefensePlacementSlot : MonoBehaviour
 
                 if (indicator != null) indicator.enabled = false;
                 if (slot_collider != null) slot_collider.enabled = false;
+                NotificationToast.Show(data.defense_name + " placed!", ToastType.Success);
                 return true;
             }
         }

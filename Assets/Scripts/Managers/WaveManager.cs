@@ -69,6 +69,11 @@ public class WaveManager : MonoBehaviour
                 {
                     on_huge_wave_alert.Invoke(true);
                 }
+                NotificationToast.Show("WARNING: Huge Wave Incoming!", ToastType.Warning);
+            }
+            else
+            {
+                NotificationToast.Show("Wave " + (current_wave_index + 1) + " / " + current_level_data.waves.Count + " Started!", ToastType.Info);
             }
 
             if (on_wave_started != null)
@@ -96,6 +101,8 @@ public class WaveManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
         }
+
+        NotificationToast.Show("All waves cleared!", ToastType.Success);
 
         if (on_all_waves_cleared != null)
         {

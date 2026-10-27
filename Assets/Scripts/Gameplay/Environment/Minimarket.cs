@@ -46,9 +46,21 @@ public class Minimarket : MonoBehaviour
 
         combat.Restock();
 
-        if (health != null && health.health_current < health.health_max && combat.UseRepairPoints(repair_cost))
+        if (health != null)
         {
-            health.Heal(repair_heal_amount);
+            if (health.health_current >= health.health_max)
+            {
+                NotificationToast.Show("Minimarket is already at full health!", ToastType.Info);
+            }
+            else if (combat.repair_points < repair_cost)
+            {
+                NotificationToast.Show("Need " + repair_cost + " repair points to fix Minimarket! (" + combat.repair_points + "/" + repair_cost + ")", ToastType.Warning);
+            }
+            else if (combat.UseRepairPoints(repair_cost))
+            {
+                health.Heal(repair_heal_amount);
+                NotificationToast.Show("Minimarket repaired! +" + repair_heal_amount + " HP", ToastType.Success);
+            }
         }
     }
 

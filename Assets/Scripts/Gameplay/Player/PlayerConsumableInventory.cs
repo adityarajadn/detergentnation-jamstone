@@ -100,7 +100,16 @@ public class PlayerConsumableInventory : MonoBehaviour
     {
         string item_name = GetActiveConsumableName();
         int count = GetActiveConsumableCount();
-        if (string.IsNullOrEmpty(item_name) || item_name == GameConstants.EquipmentNames.None || count <= 0) return;
+        if (string.IsNullOrEmpty(item_name) || item_name == GameConstants.EquipmentNames.None)
+        {
+            NotificationToast.Show("No consumable equipped in Slot " + active_consumable_slot + "!", ToastType.Warning);
+            return;
+        }
+        if (count <= 0)
+        {
+            NotificationToast.Show("No " + item_name + " remaining!", ToastType.Warning);
+            return;
+        }
 
         bool success = ExecuteConsumableEffect(item_name);
         if (success)
