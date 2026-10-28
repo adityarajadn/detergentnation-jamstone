@@ -17,26 +17,6 @@ public class PlayerWeaponAim : MonoBehaviour
     {
         main_camera = Camera.main;
         player_controller = GetComponent<PlayerController>();
-        if (visuals == null)
-        {
-            visuals = transform.Find("Visuals");
-        }
-        EnsureWeaponMount();
-    }
-
-    public void EnsureWeaponMount()
-    {
-        if (weapon_mount == transform)
-        {
-            weapon_mount = null;
-        }
-
-        if (weapon_mount == null)
-        {
-            Transform found = transform.Find("WeaponMount");
-            if (found == null) found = transform.Find("Visuals/GunArm");
-            weapon_mount = found;
-        }
     }
 
     private void Update()
@@ -53,7 +33,6 @@ public class PlayerWeaponAim : MonoBehaviour
             if (phase == GamePhase.Victory || phase == GamePhase.Defeat) return;
         }
 
-        EnsureWeaponMount();
         if (weapon_mount == null || weapon_mount == transform) return;
         if (Mouse.current == null) return;
         if (main_camera == null) main_camera = Camera.main;

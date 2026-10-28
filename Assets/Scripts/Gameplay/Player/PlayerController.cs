@@ -19,12 +19,16 @@ public class PlayerController : MonoBehaviour
     public ArmorBase active_armor;
     public JetpackBase active_jetpack;
 
+    [Header("Mount Points")]
+    [SerializeField] private Transform ground_check;
+    [SerializeField] private Transform visuals;
+    [SerializeField] private Transform armor_mount;
+    [SerializeField] private Transform jetpack_mount;
+
     [Header("Jetpack Modifiers")]
     [SerializeField] private float joyride_speed_multiplier = 1.1f;
     [SerializeField] private float vengeance_speed_multiplier = 1.25f;
 
-    [SerializeField] private Transform ground_check;
-    [SerializeField] private Transform visuals;
     [SerializeField] private LayerMask ground_layer;
     [SerializeField] private float ground_radius = 0.22f;
 
@@ -93,26 +97,15 @@ public class PlayerController : MonoBehaviour
         if (!string.IsNullOrEmpty(equipped_armor) && equipped_armor != GameConstants.EquipmentNames.None)
         {
             GameObject armor_prefab = FindPrefabByName(armor_prefabs, equipped_armor);
-            if (armor_prefab != null)
+            if (armor_prefab != null && armor_mount != null)
             {
-                Transform armor_mount = transform.Find("Visuals/ArmorMount");
-                Transform cap_point = transform.Find("Visuals/Head/Cap");
-                Transform parent_point = armor_mount != null ? armor_mount : (cap_point != null ? cap_point : transform.Find("Visuals/Head"));
-                if (parent_point == null) parent_point = transform;
-
-                GameObject armor_obj = Instantiate(armor_prefab, parent_point);
+                GameObject armor_obj = Instantiate(armor_prefab, armor_mount);
                 armor_obj.transform.localPosition = Vector3.zero;
                 armor_obj.transform.localRotation = Quaternion.identity;
                 active_armor = armor_obj.GetComponent<ArmorBase>();
 
                 Health hp = GetComponent<Health>();
                 if (hp != null) hp.SetArmor(active_armor);
-
-                if (cap_point != null)
-                {
-                    SpriteRenderer cap_sr = cap_point.GetComponent<SpriteRenderer>();
-                    if (cap_sr != null) cap_sr.enabled = false;
-                }
             }
         }
 
@@ -120,14 +113,10 @@ public class PlayerController : MonoBehaviour
         if (!string.IsNullOrEmpty(equipped_jetpack) && equipped_jetpack != GameConstants.EquipmentNames.None)
         {
             GameObject jetpack_prefab = FindPrefabByName(jetpack_prefabs, equipped_jetpack);
-            if (jetpack_prefab != null)
+            if (jetpack_prefab != null && jetpack_mount != null)
             {
-                Transform jetpack_mount = transform.Find("Visuals/JetpackMount");
-                Transform body_point = jetpack_mount != null ? jetpack_mount : transform.Find("Visuals/Body");
-                if (body_point == null) body_point = transform;
-
-                GameObject jetpack_obj = Instantiate(jetpack_prefab, body_point);
-                jetpack_obj.transform.localPosition = jetpack_mount != null ? Vector3.zero : new Vector3(-0.2f, 0f, 0f);
+                GameObject jetpack_obj = Instantiate(jetpack_prefab, jetpack_mount);
+                jetpack_obj.transform.localPosition = Vector3.zero;
                 jetpack_obj.transform.localRotation = Quaternion.identity;
                 active_jetpack = jetpack_obj.GetComponent<JetpackBase>();
             }
