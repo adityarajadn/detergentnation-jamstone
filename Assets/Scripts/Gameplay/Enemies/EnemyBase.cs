@@ -254,7 +254,7 @@ public class EnemyBase : MonoBehaviour
         }
 
         // 2. Active Strike Hitbox
-        AudioEvents.TriggerEnemyAttack();
+        AudioManager.PlaySFX("enemy_attack");
         if (enemy_data != null && enemy_data.attack_type == EnemyAttackType.Ranged && enemy_data.projectile_prefab != null)
         {
             PerformRangedStrike();
@@ -316,13 +316,13 @@ public class EnemyBase : MonoBehaviour
     {
         if (current < max && current > 0)
         {
-            AudioEvents.TriggerEnemyHurt();
+            AudioManager.PlaySFX("enemy_hurt");
         }
     }
 
     protected virtual void OnDeath()
     {
-        AudioEvents.TriggerEnemyDeath();
+        AudioManager.PlaySFX("enemy_death");
         if (KillStreakManager.instance != null)
         {
             KillStreakManager.instance.RegisterKill();

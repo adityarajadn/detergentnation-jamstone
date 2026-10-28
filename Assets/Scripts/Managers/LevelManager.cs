@@ -106,7 +106,7 @@ public class LevelManager : MonoBehaviour
         {
             on_victory.Invoke(stars_earned);
         }
-        AudioEvents.TriggerVictory();
+        AudioManager.PlaySFX("victory");
     }
 
     private void OnLevelDefeat()
@@ -118,7 +118,7 @@ public class LevelManager : MonoBehaviour
         {
             on_defeat.Invoke();
         }
-        AudioEvents.TriggerDefeat();
+        AudioManager.PlaySFX("defeat");
     }
 
     private int CalculateStars()

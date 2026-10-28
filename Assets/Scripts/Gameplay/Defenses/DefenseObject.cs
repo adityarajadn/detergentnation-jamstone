@@ -48,7 +48,7 @@ public class DefenseObject : MonoBehaviour
             health.on_health_changed.AddListener((cur, max) => {
                 if (cur < max && cur > 0 && defense_data != null && defense_data.defense_name.Contains("Fence"))
                 {
-                    AudioEvents.TriggerFenceHurt();
+                    AudioManager.PlaySFX("fence_hurt");
                 }
             });
         }
@@ -169,7 +169,7 @@ public class DefenseObject : MonoBehaviour
 
         ammo_current--;
         next_cannon_fire_time = Time.time + 0.5f;
-        AudioEvents.TriggerCannonFire();
+        AudioManager.PlaySFX("cannon_fire");
 
         // Determine target direction (outwards towards enemy flank or nearest enemy)
         Vector2 fire_dir = transform.position.x < 0 ? Vector2.left : Vector2.right;
@@ -225,7 +225,7 @@ public class DefenseObject : MonoBehaviour
     {
         if (is_rolling) return;
         is_rolling = true;
-        AudioEvents.TriggerBarrelRoll();
+        AudioManager.PlaySFX("barrel_roll");
         roll_direction = transform.position.x < 0 ? -1f : 1f;
         if (prompt_text != null) prompt_text.gameObject.SetActive(false);
         Destroy(gameObject, 6f);
@@ -234,7 +234,7 @@ public class DefenseObject : MonoBehaviour
     public void TriggerTrap()
     {
         if (defense_data == null) return;
-        AudioEvents.TriggerTrapTrigger();
+        AudioManager.PlaySFX("trap_trigger");
 
         if (defense_data.defense_type == DefenseType.SingleUse)
         {
@@ -262,7 +262,7 @@ public class DefenseObject : MonoBehaviour
 
     private void ExplodeBarrel()
     {
-        AudioEvents.TriggerBarrelBreak();
+        AudioManager.PlaySFX("barrel_break");
         float radius = 3.5f;
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
         for (int i = 0; i < hits.Length; i++)
@@ -303,8 +303,8 @@ public class DefenseObject : MonoBehaviour
     {
         if (defense_data != null)
         {
-            if (defense_data.defense_name.Contains("Fence")) AudioEvents.TriggerFenceBreak();
-            else if (defense_data.defense_name.Contains("Barrel") && !is_rolling) AudioEvents.TriggerBarrelBreak();
+            if (defense_data.defense_name.Contains("Fence")) AudioManager.PlaySFX("fence_break");
+            else if (defense_data.defense_name.Contains("Barrel") && !is_rolling) AudioManager.PlaySFX("barrel_break");
         }
 
         on_destroyed?.Invoke();

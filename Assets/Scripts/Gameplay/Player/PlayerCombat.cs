@@ -201,7 +201,12 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            AudioEvents.TriggerWeaponShoot(ranged_weapon.weapon_name);
+            string shootSound = "shoot_water_pistol";
+            string wn = ranged_weapon.weapon_name.ToLower();
+            if (wn.Contains("rifle")) shootSound = "shoot_water_rifle";
+            else if (wn.Contains("plasma")) shootSound = "shoot_water_plasma";
+            else if (wn.Contains("bubble")) shootSound = "shoot_bubble_gun";
+            AudioManager.PlaySFX(shootSound);
         }
 
         if (main_camera == null) main_camera = Camera.main;
@@ -225,7 +230,11 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            AudioEvents.TriggerMeleeSwing(melee_weapon.weapon_name);
+            string swingSound = "swing_curse_sword";
+            string wn = melee_weapon.weapon_name.ToLower();
+            if (wn.Contains("hammer")) swingSound = "swing_soap_hammer";
+            else if (wn.Contains("stick")) swingSound = "swing_bubble_stick";
+            AudioManager.PlaySFX(swingSound);
         }
 
         Vector3 origin = melee_point != null ? melee_point.position : transform.position;

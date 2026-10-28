@@ -74,8 +74,8 @@ public class PlayerController : MonoBehaviour
         Health hp = GetComponent<Health>();
         if (hp != null)
         {
-            hp.on_health_changed.AddListener((cur, max) => { if (cur < max && cur > 0) AudioEvents.TriggerPlayerHurt(); });
-            hp.on_death.AddListener(() => AudioEvents.TriggerPlayerDeath());
+            hp.on_health_changed.AddListener((cur, max) => { if (cur < max && cur > 0) AudioManager.PlaySFX("player_hurt"); });
+            hp.on_death.AddListener(() => AudioManager.PlaySFX("player_death"));
         }
 
         if (GameManager.instance != null)
