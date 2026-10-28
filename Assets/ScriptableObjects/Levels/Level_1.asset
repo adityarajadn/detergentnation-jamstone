@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level_1
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   level_number: 1
+  environment_prefab: {fileID: 4904552904834569109, guid: 051a3250472e97345a2b67baa5ae9545, type: 3}
   defense_points_start: 6
   max_restocks_for_star: 3
   max_defense_points_for_star: 6
