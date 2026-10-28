@@ -2050,10 +2050,10 @@ MonoBehaviour:
     clip: {fileID: 0}
     volume: 1
   - sound_id: player_hurt
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 73419c7dcdbeed443b09454ac0a3d731, type: 3}
     volume: 1
   - sound_id: player_death
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: e3647d38f68f2bd48a0b837fd0614ccd, type: 3}
     volume: 1
   - sound_id: shoot_water_pistol
     clip: {fileID: 0}
@@ -2068,34 +2068,34 @@ MonoBehaviour:
     clip: {fileID: 0}
     volume: 1
   - sound_id: swing_soap_hammer
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 1860c7b4f48ff054e91ff4c78824916d, type: 3}
     volume: 1
   - sound_id: swing_bubble_stick
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 47872943e066ae046afffd703f1d022d, type: 3}
     volume: 1
   - sound_id: swing_curse_sword
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: af32861d043704c4a9f2172c80826785, type: 3}
     volume: 1
   - sound_id: hit_soap_hammer
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 8c538d6a7413f714b81f264dab62ec40, type: 3}
     volume: 1
   - sound_id: hit_bubble_stick
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: e67381370eddc7845b52368197f7ca45, type: 3}
     volume: 1
   - sound_id: hit_curse_sword
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: c186ae8d7dfef3348a8c3e6c3286791c, type: 3}
     volume: 1
   - sound_id: enemy_attack
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: bcb72d7f161ac624590cf3143656856d, type: 3}
     volume: 1
   - sound_id: enemy_hurt
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: f169df2386fe3374fb64091871f96674, type: 3}
     volume: 1
   - sound_id: enemy_death
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 03f437f19c5df7145abb9069095bcb0d, type: 3}
     volume: 1
   - sound_id: enemy_footstep
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: cc01d5e453d7ff14e93ab30011d1c863, type: 3}
     volume: 1
   - sound_id: fence_place
     clip: {fileID: 0}
@@ -2113,10 +2113,10 @@ MonoBehaviour:
     clip: {fileID: 0}
     volume: 1
   - sound_id: barrel_roll
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: af0cbb57e8d94d046aca5ff136ae6ebd, type: 3}
     volume: 1
   - sound_id: barrel_break
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 1e976b162c22de340a3e1520c286b75a, type: 3}
     volume: 1
   - sound_id: cannon_fire
     clip: {fileID: 0}
@@ -2134,7 +2134,7 @@ MonoBehaviour:
     clip: {fileID: 0}
     volume: 1
   - sound_id: consumable_repair
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 0089d7ba36d488040b666052757ebc55, type: 3}
     volume: 1
   - sound_id: huge_wave_alarm
     clip: {fileID: 0}
