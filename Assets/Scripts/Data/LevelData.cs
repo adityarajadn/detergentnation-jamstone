@@ -40,6 +40,10 @@ public class WaveData
 public class LevelData : ScriptableObject
 {
     public int level_number = 1;
+    [Header("Environment")]
+    public GameObject environment_prefab;
+
+    [Header("Defense & Stars")]
     public int defense_points_start = 6;
     public int max_restocks_for_star = 3;
     public int max_defense_points_for_star = 6;

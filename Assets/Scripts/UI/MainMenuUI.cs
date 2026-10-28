@@ -37,19 +37,19 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnPlayClicked()
     {
-        AudioEvents.TriggerGameStart();
+        AudioManager.PlaySFX("game_start");
         SceneLoader.LoadLevelSelect();
     }
 
     private void OnShopClicked()
     {
-        AudioEvents.TriggerTitleSelect();
+        AudioManager.PlaySFX("title_select");
         SceneLoader.LoadShop();
     }
 
     private void OnSettingsClicked()
     {
-        AudioEvents.TriggerTitleSelect();
+        AudioManager.PlaySFX("title_select");
         if (settings_panel != null)
         {
             settings_panel.SetActive(true);
@@ -62,7 +62,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnCreditsClicked()
     {
-        AudioEvents.TriggerTitleSelect();
+        AudioManager.PlaySFX("title_select");
         if (credits_panel != null)
         {
             credits_panel.SetActive(!credits_panel.activeSelf);
@@ -71,7 +71,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnExitClicked()
     {
-        AudioEvents.TriggerTitleSelect();
+        AudioManager.PlaySFX("title_select");
         Application.Quit();
     }
 }

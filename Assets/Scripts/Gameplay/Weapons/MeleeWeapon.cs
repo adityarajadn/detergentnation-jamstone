@@ -30,7 +30,14 @@ public class MeleeWeapon : WeaponBase
         if (hp != null && !hp.is_dead)
         {
             hp.TakeDamage(damage);
-            AudioEvents.TriggerMeleeHit(weapon_data != null ? weapon_data.weapon_name : gameObject.name);
+            string hitSound = "hit_curse_sword";
+            if (weapon_data != null)
+            {
+                string wn = weapon_data.weapon_name.ToLower();
+                if (wn.Contains("hammer")) hitSound = "hit_soap_hammer";
+                else if (wn.Contains("stick")) hitSound = "hit_bubble_stick";
+            }
+            AudioManager.PlaySFX(hitSound);
         }
     }
 }

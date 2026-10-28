@@ -41,6 +41,8 @@ public class LevelManager : MonoBehaviour
 
         if (active_level_data != null)
         {
+            SetupEnvironment();
+
             if (DefensePlacementManager.instance != null)
             {
                 DefensePlacementManager.instance.InitPoints(active_level_data.defense_points_start);
@@ -104,7 +106,7 @@ public class LevelManager : MonoBehaviour
         {
             on_victory.Invoke(stars_earned);
         }
-        AudioEvents.TriggerVictory();
+        AudioManager.PlaySFX("victory");
     }
 
     private void OnLevelDefeat()
@@ -116,7 +118,7 @@ public class LevelManager : MonoBehaviour
         {
             on_defeat.Invoke();
         }
-        AudioEvents.TriggerDefeat();
+        AudioManager.PlaySFX("defeat");
     }
 
     private int CalculateStars()
@@ -172,5 +174,26 @@ public class LevelManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneLoader.LoadMainMenu();
+    }
+
+    private void SetupEnvironment()
+    {
+        if (active_level_data == null || active_level_data.environment_prefab == null) return;
+
+        GameObject existingEnv = GameObject.Find("Environment_Root");
+        if (existingEnv != null)
+        {
+            Destroy(existingEnv);
+        }
+        else
+        {
+            GameObject pb = GameObject.Find("ParallaxBackground");
+            if (pb != null) Destroy(pb);
+            GameObject grid = GameObject.Find("Grid");
+            if (grid != null) Destroy(grid);
+        }
+
+        GameObject envInstance = Instantiate(active_level_data.environment_prefab, Vector3.zero, Quaternion.identity);
+        envInstance.name = "Environment_Root";
     }
 }

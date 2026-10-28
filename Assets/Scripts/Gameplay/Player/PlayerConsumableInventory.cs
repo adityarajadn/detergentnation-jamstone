@@ -114,6 +114,7 @@ public class PlayerConsumableInventory : MonoBehaviour
         bool success = ExecuteConsumableEffect(item_name);
         if (success)
         {
+            ShowConsumablePopup(item_name);
             int new_count = count - 1;
             if (GameManager.instance != null)
             {
@@ -121,6 +122,50 @@ public class PlayerConsumableInventory : MonoBehaviour
             }
             NotifyConsumableChanged();
         }
+    }
+
+    private void ShowConsumablePopup(string item_name)
+    {
+        string label;
+        Color color;
+
+        if (item_name.IndexOf("First Aid", System.StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            label = "+50 HP";
+            color = new Color(0.29f, 0.87f, 0.5f, 1f); // Green
+        }
+        else if (item_name.IndexOf("Energy Drink", System.StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            label = "SPEED UP!";
+            color = new Color(0.22f, 0.74f, 0.97f, 1f); // Blue
+        }
+        else if (item_name.IndexOf("Tool", System.StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            label = "+REPAIR";
+            color = new Color(0.98f, 0.57f, 0.24f, 1f); // Orange
+        }
+        else if (item_name.IndexOf("Soap Bomb", System.StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            label = "SOAP BOMB!";
+            color = new Color(1f, 0.88f, 0.32f, 1f); // Yellow
+        }
+        else if (item_name.IndexOf("Bucket", System.StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            label = "SOAP BUCKET!";
+            color = new Color(0.4f, 0.9f, 1f, 1f); // Cyan
+        }
+        else if (item_name.IndexOf("Sonar", System.StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            label = "SONAR!";
+            color = new Color(0.75f, 0.55f, 1f, 1f); // Purple
+        }
+        else
+        {
+            label = item_name.ToUpper();
+            color = new Color(1f, 0.88f, 0.32f, 1f);
+        }
+
+        DamagePopup.SpawnText(transform.position + Vector3.up * 0.8f, label, color);
     }
 
     private bool ExecuteConsumableEffect(string item_name)

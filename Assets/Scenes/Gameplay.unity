@@ -1593,7 +1593,6 @@ GameObject:
   - component: {fileID: 549139227}
   - component: {fileID: 549139226}
   - component: {fileID: 549139225}
-  - component: {fileID: 549139229}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -1809,6 +1808,121 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   sfx_source: {fileID: 549139226}
   bgm_source: {fileID: 549139225}
+  audio_library:
+  - sound_id: title_select
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: game_start
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: scene_transition
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: purchase
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: player_hurt
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: player_death
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: shoot_water_pistol
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: shoot_water_rifle
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: shoot_water_plasma
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: shoot_bubble_gun
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: swing_soap_hammer
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: swing_bubble_stick
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: swing_curse_sword
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: hit_soap_hammer
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: hit_bubble_stick
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: hit_curse_sword
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: enemy_attack
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: enemy_hurt
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: enemy_death
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: enemy_footstep
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: fence_place
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: fence_hurt
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: fence_break
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: trap_set
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: trap_trigger
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: barrel_roll
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: barrel_break
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: cannon_fire
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: cannon_impact
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: consumable_healing
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: consumable_drink
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: consumable_whistle
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: consumable_repair
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: huge_wave_alarm
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: victory
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: defeat
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: main_menu_bgm
+    clip: {fileID: 0}
+    volume: 1
+  - sound_id: ingame_bgm
+    clip: {fileID: 0}
+    volume: 1
 --- !u!4 &549139228
 Transform:
   m_ObjectHideFlags: 0
@@ -1824,19 +1938,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &549139229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549139224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80c39975466a6604aa6d0eca2f6f3225, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameAudioObserver
-  database: {fileID: 11400000, guid: e700f17d4880f2b47861d11dbf533b49, type: 2}
 --- !u!1001 &570936847
 PrefabInstance:
   m_ObjectHideFlags: 0

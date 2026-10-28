@@ -214,6 +214,7 @@ MonoBehaviour:
   visuals: {fileID: 553662551979816509}
   mount_offset_x: 0.2
   mount_offset_y: -0.05
+  aim_deadzone: 0.25
 --- !u!114 &7323487797412768186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +270,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
