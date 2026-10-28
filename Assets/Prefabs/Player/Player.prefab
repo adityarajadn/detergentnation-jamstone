@@ -157,10 +157,12 @@ MonoBehaviour:
   - {fileID: 5320631636654170665, guid: f43a3943b50747d439673d6a7f104797, type: 3}
   active_armor: {fileID: 0}
   active_jetpack: {fileID: 0}
-  joyride_speed_multiplier: 1.1
-  vengeance_speed_multiplier: 1.25
   ground_check: {fileID: 4472128486095287192}
   visuals: {fileID: 553662551979816509}
+  armor_mount: {fileID: 4761552547803632631}
+  jetpack_mount: {fileID: 3827986518986834556}
+  joyride_speed_multiplier: 1.1
+  vengeance_speed_multiplier: 1.25
   ground_layer:
     serializedVersion: 2
     m_Bits: 577

@@ -56,28 +56,6 @@ public class PlayerCombat : MonoBehaviour
         ammo_comp = GetComponent<PlayerAmmo>();
         consumable_inv = GetComponent<PlayerConsumableInventory>();
         main_camera = Camera.main;
-
-        if (weapon_mount == transform)
-        {
-            weapon_mount = null;
-        }
-
-        if (weapon_mount == null)
-        {
-            Transform found = transform.Find("WeaponMount");
-            if (found == null) found = transform.Find("Visuals/GunArm");
-            if (found == null && weapon_aim != null)
-            {
-                weapon_aim.EnsureWeaponMount();
-                found = weapon_aim.weapon_mount;
-            }
-            weapon_mount = found;
-        }
-        if (weapon_aim != null)
-        {
-            if (weapon_mount != null) weapon_aim.weapon_mount = weapon_mount;
-            else weapon_mount = weapon_aim.weapon_mount;
-        }
     }
 
     private void Start()
@@ -271,21 +249,9 @@ public class PlayerCombat : MonoBehaviour
 
     public void UpdateWeaponVisual()
     {
-        if (weapon_mount == transform)
+        if (weapon_mount == null && weapon_aim != null)
         {
-            weapon_mount = null;
-        }
-
-        if (weapon_mount == null)
-        {
-            Transform found = transform.Find("WeaponMount");
-            if (found == null) found = transform.Find("Visuals/GunArm");
-            if (found == null && weapon_aim != null)
-            {
-                weapon_aim.EnsureWeaponMount();
-                found = weapon_aim.weapon_mount;
-            }
-            weapon_mount = found;
+            weapon_mount = weapon_aim.weapon_mount;
         }
 
         if (weapon_mount == null || weapon_mount == transform) return;
