@@ -6205,7 +6205,7 @@ MonoBehaviour:
   - item_name: First Aid Kit
     price: 25
     description: Restores +50 Health Points
-    preview_sprite: {fileID: 2616343441511125068, guid: 5422e1339b8717a45926be39a0b5853a, type: 3}
+    preview_sprite: {fileID: 21300000, guid: 90d31c7fbecea06458c5d7c6222711fc, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 638808459}
     name_text: {fileID: 1343292123}
@@ -6220,7 +6220,7 @@ MonoBehaviour:
   - item_name: Energy Drink
     price: 10
     description: Increases movement speed
-    preview_sprite: {fileID: 1338023835199056024, guid: c1e61c7bf218a704a8f94a8f334d1c9a, type: 3}
+    preview_sprite: {fileID: 21300000, guid: 5457249038dbee64fb8373fd6210f05c, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 720911182}
     name_text: {fileID: 1582643210}
@@ -6250,7 +6250,7 @@ MonoBehaviour:
   - item_name: Tools Box
     price: 25
     description: Provides +30 repair points
-    preview_sprite: {fileID: -4421165508793359571, guid: 107f462fec7d1a74e89e9016b03bc7e6, type: 3}
+    preview_sprite: {fileID: 21300000, guid: dc558b34e60fb3d4399a5938c279a17e, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 1262946056}
     name_text: {fileID: 236950552}
@@ -14477,7 +14477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2616343441511125068, guid: 5422e1339b8717a45926be39a0b5853a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 90d31c7fbecea06458c5d7c6222711fc, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -16685,7 +16685,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1338023835199056024, guid: c1e61c7bf218a704a8f94a8f334d1c9a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5457249038dbee64fb8373fd6210f05c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -26506,7 +26506,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4421165508793359571, guid: 107f462fec7d1a74e89e9016b03bc7e6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dc558b34e60fb3d4399a5938c279a17e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

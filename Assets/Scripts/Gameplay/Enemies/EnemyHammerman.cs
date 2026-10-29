@@ -8,32 +8,23 @@ public class EnemyHammerman : EnemyBase
     protected override IEnumerator AttackRoutine()
     {
         is_attacking = true;
+        if (animator != null)
+        {
+            animator.SetBool("is_moving", false);
+            animator.SetTrigger("attack");
+        }
+
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 1.6f;
         next_attack_time = Time.time + attack_rate;
 
-        Color original_color = sr != null ? sr.color : Color.white;
-
-        // Slow heavy windup
-        float windup_time = 0.45f;
-        float elapsed = 0f;
-        while (elapsed < windup_time)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / windup_time;
-            if (visual_transform != null)
-            {
-                visual_transform.localPosition = new Vector3(0f, t * 0.35f, 0f);
-            }
-            if (sr != null) sr.color = Color.Lerp(original_color, Color.red, t);
-            yield return null;
-        }
+        // Slow heavy windup (no red tint)
+        yield return new WaitForSeconds(0.45f);
 
         // Slam down!
-        if (visual_transform != null) visual_transform.localPosition = Vector3.zero;
+        AudioManager.PlaySFX("enemy_attack");
         PerformMeleeStrike();
 
         yield return new WaitForSeconds(0.2f);
-        if (sr != null) sr.color = original_color;
         is_attacking = false;
     }
 

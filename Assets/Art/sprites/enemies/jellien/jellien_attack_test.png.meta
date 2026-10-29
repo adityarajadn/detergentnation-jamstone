@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 125bd75de52cd3c4e9cd32e9c494ac57
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8153689178804507810
+    second: jellien_attack_test_0
+  - first:
+      213: -175495233624894814
+    second: jellien_attack_test_1
+  - first:
+      213: -7278763801347310815
+    second: jellien_attack_test_2
+  - first:
+      213: 4466065422115779674
+    second: jellien_attack_test_3
+  - first:
+      213: 237227889692926937
+    second: jellien_attack_test_4
+  - first:
+      213: -1465911383739355369
+    second: jellien_attack_test_5
+  - first:
+      213: -1490192091197290812
+    second: jellien_attack_test_6
+  - first:
+      213: 4895151149137632550
+    second: jellien_attack_test_7
+  - first:
+      213: 6942163632916024847
+    second: jellien_attack_test_8
+  - first:
+      213: 6287910798813077924
+    second: jellien_attack_test_9
+  - first:
+      213: 1114085591854412161
+    second: jellien_attack_test_10
+  - first:
+      213: -7138611963145909771
+    second: jellien_attack_test_11
+  - first:
+      213: -4390508750696531673
+    second: jellien_attack_test_12
+  - first:
+      213: -4550228845321206016
+    second: jellien_attack_test_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: jellien_attack_test_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a4d697ab19b72170800000000000000
+      internalID: 8153689178804507810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_1
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a2930cc304809df0800000000000000
+      internalID: -175495233624894814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_2
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12bb8b023e2acfa90800000000000000
+      internalID: -7278763801347310815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_3
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a54bdd4d6d6aafd30800000000000000
+      internalID: 4466065422115779674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_4
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 15
+        width: 29
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d366ff328dca4300800000000000000
+      internalID: 237227889692926937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_5
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 18
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71fa30cfc5908abe0800000000000000
+      internalID: -1465911383739355369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_6
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6c61d3036c15be0800000000000000
+      internalID: -1490192091197290812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_7
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 17
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62d9136d8021fe340800000000000000
+      internalID: 4895151149137632550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_8
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0e48900b05875060800000000000000
+      internalID: 6942163632916024847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_9
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 15
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a1a8968e85234750800000000000000
+      internalID: 6287910798813077924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_10
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 181fcdf61f6067f00800000000000000
+      internalID: 1114085591854412161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_11
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 15
+        width: 13
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f98553dd3e8eec90800000000000000
+      internalID: -7138611963145909771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_12
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 15
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7293d7b9d87c113c0800000000000000
+      internalID: -4390508750696531673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_attack_test_13
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 15
+        width: 46
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 007c4eb29f65ad0c0800000000000000
+      internalID: -4550228845321206016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      jellien_attack_test_0: 8153689178804507810
+      jellien_attack_test_1: -175495233624894814
+      jellien_attack_test_10: 1114085591854412161
+      jellien_attack_test_11: -7138611963145909771
+      jellien_attack_test_12: -4390508750696531673
+      jellien_attack_test_13: -4550228845321206016
+      jellien_attack_test_2: -7278763801347310815
+      jellien_attack_test_3: 4466065422115779674
+      jellien_attack_test_4: 237227889692926937
+      jellien_attack_test_5: -1465911383739355369
+      jellien_attack_test_6: -1490192091197290812
+      jellien_attack_test_7: 4895151149137632550
+      jellien_attack_test_8: 6942163632916024847
+      jellien_attack_test_9: 6287910798813077924
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
