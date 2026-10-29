@@ -18,8 +18,13 @@ public class PlayerCombat : MonoBehaviour
     [Header("Mount & Targeting")]
     public Transform fire_point;
     public Transform melee_point;
-    public Transform weapon_mount;
+    public Transform hand_mount;
+    public Transform weapon_attachment;
     public LayerMask enemy_layer;
+
+    // Backward compatibility property
+    public Transform weapon_mount { get => hand_mount; set => hand_mount = value; }
+    public Transform weapon_holder { get => weapon_attachment; set => weapon_attachment = value; }
 
     [Header("Resources")]
     public int repair_points = 0;
@@ -249,12 +254,12 @@ public class PlayerCombat : MonoBehaviour
 
     public void UpdateWeaponVisual()
     {
-        if (weapon_mount == null && weapon_aim != null)
+        if (hand_mount == null && weapon_aim != null)
         {
-            weapon_mount = weapon_aim.weapon_mount;
+            hand_mount = weapon_aim.hand_mount;
         }
 
-        if (weapon_mount == null || weapon_mount == transform) return;
+        if (hand_mount == null || hand_mount == transform) return;
 
         if (current_weapon_instance != null)
         {
@@ -267,11 +272,12 @@ public class PlayerCombat : MonoBehaviour
         WeaponData active_data = active_weapon_type == WeaponType.Melee ? melee_weapon : ranged_weapon;
         if (active_data != null && active_data.weapon_prefab != null)
         {
-            SpriteRenderer arm_sr = weapon_mount.GetComponent<SpriteRenderer>();
+            SpriteRenderer arm_sr = hand_mount.GetComponentInChildren<SpriteRenderer>();
             if (arm_sr != null) arm_sr.enabled = true;
 
-            current_weapon_instance = Instantiate(active_data.weapon_prefab, weapon_mount);
-            current_weapon_instance.transform.localPosition = new Vector3(0.25f, 0f, 0f);
+            Transform parent_target = weapon_attachment != null ? weapon_attachment : hand_mount;
+            current_weapon_instance = Instantiate(active_data.weapon_prefab, parent_target);
+            current_weapon_instance.transform.localPosition = Vector3.zero;
             current_weapon_instance.transform.localRotation = Quaternion.identity;
 
             WeaponBase wb = current_weapon_instance.GetComponent<WeaponBase>();

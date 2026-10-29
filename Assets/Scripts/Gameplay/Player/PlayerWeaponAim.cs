@@ -3,11 +3,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerWeaponAim : MonoBehaviour
 {
-    public Transform weapon_mount;
+    [Header("Mount & Aiming")]
+    public Transform hand_mount;
     [SerializeField] private Transform visuals;
-    [SerializeField] private float mount_offset_x = 0.2f;
-    [SerializeField] private float mount_offset_y = -0.05f;
     [SerializeField] private float aim_deadzone = 0.25f;
+
+    // Backward compatibility property
+    public Transform weapon_mount { get => hand_mount; set => hand_mount = value; }
 
     private Camera main_camera;
     private PlayerController player_controller;
@@ -33,7 +35,7 @@ public class PlayerWeaponAim : MonoBehaviour
             if (phase == GamePhase.Victory || phase == GamePhase.Defeat) return;
         }
 
-        if (weapon_mount == null || weapon_mount == transform) return;
+        if (hand_mount == null || hand_mount == transform) return;
         if (Mouse.current == null) return;
         if (main_camera == null) main_camera = Camera.main;
         if (main_camera == null) return;
@@ -41,43 +43,42 @@ public class PlayerWeaponAim : MonoBehaviour
         Vector3 mouse_screen = Mouse.current.position.ReadValue();
         Vector3 mouse_world = main_camera.ScreenToWorldPoint(mouse_screen);
 
-        // Determine aim direction relative to player center with deadzone hysteresis to prevent jitter
+        // Determine if mouse is left or right relative to player
         float delta_x_from_player = mouse_world.x - transform.position.x;
-        if (Mathf.Abs(delta_x_from_player) > aim_deadzone)
+        bool aim_left = delta_x_from_player < -aim_deadzone;
+        bool aim_right = delta_x_from_player > aim_deadzone;
+
+        float vx = Mathf.Abs(visuals != null ? visuals.localScale.x : 1f);
+        bool face_left;
+        if (player_controller != null && Mathf.Abs(player_controller.MoveInput) > 0.05f)
         {
-            last_aim_left = delta_x_from_player < 0f;
+            face_left = player_controller.MoveInput < 0f;
         }
-        bool aim_left = last_aim_left;
+        else
+        {
+            face_left = aim_left || (last_aim_left && !aim_right);
+        }
+        last_aim_left = face_left;
 
-        float offset_x = Mathf.Abs(mount_offset_x);
-        weapon_mount.localPosition = new Vector3(aim_left ? -offset_x : offset_x, mount_offset_y, 0f);
+        // Flip visuals horizontally based on movement input or aim direction
+        if (visuals != null)
+        {
+            visuals.localScale = new Vector3(face_left ? -vx : vx, visuals.localScale.y, visuals.localScale.z);
+        }
 
-        Vector2 aim_delta = mouse_world - weapon_mount.position;
+        // Aim rotation on hand_mount (child of Visuals)
+        Vector2 aim_delta = mouse_world - hand_mount.position;
         if (aim_delta.sqrMagnitude > 0.0001f)
         {
             float aim_angle = Mathf.Atan2(aim_delta.y, aim_delta.x) * Mathf.Rad2Deg;
-            weapon_mount.rotation = Quaternion.Euler(0f, 0f, aim_angle);
+            if (face_left)
+            {
+                aim_angle = 180f - aim_angle;
+            }
+            hand_mount.localRotation = Quaternion.Euler(0f, 0f, aim_angle);
         }
 
-        weapon_mount.localScale = new Vector3(1f, aim_left ? -1f : 1f, 1f);
-
-        // Keep player body completely upright (0 rotation)
+        // Keep player body upright
         transform.rotation = Quaternion.identity;
-
-        // Flip visuals horizontally: prioritize movement input over aim direction
-        if (visuals != null)
-        {
-            float vx = Mathf.Abs(visuals.localScale.x);
-            bool face_left;
-            if (player_controller != null && Mathf.Abs(player_controller.MoveInput) > 0.05f)
-            {
-                face_left = player_controller.MoveInput < 0f;
-            }
-            else
-            {
-                face_left = aim_left;
-            }
-            visuals.localScale = new Vector3(face_left ? -vx : vx, visuals.localScale.y, visuals.localScale.z);
-        }
     }
 }
