@@ -113,7 +113,7 @@ MonoBehaviour:
   damage: 70
   explosion_radius: 3
   lifetime: 4
-  explosion_effect_prefab: {fileID: 0}
+  explosion_effect_prefab: {fileID: 7014868329117955637, guid: 5e165508bfc20cc4c9cc5007895d7231, type: 3}
 --- !u!1 &6502075967088315227
 GameObject:
   m_ObjectHideFlags: 0

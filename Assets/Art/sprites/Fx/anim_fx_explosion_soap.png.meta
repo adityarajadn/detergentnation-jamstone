@@ -1,0 +1,780 @@
+fileFormatVersion: 2
+guid: 063fc9fb2b795c248bd12e4ed52be2c9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6742426506149412003
+    second: anim_fx_explosion_soap_0
+  - first:
+      213: 5623032579258786825
+    second: anim_fx_explosion_soap_1
+  - first:
+      213: 2144486342374330590
+    second: anim_fx_explosion_soap_2
+  - first:
+      213: 2468547876543556124
+    second: anim_fx_explosion_soap_3
+  - first:
+      213: -4261485850554193380
+    second: anim_fx_explosion_soap_4
+  - first:
+      213: 19815271132699700
+    second: anim_fx_explosion_soap_5
+  - first:
+      213: 82102668387416005
+    second: anim_fx_explosion_soap_6
+  - first:
+      213: -4810039456172322371
+    second: anim_fx_explosion_soap_7
+  - first:
+      213: -4062374758119444908
+    second: anim_fx_explosion_soap_8
+  - first:
+      213: -4857809330979806265
+    second: anim_fx_explosion_soap_9
+  - first:
+      213: -2775593199716840639
+    second: anim_fx_explosion_soap_10
+  - first:
+      213: 6232612685006929082
+    second: anim_fx_explosion_soap_11
+  - first:
+      213: 9075277037608164972
+    second: anim_fx_explosion_soap_12
+  - first:
+      213: -5243487713005176494
+    second: anim_fx_explosion_soap_13
+  - first:
+      213: 2858425698214041204
+    second: anim_fx_explosion_soap_14
+  - first:
+      213: 6335851548985449967
+    second: anim_fx_explosion_soap_15
+  - first:
+      213: -4346137419837797660
+    second: anim_fx_explosion_soap_16
+  - first:
+      213: -8604922500883757049
+    second: anim_fx_explosion_soap_17
+  - first:
+      213: -4041150895639204180
+    second: anim_fx_explosion_soap_18
+  - first:
+      213: -1220141439479894408
+    second: anim_fx_explosion_soap_19
+  - first:
+      213: -6163847458803826782
+    second: anim_fx_explosion_soap_20
+  - first:
+      213: -3495982977434243604
+    second: anim_fx_explosion_soap_21
+  - first:
+      213: -2750857678077763737
+    second: anim_fx_explosion_soap_22
+  - first:
+      213: 8622727305323748726
+    second: anim_fx_explosion_soap_23
+  - first:
+      213: -5566241287985525139
+    second: anim_fx_explosion_soap_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_0
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 49
+        width: 77
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3acb6373f29e19d50800000000000000
+      internalID: 6742426506149412003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_1
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 81
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9042b27b656090e40800000000000000
+      internalID: 5623032579258786825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_2
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 80
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed016e667feb2cd10800000000000000
+      internalID: 2144486342374330590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_3
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 85
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1a6c6cf63b024220800000000000000
+      internalID: 2468547876543556124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_4
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 78
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1a2d5e72392cd4c0800000000000000
+      internalID: -4261485850554193380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_5
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 63
+        width: 54
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43c1ef452e5664000800000000000000
+      internalID: 19815271132699700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_6
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 47
+        width: 52
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c7f75021ffa32100800000000000000
+      internalID: 82102668387416005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_7
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 47
+        width: 76
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db15c3b699e4f3db0800000000000000
+      internalID: -4810039456172322371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_8
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 65
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ee6cd4eab8f97c0800000000000000
+      internalID: -4062374758119444908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_9
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 52
+        width: 52
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c3ee58b628959cb0800000000000000
+      internalID: -4857809330979806265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_10
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 63
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14b43e9c0bc1b79d0800000000000000
+      internalID: -2775593199716840639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_11
+      rect:
+        serializedVersion: 2
+        x: 597
+        y: 74
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abc7e681730be7650800000000000000
+      internalID: 6232612685006929082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_12
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 66
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6ed4e0026cd1fd70800000000000000
+      internalID: 9075277037608164972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_13
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 60
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 259733ac4b36b37b0800000000000000
+      internalID: -5243487713005176494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_14
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 73
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47655e6270b2ba720800000000000000
+      internalID: 2858425698214041204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_15
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 76
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fedd2ee3a677de750800000000000000
+      internalID: 6335851548985449967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_16
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 76
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ea09812b0b6fa3c0800000000000000
+      internalID: -4346137419837797660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_17
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 47
+        width: 33
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 708ce07839c259880800000000000000
+      internalID: -8604922500883757049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_18
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 59
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cae6caddba2fae7c0800000000000000
+      internalID: -4041150895639204180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_19
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 59
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87e211c43df211fe0800000000000000
+      internalID: -1220141439479894408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_20
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 64
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2afbd48c46d957aa0800000000000000
+      internalID: -6163847458803826782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_21
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 67
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ced28392106cb7fc0800000000000000
+      internalID: -3495982977434243604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_22
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 56
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76fd486348df2d9d0800000000000000
+      internalID: -2750857678077763737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_23
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 57
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67d12ec8cc41aa770800000000000000
+      internalID: 8622727305323748726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim_fx_explosion_soap_24
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 59
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6e828f2a0db0c2b0800000000000000
+      internalID: -5566241287985525139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      anim_fx_explosion_soap_0: 6742426506149412003
+      anim_fx_explosion_soap_1: 5623032579258786825
+      anim_fx_explosion_soap_10: -2775593199716840639
+      anim_fx_explosion_soap_11: 6232612685006929082
+      anim_fx_explosion_soap_12: 9075277037608164972
+      anim_fx_explosion_soap_13: -5243487713005176494
+      anim_fx_explosion_soap_14: 2858425698214041204
+      anim_fx_explosion_soap_15: 6335851548985449967
+      anim_fx_explosion_soap_16: -4346137419837797660
+      anim_fx_explosion_soap_17: -8604922500883757049
+      anim_fx_explosion_soap_18: -4041150895639204180
+      anim_fx_explosion_soap_19: -1220141439479894408
+      anim_fx_explosion_soap_2: 2144486342374330590
+      anim_fx_explosion_soap_20: -6163847458803826782
+      anim_fx_explosion_soap_21: -3495982977434243604
+      anim_fx_explosion_soap_22: -2750857678077763737
+      anim_fx_explosion_soap_23: 8622727305323748726
+      anim_fx_explosion_soap_24: -5566241287985525139
+      anim_fx_explosion_soap_3: 2468547876543556124
+      anim_fx_explosion_soap_4: -4261485850554193380
+      anim_fx_explosion_soap_5: 19815271132699700
+      anim_fx_explosion_soap_6: 82102668387416005
+      anim_fx_explosion_soap_7: -4810039456172322371
+      anim_fx_explosion_soap_8: -4062374758119444908
+      anim_fx_explosion_soap_9: -4857809330979806265
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
