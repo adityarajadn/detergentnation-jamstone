@@ -47,6 +47,8 @@ public class PlayerCombat : MonoBehaviour
     private Camera main_camera;
     private int weapon_damage_bonus = 0;
     private float fire_rate_mod = 1f;
+    private Animator hand_animator;
+    private Coroutine melee_attack_coroutine;
 
     private void Awake()
     {
@@ -61,6 +63,16 @@ public class PlayerCombat : MonoBehaviour
         ammo_comp = GetComponent<PlayerAmmo>();
         consumable_inv = GetComponent<PlayerConsumableInventory>();
         main_camera = Camera.main;
+        if (enemy_layer.value == 0)
+        {
+            enemy_layer = LayerMask.GetMask(GameConstants.Layers.Enemy);
+        }
+
+        if (hand_mount != null)
+        {
+            Transform hand = hand_mount.Find("Hand");
+            if (hand != null) hand_animator = hand.GetComponent<Animator>();
+        }
     }
 
     private void Start()
@@ -206,6 +218,7 @@ public class PlayerCombat : MonoBehaviour
         if (melee_weapon == null || active_melee_comp == null) return;
 
         next_melee_time = Time.time + melee_weapon.attack_rate;
+        string weaponName = melee_weapon.weapon_name.ToLower();
 
         if (melee_weapon.attack_sound != null)
         {
@@ -214,14 +227,58 @@ public class PlayerCombat : MonoBehaviour
         else
         {
             string swingSound = "swing_imelda";
-            string wn = melee_weapon.weapon_name.ToLower();
-            if (wn.Contains("hammer")) swingSound = "swing_hammer";
-            else if (wn.Contains("stick")) swingSound = "swing_stick";
+            if (weaponName.Contains("hammer")) swingSound = "swing_hammer";
+            else if (weaponName.Contains("stick")) swingSound = "swing_stick";
             AudioManager.PlaySFX(swingSound);
         }
 
-        Vector3 origin = melee_point != null ? melee_point.position : transform.position;
-        active_melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
+        // Trigger hand attack animation and toggle weapon attachment visual
+        string triggerName = null;
+        if (weaponName.Contains("imelda") || weaponName.Contains("curse"))
+        {
+            triggerName = "Attack_ImeldaSword";
+        }
+        else if (weaponName.Contains("mace") || weaponName.Contains("loofah"))
+        {
+            triggerName = "Attack_LoofahMace";
+        }
+
+        // For weapons without animated hand colliders, use raycast/overlap strike
+        if (triggerName == null)
+        {
+            Vector3 origin = melee_point != null ? melee_point.position : transform.position;
+            active_melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
+        }
+        else
+        {
+            if (hand_animator == null && hand_mount != null)
+            {
+                Transform hand = hand_mount.Find("Hand");
+                if (hand != null) hand_animator = hand.GetComponent<Animator>();
+            }
+
+            if (hand_animator != null)
+            {
+                hand_animator.SetTrigger(triggerName);
+            }
+
+            if (weapon_attachment != null)
+            {
+                if (melee_attack_coroutine != null) StopCoroutine(melee_attack_coroutine);
+                melee_attack_coroutine = StartCoroutine(HideWeaponDuringAttack(0.33f));
+            }
+        }
+    }
+
+    private System.Collections.IEnumerator HideWeaponDuringAttack(float duration)
+    {
+        weapon_attachment.gameObject.SetActive(false);
+        yield return new WaitForSeconds(duration);
+        if (weapon_attachment != null)
+        {
+            weapon_attachment.gameObject.SetActive(true);
+        }
+        melee_attack_coroutine = null;
     }
 
     public void Reload()
