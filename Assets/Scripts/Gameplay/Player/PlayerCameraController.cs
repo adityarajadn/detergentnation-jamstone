@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerCameraController : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class PlayerCameraController : MonoBehaviour
     public float max_y = 7f;
 
     private Vector3 current_velocity;
-    private float shake_timer = 0f;
-    private float shake_intensity = 0f;
+    private Vector3 shake_offset = Vector3.zero;
+    private Tweener shake_tweener;
 
     public static PlayerCameraController Instance { get; private set; }
 
@@ -28,12 +29,16 @@ public class PlayerCameraController : MonoBehaviour
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;
+        shake_tweener?.Kill();
     }
 
     public void Shake(float duration = 0.2f, float intensity = 0.3f)
     {
-        shake_timer = duration;
-        shake_intensity = intensity;
+        shake_tweener?.Kill();
+        shake_offset = Vector3.zero;
+        shake_tweener = DOTween.Shake(() => shake_offset, x => shake_offset = x, duration, intensity, 20, 90f, false, true)
+            .SetUpdate(true)
+            .OnComplete(() => shake_offset = Vector3.zero);
     }
 
     private void LateUpdate()
@@ -75,13 +80,7 @@ public class PlayerCameraController : MonoBehaviour
 
         Vector3 target_pos = Vector3.SmoothDamp(transform.position, desired_pos, ref current_velocity, smooth_time);
 
-        if (shake_timer > 0f)
-        {
-            shake_timer -= Time.deltaTime;
-            Vector2 offset_shake = Random.insideUnitCircle * shake_intensity;
-            target_pos.x += offset_shake.x;
-            target_pos.y += offset_shake.y;
-        }
+        target_pos += shake_offset;
 
         transform.position = target_pos;
     }
