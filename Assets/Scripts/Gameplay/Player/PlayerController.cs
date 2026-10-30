@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform visuals;
     [SerializeField] private Transform armor_mount;
     [SerializeField] private Transform jetpack_mount;
+    [SerializeField] private Transform hand_mount;
 
     [Header("Jetpack Modifiers")]
     [SerializeField] private float joyride_speed_multiplier = 1.1f;
@@ -57,6 +58,8 @@ public class PlayerController : MonoBehaviour
         transform.localScale = Vector3.one;
 
         if (visuals == null) visuals = transform.Find("Visuals");
+        if (hand_mount == null && visuals != null) hand_mount = visuals.Find("HandMount");
+        if (hand_mount == null) hand_mount = transform.Find("HandMount");
 
         if (ground_layer.value == 0)
         {
@@ -73,12 +76,27 @@ public class PlayerController : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
+    private int last_health = -1;
+    private Coroutine hit_disable_coroutine = null;
+
     private void Start()
     {
         Health hp = GetComponent<Health>();
         if (hp != null)
         {
-            hp.on_health_changed.AddListener((cur, max) => { if (cur < max && cur > 0) AudioManager.PlaySFX("player_hurt"); });
+            last_health = hp.health_current;
+            hp.on_health_changed.AddListener((cur, max) =>
+            {
+                if (last_health > 0 && cur < last_health && cur > 0)
+                {
+                    AudioManager.PlaySFX("player_hurt");
+                    if (animator != null) animator.SetTrigger("hit");
+                    if (PlayerCameraController.Instance != null) PlayerCameraController.Instance.Shake(0.2f, 0.35f);
+                    if (hit_disable_coroutine != null) StopCoroutine(hit_disable_coroutine);
+                    hit_disable_coroutine = StartCoroutine(DisableHandMountOnHit(0.25f));
+                }
+                last_health = cur;
+            });
             hp.on_death.AddListener(() => AudioManager.PlaySFX("player_death"));
         }
 
@@ -307,5 +325,13 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.35f);
             Physics2D.IgnoreLayerCollision(gameObject.layer, platform_layer, false);
         }
+    }
+
+    private IEnumerator DisableHandMountOnHit(float duration)
+    {
+        if (hand_mount != null) hand_mount.gameObject.SetActive(false);
+        yield return new WaitForSeconds(duration);
+        if (hand_mount != null) hand_mount.gameObject.SetActive(true);
+        hit_disable_coroutine = null;
     }
 }

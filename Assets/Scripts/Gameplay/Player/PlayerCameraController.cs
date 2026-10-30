@@ -15,6 +15,26 @@ public class PlayerCameraController : MonoBehaviour
     public float max_y = 7f;
 
     private Vector3 current_velocity;
+    private float shake_timer = 0f;
+    private float shake_intensity = 0f;
+
+    public static PlayerCameraController Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
+    public void Shake(float duration = 0.2f, float intensity = 0.3f)
+    {
+        shake_timer = duration;
+        shake_intensity = intensity;
+    }
 
     private void LateUpdate()
     {
@@ -53,6 +73,16 @@ public class PlayerCameraController : MonoBehaviour
         desired_pos.y = Mathf.Clamp(desired_pos.y, min_y, max_y);
         desired_pos.z = offset.z;
 
-        transform.position = Vector3.SmoothDamp(transform.position, desired_pos, ref current_velocity, smooth_time);
+        Vector3 target_pos = Vector3.SmoothDamp(transform.position, desired_pos, ref current_velocity, smooth_time);
+
+        if (shake_timer > 0f)
+        {
+            shake_timer -= Time.deltaTime;
+            Vector2 offset_shake = Random.insideUnitCircle * shake_intensity;
+            target_pos.x += offset_shake.x;
+            target_pos.y += offset_shake.y;
+        }
+
+        transform.position = target_pos;
     }
 }
