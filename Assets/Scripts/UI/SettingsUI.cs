@@ -115,25 +115,33 @@ public class SettingsUI : MonoBehaviour
     {
         if (music_volume_slider != null)
         {
-            music_volume_slider.value = PlayerPrefs.GetFloat(GameConstants.PrefKeys.MusicVolume, 0.8f);
+            float max = music_volume_slider.maxValue > 0 ? music_volume_slider.maxValue : 1f;
+            float normalized = PlayerPrefs.GetFloat(GameConstants.PrefKeys.MusicVolume, 0.8f);
+            music_volume_slider.value = normalized * max;
         }
         if (sfx_volume_slider != null)
         {
-            sfx_volume_slider.value = PlayerPrefs.GetFloat(GameConstants.PrefKeys.SfxVolume, 1f);
+            float max = sfx_volume_slider.maxValue > 0 ? sfx_volume_slider.maxValue : 1f;
+            float normalized = PlayerPrefs.GetFloat(GameConstants.PrefKeys.SfxVolume, 1f);
+            sfx_volume_slider.value = normalized * max;
         }
     }
 
     private void OnMusicVolumeChanged(float val)
     {
-        AudioManager.SetMusicVolume(val);
-        PlayerPrefs.SetFloat(GameConstants.PrefKeys.MusicVolume, val);
+        float max = music_volume_slider != null && music_volume_slider.maxValue > 0 ? music_volume_slider.maxValue : 1f;
+        float normalized = Mathf.Clamp01(val / max);
+        AudioManager.SetMusicVolume(normalized);
+        PlayerPrefs.SetFloat(GameConstants.PrefKeys.MusicVolume, normalized);
         PlayerPrefs.Save();
     }
 
     private void OnSfxVolumeChanged(float val)
     {
-        AudioManager.SetSFXVolume(val);
-        PlayerPrefs.SetFloat(GameConstants.PrefKeys.SfxVolume, val);
+        float max = sfx_volume_slider != null && sfx_volume_slider.maxValue > 0 ? sfx_volume_slider.maxValue : 1f;
+        float normalized = Mathf.Clamp01(val / max);
+        AudioManager.SetSFXVolume(normalized);
+        PlayerPrefs.SetFloat(GameConstants.PrefKeys.SfxVolume, normalized);
         PlayerPrefs.Save();
     }
 
