@@ -140,4 +140,9 @@ MonoBehaviour:
   price: 100
   sr: {fileID: 3976471502592068613}
   soap_bomb_projectile_prefab: {fileID: 88275635079728158, guid: 9ad958ec61fdcc14aae9c9002b8b98f2, type: 3}
-  throw_impulse: {x: 10, y: 6}
+  max_throw_distance: 8
+  arc_height: 2.5
+  flight_duration: 0.55
+  obstacle_mask:
+    serializedVersion: 2
+    m_Bits: 64

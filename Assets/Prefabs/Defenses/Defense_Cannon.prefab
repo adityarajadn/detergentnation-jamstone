@@ -153,7 +153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -199,8 +199,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[E] FIRE CANNON'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -406,6 +406,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1756414634383236430}
     m_Modifications:
+    - target: {fileID: 639770383128973709, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+    - target: {fileID: 639770383128973709, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
     - target: {fileID: 4675019859166719404, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
       propertyPath: m_Name
       value: UI_HealthBar_World
@@ -488,6 +496,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839930890605476205, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100841707566948724, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100841707566948724, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -210,7 +210,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -256,8 +256,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[F] RESTOCK AMMO'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -853,7 +853,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -899,8 +899,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[F] REPAIR BASE'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -980,6 +980,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 472754311022914928}
     m_Modifications:
+    - target: {fileID: 639770383128973709, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+    - target: {fileID: 639770383128973709, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
     - target: {fileID: 639770383128973709, guid: 66f8c3ca3a37fbb4896d9fa3995955e0, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901

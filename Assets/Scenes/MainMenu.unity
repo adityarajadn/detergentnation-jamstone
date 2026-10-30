@@ -705,8 +705,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'CANDY: 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1468,8 +1468,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DETERGENTNATION
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1814,8 +1814,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DEFEND RnA MART'S ICE CREAM FROM ALIEN INVADERS!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
