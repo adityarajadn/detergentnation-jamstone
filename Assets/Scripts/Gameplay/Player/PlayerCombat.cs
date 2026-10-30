@@ -184,11 +184,11 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string shootSound = "shoot_water_pistol";
+            string shootSound = "pistol_shoot";
             string wn = ranged_weapon.weapon_name.ToLower();
-            if (wn.Contains("rifle")) shootSound = "shoot_water_rifle";
-            else if (wn.Contains("plasma")) shootSound = "shoot_water_plasma";
-            else if (wn.Contains("bubble")) shootSound = "shoot_bubble_gun";
+            if (wn.Contains("rifle")) shootSound = "rifle_loop";
+            else if (wn.Contains("plasma")) shootSound = "plasma_shoot";
+            else if (wn.Contains("bubble")) shootSound = "bubble_shoot";
             AudioManager.PlaySFX(shootSound);
         }
 
@@ -213,10 +213,10 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string swingSound = "swing_curse_sword";
+            string swingSound = "swing_imelda";
             string wn = melee_weapon.weapon_name.ToLower();
-            if (wn.Contains("hammer")) swingSound = "swing_soap_hammer";
-            else if (wn.Contains("stick")) swingSound = "swing_bubble_stick";
+            if (wn.Contains("hammer")) swingSound = "swing_hammer";
+            else if (wn.Contains("stick")) swingSound = "swing_stick";
             AudioManager.PlaySFX(swingSound);
         }
 

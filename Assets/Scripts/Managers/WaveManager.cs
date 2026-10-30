@@ -63,7 +63,7 @@ public class WaveManager : MonoBehaviour
                 }
                 else
                 {
-                    AudioManager.PlaySFX("huge_wave_alarm");
+                    AudioManager.PlaySFX("huge_wave_incoming");
                 }
                 if (on_huge_wave_alert != null)
                 {

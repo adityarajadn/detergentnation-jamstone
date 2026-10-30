@@ -17,7 +17,7 @@ public class ConsumableFirstAidKit : ConsumableBase
         if (hp == null) return false;
 
         hp.Heal(heal_amount);
-        AudioManager.PlaySFX("consumable_healing");
+        AudioManager.PlaySFX("player_heal");
         return true;
     }
 }

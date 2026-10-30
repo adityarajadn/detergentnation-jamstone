@@ -48,7 +48,7 @@ public class DefenseObject : MonoBehaviour
             health.on_health_changed.AddListener((cur, max) => {
                 if (cur < max && cur > 0 && defense_data != null && defense_data.defense_name.Contains("Fence"))
                 {
-                    AudioManager.PlaySFX("fence_hurt");
+                    AudioManager.PlaySFX("fence_damage");
                 }
             });
         }
@@ -234,7 +234,7 @@ public class DefenseObject : MonoBehaviour
     public void TriggerTrap()
     {
         if (defense_data == null) return;
-        AudioManager.PlaySFX("trap_trigger");
+        AudioManager.PlaySFX("balloon_pop");
 
         if (defense_data.defense_type == DefenseType.SingleUse)
         {

@@ -32,7 +32,7 @@ public class MainMenuUI : MonoBehaviour
         }
 
         UpdateCandyDisplay();
-        AudioManager.PlayMusic("main_menu_bgm");
+        AudioManager.PlayMusic("(main menu) into the sleeping bin");
     }
 
     private void SetupCreditsPanel()
@@ -56,7 +56,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void CloseCredits()
     {
-        AudioManager.PlaySFX("title_select");
+        AudioManager.PlaySFX("ui_click");
         if (credits_modal != null)
         {
             credits_modal.DOKill();
@@ -85,19 +85,19 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnPlayClicked()
     {
-        AudioManager.PlaySFX("game_start");
+        AudioManager.PlaySFX("gamestart");
         SceneLoader.LoadLevelSelect();
     }
 
     private void OnShopClicked()
     {
-        AudioManager.PlaySFX("title_select");
+        AudioManager.PlaySFX("ui_click");
         SceneLoader.LoadShop();
     }
 
     private void OnSettingsClicked()
     {
-        AudioManager.PlaySFX("title_select");
+        AudioManager.PlaySFX("ui_click");
         if (settings_panel != null)
         {
             settings_panel.SetActive(true);
@@ -110,7 +110,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnCreditsClicked()
     {
-        AudioManager.PlaySFX("title_select");
+        AudioManager.PlaySFX("ui_click");
         if (credits_panel != null)
         {
             if (!credits_panel.activeSelf)
@@ -133,7 +133,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnExitClicked()
     {
-        AudioManager.PlaySFX("title_select");
+        AudioManager.PlaySFX("ui_click");
         Application.Quit();
     }
 }

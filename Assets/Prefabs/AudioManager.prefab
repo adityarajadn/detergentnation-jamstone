@@ -49,35 +49,146 @@ MonoBehaviour:
   sfx_source: {fileID: 7188688395586860132}
   bgm_source: {fileID: 3062101998334378711}
   audio_library:
-  - sound_id: title_select
-    clip: {fileID: 0}
+  - sound_id: balloon_inflate
+    clip: {fileID: 8300000, guid: 0294a8874753d614ebe23dc29835acc4, type: 3}
     volume: 1
-  - sound_id: game_start
-    clip: {fileID: 0}
+  - sound_id: balloon_pop
+    clip: {fileID: 8300000, guid: 97dd8e64a9e48be419c27d08c2cbae3a, type: 3}
     volume: 1
-  - sound_id: scene_transition
-    clip: {fileID: 0}
+  - sound_id: barrel_break
+    clip: {fileID: 8300000, guid: 1e976b162c22de340a3e1520c286b75a, type: 3}
     volume: 1
-  - sound_id: purchase
-    clip: {fileID: 0}
+  - sound_id: barrel_roll
+    clip: {fileID: 8300000, guid: af0cbb57e8d94d046aca5ff136ae6ebd, type: 3}
     volume: 1
-  - sound_id: player_hurt
-    clip: {fileID: 8300000, guid: 73419c7dcdbeed443b09454ac0a3d731, type: 3}
+  - sound_id: base_hit
+    clip: {fileID: 8300000, guid: b30d826e0b45614469dcc96d97a7c11c, type: 3}
+    volume: 1
+  - sound_id: bubble_shoot
+    clip: {fileID: 8300000, guid: 5890b9480c097e840b481b16776290aa, type: 3}
+    volume: 1
+  - sound_id: cannon_fire
+    clip: {fileID: 8300000, guid: 76f97840b27fccf49b73bf7fe7b2d503, type: 3}
+    volume: 1
+  - sound_id: cannon_impact
+    clip: {fileID: 8300000, guid: 82f46e8ebf0f0684d854827100f61c82, type: 3}
+    volume: 1
+  - sound_id: cloak
+    clip: {fileID: 8300000, guid: 668819ead67b6a846abadde87e6d9e97, type: 3}
+    volume: 1
+  - sound_id: enemy_attack
+    clip: {fileID: 8300000, guid: bcb72d7f161ac624590cf3143656856d, type: 3}
+    volume: 1
+  - sound_id: enemy_death
+    clip: {fileID: 8300000, guid: 03f437f19c5df7145abb9069095bcb0d, type: 3}
+    volume: 1
+  - sound_id: enemy_footstep
+    clip: {fileID: 8300000, guid: cc01d5e453d7ff14e93ab30011d1c863, type: 3}
+    volume: 1
+  - sound_id: enemy_hurt
+    clip: {fileID: 8300000, guid: f169df2386fe3374fb64091871f96674, type: 3}
+    volume: 1
+  - sound_id: fence_break
+    clip: {fileID: 8300000, guid: be7a692c9e5c4624f8d47daf96edfe95, type: 3}
+    volume: 1
+  - sound_id: fence_damage
+    clip: {fileID: 8300000, guid: 1d95349b966181043b3e0db4cd27b82a, type: 3}
+    volume: 1
+  - sound_id: fence_place
+    clip: {fileID: 8300000, guid: 104c6a2848cdbbe42b15fb9a0958e22c, type: 3}
+    volume: 1
+  - sound_id: gamestart
+    clip: {fileID: 8300000, guid: 532aa273b6023c748a5540fbaeb31970, type: 3}
+    volume: 1
+  - sound_id: hit_hammer
+    clip: {fileID: 8300000, guid: 8c538d6a7413f714b81f264dab62ec40, type: 3}
+    volume: 1
+  - sound_id: hit_imelda
+    clip: {fileID: 8300000, guid: c186ae8d7dfef3348a8c3e6c3286791c, type: 3}
+    volume: 1
+  - sound_id: hit_stick
+    clip: {fileID: 8300000, guid: e67381370eddc7845b52368197f7ca45, type: 3}
+    volume: 1
+  - sound_id: huge_wave_incoming
+    clip: {fileID: 8300000, guid: a023a7f821428144391536cd99a250c8, type: 3}
+    volume: 1
+  - sound_id: jetpack
+    clip: {fileID: 8300000, guid: 92a9298f86ad2e44b97d159096afc595, type: 3}
+    volume: 1
+  - sound_id: jingle_win
+    clip: {fileID: 8300000, guid: 4695438437715814a8f5058387a8d456, type: 3}
+    volume: 1
+  - sound_id: (ingame battle) battle! Wazeel!
+    clip: {fileID: 8300000, guid: f7316cd42036c1e468cfbce0b7700d14, type: 3}
+    volume: 1
+  - sound_id: (main menu) into the sleeping bin
+    clip: {fileID: 8300000, guid: ca2b8c62ea271354faeee601d05e024d, type: 3}
+    volume: 1
+  - sound_id: pistol_shoot
+    clip: {fileID: 8300000, guid: 66d12e8a56814d642820b73e9979a153, type: 3}
+    volume: 1
+  - sound_id: plasma_shoot
+    clip: {fileID: 8300000, guid: fbc1137ffe0586247b2dbacc89ab1819, type: 3}
     volume: 1
   - sound_id: player_death
     clip: {fileID: 8300000, guid: e3647d38f68f2bd48a0b837fd0614ccd, type: 3}
     volume: 1
+  - sound_id: player_drink
+    clip: {fileID: 8300000, guid: 9824fcaad871fd04a9b000007b3221bd, type: 3}
+    volume: 1
+  - sound_id: player_heal
+    clip: {fileID: 8300000, guid: e6b7781402e6f2047b75b4ac8dc81d66, type: 3}
+    volume: 1
+  - sound_id: player_hurt
+    clip: {fileID: 8300000, guid: 73419c7dcdbeed443b09454ac0a3d731, type: 3}
+    volume: 1
+  - sound_id: purchase
+    clip: {fileID: 8300000, guid: 49bc03a1d4e6be6499a6fc01e2d7bdff, type: 3}
+    volume: 1
+  - sound_id: repair
+    clip: {fileID: 8300000, guid: 0089d7ba36d488040b666052757ebc55, type: 3}
+    volume: 1
+  - sound_id: rifle_loop
+    clip: {fileID: 8300000, guid: 6272b21b0fd2e0b488f8112ab18eafb6, type: 3}
+    volume: 1
+  - sound_id: swing_hammer
+    clip: {fileID: 8300000, guid: 1860c7b4f48ff054e91ff4c78824916d, type: 3}
+    volume: 1
+  - sound_id: swing_imelda
+    clip: {fileID: 8300000, guid: af32861d043704c4a9f2172c80826785, type: 3}
+    volume: 1
+  - sound_id: swing_stick
+    clip: {fileID: 8300000, guid: 47872943e066ae046afffd703f1d022d, type: 3}
+    volume: 1
+  - sound_id: ui_click
+    clip: {fileID: 8300000, guid: a6fb6af02945cae418045addc656d6e2, type: 3}
+    volume: 1
+  - sound_id: ui_transition
+    clip: {fileID: 8300000, guid: 9c25b13bd35ed7b48897655127801265, type: 3}
+    volume: 1
+  - sound_id: whistle_blow
+    clip: {fileID: 8300000, guid: a17dc7026e306b24fbab2f761d746690, type: 3}
+    volume: 1
+  - sound_id: title_select
+    clip: {fileID: 8300000, guid: a6fb6af02945cae418045addc656d6e2, type: 3}
+    volume: 1
+  - sound_id: game_start
+    clip: {fileID: 8300000, guid: 532aa273b6023c748a5540fbaeb31970, type: 3}
+    volume: 1
+  - sound_id: scene_transition
+    clip: {fileID: 8300000, guid: 9c25b13bd35ed7b48897655127801265, type: 3}
+    volume: 1
   - sound_id: shoot_water_pistol
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 66d12e8a56814d642820b73e9979a153, type: 3}
     volume: 1
   - sound_id: shoot_water_rifle
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6272b21b0fd2e0b488f8112ab18eafb6, type: 3}
     volume: 1
   - sound_id: shoot_water_plasma
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: fbc1137ffe0586247b2dbacc89ab1819, type: 3}
     volume: 1
   - sound_id: shoot_bubble_gun
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 5890b9480c097e840b481b16776290aa, type: 3}
     volume: 1
   - sound_id: swing_soap_hammer
     clip: {fileID: 8300000, guid: 1860c7b4f48ff054e91ff4c78824916d, type: 3}
@@ -97,71 +208,38 @@ MonoBehaviour:
   - sound_id: hit_curse_sword
     clip: {fileID: 8300000, guid: c186ae8d7dfef3348a8c3e6c3286791c, type: 3}
     volume: 1
-  - sound_id: enemy_attack
-    clip: {fileID: 8300000, guid: bcb72d7f161ac624590cf3143656856d, type: 3}
-    volume: 1
-  - sound_id: enemy_hurt
-    clip: {fileID: 8300000, guid: f169df2386fe3374fb64091871f96674, type: 3}
-    volume: 1
-  - sound_id: enemy_death
-    clip: {fileID: 8300000, guid: 03f437f19c5df7145abb9069095bcb0d, type: 3}
-    volume: 1
-  - sound_id: enemy_footstep
-    clip: {fileID: 8300000, guid: cc01d5e453d7ff14e93ab30011d1c863, type: 3}
-    volume: 1
-  - sound_id: fence_place
-    clip: {fileID: 0}
-    volume: 1
   - sound_id: fence_hurt
-    clip: {fileID: 0}
-    volume: 1
-  - sound_id: fence_break
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 1d95349b966181043b3e0db4cd27b82a, type: 3}
     volume: 1
   - sound_id: trap_set
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 0294a8874753d614ebe23dc29835acc4, type: 3}
     volume: 1
   - sound_id: trap_trigger
-    clip: {fileID: 0}
-    volume: 1
-  - sound_id: barrel_roll
-    clip: {fileID: 8300000, guid: af0cbb57e8d94d046aca5ff136ae6ebd, type: 3}
-    volume: 1
-  - sound_id: barrel_break
-    clip: {fileID: 8300000, guid: 1e976b162c22de340a3e1520c286b75a, type: 3}
-    volume: 1
-  - sound_id: cannon_fire
-    clip: {fileID: 0}
-    volume: 1
-  - sound_id: cannon_impact
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 97dd8e64a9e48be419c27d08c2cbae3a, type: 3}
     volume: 1
   - sound_id: consumable_healing
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: e6b7781402e6f2047b75b4ac8dc81d66, type: 3}
     volume: 1
   - sound_id: consumable_drink
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 9824fcaad871fd04a9b000007b3221bd, type: 3}
     volume: 1
   - sound_id: consumable_whistle
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: a17dc7026e306b24fbab2f761d746690, type: 3}
     volume: 1
   - sound_id: consumable_repair
     clip: {fileID: 8300000, guid: 0089d7ba36d488040b666052757ebc55, type: 3}
     volume: 1
   - sound_id: huge_wave_alarm
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: a023a7f821428144391536cd99a250c8, type: 3}
     volume: 1
   - sound_id: victory
-    clip: {fileID: 0}
-    volume: 1
-  - sound_id: defeat
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4695438437715814a8f5058387a8d456, type: 3}
     volume: 1
   - sound_id: main_menu_bgm
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: ca2b8c62ea271354faeee601d05e024d, type: 3}
     volume: 1
   - sound_id: ingame_bgm
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: f7316cd42036c1e468cfbce0b7700d14, type: 3}
     volume: 1
 --- !u!82 &7188688395586860132
 AudioSource:

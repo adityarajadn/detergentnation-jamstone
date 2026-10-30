@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.PlayMusic("ingame_bgm");
+        AudioManager.PlayMusic("(ingame battle) battle! Wazeel!");
 
         int level_to_load = GameManager.selected_level;
         if (level_database.Count > 0)
@@ -119,7 +119,7 @@ public class LevelManager : MonoBehaviour
         {
             on_victory.Invoke(stars_earned);
         }
-        AudioManager.PlaySFX("victory");
+        AudioManager.PlaySFX("jingle_win");
     }
 
     private void OnLevelDefeat()

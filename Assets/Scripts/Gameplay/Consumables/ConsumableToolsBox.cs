@@ -21,7 +21,7 @@ public class ConsumableToolsBox : ConsumableBase
             Minimarket.instance.health.Heal(minimarket_heal);
         }
 
-        AudioManager.PlaySFX("consumable_repair");
+        AudioManager.PlaySFX("repair");
         return true;
     }
 }
