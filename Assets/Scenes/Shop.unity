@@ -5827,7 +5827,7 @@ MonoBehaviour:
     category: 1
     price: 0
     description: Default Melee
-    preview_sprite: {fileID: -1623473015967106143, guid: e781704b8b883894db60925505dee581, type: 3}
+    preview_sprite: {fileID: -792859449625526860, guid: a84423f87899ca24cae6e772eb13a17b, type: 3}
     preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 546118750}
@@ -5919,7 +5919,7 @@ MonoBehaviour:
     category: 0
     price: 0
     description: Default Ranged
-    preview_sprite: {fileID: 5155931684246573122, guid: 4f285a607cc975a4d809c7560f1c20fa, type: 3}
+    preview_sprite: {fileID: -6768715193755453775, guid: 045e5d184f50d8f4382a6cda951c2c53, type: 3}
     preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 521338319}
@@ -5958,7 +5958,7 @@ MonoBehaviour:
     category: 0
     price: 140
     description: Burst Water Rifle
-    preview_sprite: {fileID: -4063907178696340972, guid: 656462060d7ff8349823c7f0f72d297a, type: 3}
+    preview_sprite: {fileID: 8609919863068727619, guid: 4b659eb4244014c43bf58955cb8283c3, type: 3}
     preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1405980843}
@@ -5997,7 +5997,7 @@ MonoBehaviour:
     category: 0
     price: 220
     description: High Damage Plasma
-    preview_sprite: {fileID: -8101358149945422605, guid: 3990fd47d2e174c4ba576d285e22546c, type: 3}
+    preview_sprite: {fileID: 4678784114830581866, guid: 4689753d69a638841b48ceda54f1b2d3, type: 3}
     preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 360880881}
@@ -6036,7 +6036,7 @@ MonoBehaviour:
     category: 0
     price: 140
     description: Bubble Mines (50 Mag)
-    preview_sprite: {fileID: 7063848755993852908, guid: 5ff2f6c6d9197ae4387b8b72abc339a8, type: 3}
+    preview_sprite: {fileID: 877903833251634843, guid: ef85b03cc8d2d614f9f34b1978266424, type: 3}
     preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1017560070}
@@ -12915,7 +12915,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8101358149945422605, guid: 3990fd47d2e174c4ba576d285e22546c, type: 3}
+  m_Sprite: {fileID: 4678784114830581866, guid: 4689753d69a638841b48ceda54f1b2d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -14552,7 +14552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1623473015967106143, guid: e781704b8b883894db60925505dee581, type: 3}
+  m_Sprite: {fileID: -792859449625526860, guid: a84423f87899ca24cae6e772eb13a17b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -18912,7 +18912,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5155931684246573122, guid: 4f285a607cc975a4d809c7560f1c20fa, type: 3}
+  m_Sprite: {fileID: -6768715193755453775, guid: 045e5d184f50d8f4382a6cda951c2c53, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -22809,7 +22809,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4063907178696340972, guid: 656462060d7ff8349823c7f0f72d297a, type: 3}
+  m_Sprite: {fileID: 8609919863068727619, guid: 4b659eb4244014c43bf58955cb8283c3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -41714,7 +41714,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7063848755993852908, guid: 5ff2f6c6d9197ae4387b8b72abc339a8, type: 3}
+  m_Sprite: {fileID: 877903833251634843, guid: ef85b03cc8d2d614f9f34b1978266424, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

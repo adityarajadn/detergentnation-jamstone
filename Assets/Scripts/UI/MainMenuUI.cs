@@ -32,6 +32,7 @@ public class MainMenuUI : MonoBehaviour
         }
 
         UpdateCandyDisplay();
+        AudioManager.PlayMusic("main_menu_bgm");
     }
 
     private void SetupCreditsPanel()

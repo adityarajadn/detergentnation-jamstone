@@ -224,6 +224,7 @@ public class PlayerController : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * 1.05f);
                 can_double_jump = false;
+                AudioManager.PlaySFX("jetpack");
             }
         }
 

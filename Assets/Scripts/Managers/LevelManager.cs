@@ -32,6 +32,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.PlayMusic("ingame_bgm");
+
         int level_to_load = GameManager.selected_level;
         if (level_database.Count > 0)
         {
