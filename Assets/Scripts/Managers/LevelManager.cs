@@ -63,7 +63,18 @@ public class LevelManager : MonoBehaviour
 
         if (player_health != null)
         {
-            player_health.on_death.AddListener(OnLevelDefeat);
+            // Player death sequence will invoke OnLevelDefeat after animation and equipment fling finish
+            player_health.on_death.AddListener(() =>
+            {
+                if (PlayerController.Instance != null)
+                {
+                    PlayerController.Instance.TriggerDeathSequence(OnLevelDefeat);
+                }
+                else
+                {
+                    OnLevelDefeat();
+                }
+            });
         }
 
         if (Minimarket.instance != null && Minimarket.instance.health != null)

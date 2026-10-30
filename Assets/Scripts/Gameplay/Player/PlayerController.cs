@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,6 +44,8 @@ public class PlayerController : MonoBehaviour
     public float MoveInput => move_input;
     private float speed_boost_multiplier = 1f;
     private Coroutine speed_boost_coroutine = null;
+    private bool is_dying = false;
+    public bool IsDying => is_dying;
 
     private void Awake()
     {
@@ -180,6 +185,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (is_dying) return;
         CheckGround();
         ApplyMovement();
     }
@@ -187,6 +193,7 @@ public class PlayerController : MonoBehaviour
     private void ReadInput()
     {
         move_input = 0f;
+        if (is_dying) return;
         if (Time.timeScale == 0f) return;
         if (LevelManager.instance != null)
         {
@@ -333,5 +340,76 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         if (hand_mount != null) hand_mount.gameObject.SetActive(true);
         hit_disable_coroutine = null;
+    }
+
+    public void TriggerDeathSequence(Action on_complete)
+    {
+        if (is_dying) return;
+        is_dying = true;
+        StartCoroutine(DeathSequenceCoroutine(on_complete));
+    }
+
+    private IEnumerator DeathSequenceCoroutine(Action on_complete)
+    {
+        if (hit_disable_coroutine != null)
+        {
+            StopCoroutine(hit_disable_coroutine);
+            hit_disable_coroutine = null;
+        }
+
+        // Disable weapons aiming & combat
+        PlayerWeaponAim pwa = GetComponent<PlayerWeaponAim>();
+        if (pwa != null) pwa.enabled = false;
+        PlayerCombat pc = GetComponent<PlayerCombat>();
+        if (pc != null) pc.enabled = false;
+
+        // Stop player physical movement
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        // Collect equipment to fling off
+        List<Transform> items_to_drop = new List<Transform>();
+
+        if (active_armor != null) items_to_drop.Add(active_armor.transform);
+        else if (armor_mount != null && armor_mount.childCount > 0) items_to_drop.Add(armor_mount.GetChild(0));
+
+        if (active_jetpack != null) items_to_drop.Add(active_jetpack.transform);
+        else if (jetpack_mount != null && jetpack_mount.childCount > 0) items_to_drop.Add(jetpack_mount.GetChild(0));
+
+        if (hand_mount != null)
+        {
+            hand_mount.gameObject.SetActive(true);
+            items_to_drop.Add(hand_mount);
+        }
+
+        // Fling each item using DOTween
+        float ground_y = transform.position.y - 0.45f;
+        for (int i = 0; i < items_to_drop.Count; i++)
+        {
+            Transform item = items_to_drop[i];
+            if (item == null) continue;
+
+            item.SetParent(null, true);
+
+            float dir_x = (i % 2 == 0 ? 1f : -1f) * UnityEngine.Random.Range(1.2f, 2.2f);
+            Vector3 drop_target = new Vector3(item.position.x + dir_x, ground_y, item.position.z);
+
+            // Pop up arc and rotate towards ground
+            item.DOJump(drop_target, jumpPower: 1.2f, numJumps: 1, duration: 0.65f)
+                .SetEase(Ease.OutQuad);
+            item.DORotate(new Vector3(0f, 0f, UnityEngine.Random.Range(-90f, 90f)), 0.65f)
+                .SetEase(Ease.OutQuad);
+        }
+
+        // Trigger Death animation
+        if (animator != null)
+        {
+            animator.SetTrigger("death");
+        }
+
+        // Wait for fling and death animation to complete
+        yield return new WaitForSeconds(1.1f);
+
+        on_complete?.Invoke();
     }
 }
