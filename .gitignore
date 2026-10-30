@@ -69,3 +69,9 @@ ai-assistant/
 .assistant/
 *ai-assistant*
 *ai_assistant*
+
+# Class Diagram Generator
+/[Aa]ssets/ClassDiagramGenerator/
+/[Aa]ssets/ClassDiagramGenerator.meta
+/[Aa]ssets/ClassDiagramGeneratorOutput/
+/[Aa]ssets/ClassDiagramGeneratorOutput.meta
