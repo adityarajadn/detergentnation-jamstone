@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   move_speed: 6
-  jump_force: 12.5
+  jump_force: 15
   equipped_jetpack: None
   equipped_armor: None
   armor_prefabs:

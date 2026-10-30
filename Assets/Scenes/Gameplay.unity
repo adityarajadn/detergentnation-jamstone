@@ -970,13 +970,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraController
   target: {fileID: 891089731}
   smooth_time: 0.25
-  max_look_ahead_x: 3.5
-  max_look_ahead_y: 2
+  max_look_ahead_x: 2
+  max_look_ahead_y: 1.2
   offset: {x: 0, y: 1, z: -10}
-  min_x: -13
-  max_x: 13
+  min_x: -4.5
+  max_x: 4.5
   min_y: -1
-  max_y: 7
+  max_y: 3.5
 --- !u!81 &240471646
 AudioListener:
   m_ObjectHideFlags: 0
