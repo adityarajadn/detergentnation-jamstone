@@ -73,4 +73,37 @@ public static class GameConstants
         public const string JetpackJoyride = "Joyride";
         public const string JetpackVengeance = "I am Vengeance";
     }
+
+    public static class AudioKeys
+    {
+        public const string MusicMainMenu = "(main menu) into the sleeping bin";
+        public const string MusicInGameBattle = "(ingame battle) battle! Wazeel!";
+        public const string GameStart = "gamestart";
+        public const string UiClick = "ui_click";
+        public const string UiTransition = "ui_transition";
+        public const string Purchase = "purchase";
+        public const string Defeat = "defeat";
+        public const string JingleWin = "jingle_win";
+        public const string HugeWaveIncoming = "huge_wave_incoming";
+        public const string PlayerHurt = "player_hurt";
+        public const string PlayerDeath = "player_death";
+        public const string PlayerHeal = "player_heal";
+        public const string PlayerDrink = "player_drink";
+        public const string Jetpack = "jetpack";
+        public const string EnemyAttack = "enemy_attack";
+        public const string EnemyHurt = "enemy_hurt";
+        public const string EnemyDeath = "enemy_death";
+        public const string BaseHit = "base_hit";
+        public const string FenceDamage = "fence_damage";
+        public const string FenceBreak = "fence_break";
+        public const string FencePlace = "fence_place";
+        public const string BalloonPop = "balloon_pop";
+        public const string BalloonInflate = "balloon_inflate";
+        public const string BarrelRoll = "barrel_roll";
+        public const string BarrelBreak = "barrel_break";
+        public const string CannonFire = "cannon_fire";
+        public const string WhistleBlow = "whistle_blow";
+        public const string Repair = "repair";
+        public const string HitImelda = "hit_imelda";
+    }
 }

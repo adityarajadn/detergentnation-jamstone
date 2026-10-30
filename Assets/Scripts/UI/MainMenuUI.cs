@@ -32,7 +32,7 @@ public class MainMenuUI : MonoBehaviour
         }
 
         UpdateCandyDisplay();
-        AudioManager.PlayMusic("(main menu) into the sleeping bin");
+        AudioManager.PlayMusic(GameConstants.AudioKeys.MusicMainMenu);
     }
 
     private void SetupCreditsPanel()
@@ -56,7 +56,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void CloseCredits()
     {
-        AudioManager.PlaySFX("ui_click");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.UiClick);
         if (credits_modal != null)
         {
             credits_modal.DOKill();
@@ -85,19 +85,19 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnPlayClicked()
     {
-        AudioManager.PlaySFX("gamestart");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.GameStart);
         SceneLoader.LoadLevelSelect();
     }
 
     private void OnShopClicked()
     {
-        AudioManager.PlaySFX("ui_click");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.UiClick);
         SceneLoader.LoadShop();
     }
 
     private void OnSettingsClicked()
     {
-        AudioManager.PlaySFX("ui_click");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.UiClick);
         if (settings_panel != null)
         {
             settings_panel.SetActive(true);
@@ -110,7 +110,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnCreditsClicked()
     {
-        AudioManager.PlaySFX("ui_click");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.UiClick);
         if (credits_panel != null)
         {
             if (!credits_panel.activeSelf)
@@ -133,7 +133,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnExitClicked()
     {
-        AudioManager.PlaySFX("ui_click");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.UiClick);
         Application.Quit();
     }
 }

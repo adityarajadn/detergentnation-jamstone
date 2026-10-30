@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         {
             on_candy_changed.Invoke(candy_total);
         }
-        AudioManager.PlaySFX("purchase");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.Purchase);
         return true;
     }
 

@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.PlayMusic("(ingame battle) battle! Wazeel!");
+        AudioManager.PlayMusic(GameConstants.AudioKeys.MusicInGameBattle);
 
         int level_to_load = GameManager.selected_level;
         if (level_database.Count > 0)
@@ -119,7 +119,7 @@ public class LevelManager : MonoBehaviour
         {
             on_victory.Invoke(stars_earned);
         }
-        AudioManager.PlaySFX("jingle_win");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.JingleWin);
     }
 
     private void OnLevelDefeat()
@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
         {
             on_defeat.Invoke();
         }
-        AudioManager.PlaySFX("defeat");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.Defeat);
     }
 
     private int CalculateStars()
@@ -189,24 +189,28 @@ public class LevelManager : MonoBehaviour
         SceneLoader.LoadMainMenu();
     }
 
+    private const string EnvironmentRootName = "Environment_Root";
+    private const string ParallaxBackgroundName = "ParallaxBackground";
+    private const string GridName = "Grid";
+
     private void SetupEnvironment()
     {
         if (active_level_data == null || active_level_data.environment_prefab == null) return;
 
-        GameObject existingEnv = GameObject.Find("Environment_Root");
+        GameObject existingEnv = GameObject.Find(EnvironmentRootName);
         if (existingEnv != null)
         {
             Destroy(existingEnv);
         }
         else
         {
-            GameObject pb = GameObject.Find("ParallaxBackground");
+            GameObject pb = GameObject.Find(ParallaxBackgroundName);
             if (pb != null) Destroy(pb);
-            GameObject grid = GameObject.Find("Grid");
+            GameObject grid = GameObject.Find(GridName);
             if (grid != null) Destroy(grid);
         }
 
         GameObject envInstance = Instantiate(active_level_data.environment_prefab, Vector3.zero, Quaternion.identity);
-        envInstance.name = "Environment_Root";
+        envInstance.name = EnvironmentRootName;
     }
 }
