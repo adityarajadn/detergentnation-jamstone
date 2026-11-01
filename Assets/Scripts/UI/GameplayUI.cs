@@ -32,6 +32,7 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private TMP_Text wave_text;
     [SerializeField] private GameObject huge_wave_banner;
     [SerializeField] private TMP_Text break_timer_text;
+    [SerializeField] private Slider wave_progress_slider;
 
     [Header("Planning Phase")]
     [SerializeField] private GameObject planning_panel;
@@ -401,6 +402,14 @@ public class GameplayUI : MonoBehaviour
         if (wave_text != null)
         {
             wave_text.text = "Wave " + current_wave + " / " + total_waves;
+        }
+
+        if (wave_progress_slider != null)
+        {
+            wave_progress_slider.minValue = 0;
+            wave_progress_slider.maxValue = total_waves;
+            wave_progress_slider.wholeNumbers = true;
+            wave_progress_slider.value = current_wave;
         }
     }
 
