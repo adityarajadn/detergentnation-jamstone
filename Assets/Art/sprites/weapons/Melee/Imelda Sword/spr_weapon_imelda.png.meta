@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5e1690ed1e6825a4e97bb486cebb9574
+guid: 6ba6d5bc3aded7c4b8f161aa88e0da9c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4903066360460400065
-    second: imelda_sword_0
+      213: 9010560868807495507
+    second: spr_weapon_imelda_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: imelda_sword_0
+      name: spr_weapon_imelda_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 0
-        width: 20
-        height: 48
+        x: 5
+        y: 5
+        width: 74
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1c5d86590e03b0440800000000000000
-      internalID: 4903066360460400065
+      spriteID: 35f4e44ce51fb0d70800000000000000
+      internalID: 9010560868807495507
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      imelda_sword_0: 4903066360460400065
+      spr_weapon_imelda_0: 9010560868807495507
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

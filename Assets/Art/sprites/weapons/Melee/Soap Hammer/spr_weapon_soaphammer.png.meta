@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f8530e649a563e64b80c116a22297cd5
+guid: 1520277e6016ce2428705384792f1441
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3501964041665983907
-    second: soap_hammer_0
+      213: 8139947380414667663
+    second: spr_weapon_soaphammer_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: soap_hammer_0
+      name: spr_weapon_soaphammer_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 34
-        height: 35
+        width: 96
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3a531bfddb9799030800000000000000
-      internalID: 3501964041665983907
+      spriteID: f8bdcf3e307e6f070800000000000000
+      internalID: 8139947380414667663
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      soap_hammer_0: 3501964041665983907
+      spr_weapon_soaphammer_0: 8139947380414667663
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

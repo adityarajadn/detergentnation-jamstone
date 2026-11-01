@@ -238,9 +238,9 @@ public class PlayerCombat : MonoBehaviour
         {
             triggerName = "Attack_ImeldaSword";
         }
-        else if (weaponName.Contains("mace") || weaponName.Contains("loofah"))
+        else if (weaponName.Contains("hammer") || weaponName.Contains("soap"))
         {
-            triggerName = "Attack_LoofahMace";
+            triggerName = "Attack_SoapHammer";
         }
 
         // For weapons without animated hand colliders, use raycast/overlap strike
