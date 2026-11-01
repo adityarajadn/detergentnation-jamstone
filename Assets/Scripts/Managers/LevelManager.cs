@@ -94,8 +94,21 @@ public class LevelManager : MonoBehaviour
         SetPhase(GamePhase.Combat);
         if (WaveManager.instance != null)
         {
-            WaveManager.instance.StartWaves();
+            if (!WaveManager.instance.is_running)
+            {
+                WaveManager.instance.StartWaves();
+            }
+            else
+            {
+                WaveManager.instance.SkipBreak();
+            }
         }
+    }
+
+    public void StartWaveBreak()
+    {
+        if (current_phase == GamePhase.Victory || current_phase == GamePhase.Defeat) return;
+        SetPhase(GamePhase.Planning);
     }
 
     public void RegisterRestock()

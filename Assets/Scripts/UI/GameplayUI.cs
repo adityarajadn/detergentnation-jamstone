@@ -31,6 +31,7 @@ public class GameplayUI : MonoBehaviour
     [Header("Wave Progress")]
     [SerializeField] private TMP_Text wave_text;
     [SerializeField] private GameObject huge_wave_banner;
+    [SerializeField] private TMP_Text break_timer_text;
 
     [Header("Planning Phase")]
     [SerializeField] private GameObject planning_panel;
@@ -91,6 +92,9 @@ public class GameplayUI : MonoBehaviour
         {
             WaveManager.instance.on_wave_started.AddListener(OnWaveStarted);
             WaveManager.instance.on_huge_wave_alert.AddListener(OnHugeWaveAlert);
+            WaveManager.instance.on_break_started.AddListener(OnBreakStarted);
+            WaveManager.instance.on_break_timer_tick.AddListener(OnBreakTimerTick);
+            WaveManager.instance.on_break_ended.AddListener(OnBreakEnded);
         }
 
         if (DefensePlacementManager.instance != null)
@@ -373,9 +377,47 @@ public class GameplayUI : MonoBehaviour
 
     private void OnWaveStarted(int current_wave, int total_waves)
     {
+        if (break_timer_text != null)
+        {
+            break_timer_text.gameObject.SetActive(false);
+        }
+
         if (wave_text != null)
         {
             wave_text.text = "Wave " + current_wave + " / " + total_waves;
+        }
+    }
+
+    private void OnBreakStarted(float duration)
+    {
+        if (break_timer_text != null)
+        {
+            break_timer_text.gameObject.SetActive(true);
+            break_timer_text.text = "Next Wave in: " + Mathf.CeilToInt(duration) + "s";
+        }
+    }
+
+    private void OnBreakTimerTick(float remaining)
+    {
+        if (break_timer_text != null)
+        {
+            if (remaining > 0f)
+            {
+                break_timer_text.gameObject.SetActive(true);
+                break_timer_text.text = "Next Wave in: " + Mathf.CeilToInt(remaining) + "s";
+            }
+            else
+            {
+                break_timer_text.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void OnBreakEnded()
+    {
+        if (break_timer_text != null)
+        {
+            break_timer_text.gameObject.SetActive(false);
         }
     }
 
