@@ -42,6 +42,8 @@ public class PlayerCombat : MonoBehaviour
     private RangedWeapon active_ranged_comp;
     private MeleeWeapon active_melee_comp;
 
+    public WeaponBase active_weapon => active_weapon_type == WeaponType.Melee ? (WeaponBase)active_melee_comp : (WeaponBase)active_ranged_comp;
+
     private float next_fire_time = 0f;
     private float next_melee_time = 0f;
     private Camera main_camera;

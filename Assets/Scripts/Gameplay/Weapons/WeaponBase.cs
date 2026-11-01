@@ -28,4 +28,9 @@ public abstract class WeaponBase : MonoBehaviour
 
     public virtual void OnAttack() { }
     public virtual void OnReload() { }
+
+    public virtual string GetAmmoDisplayText(PlayerAmmo ammo)
+    {
+        return weapon_data != null ? weapon_data.weapon_name : "WEAPON";
+    }
 }

@@ -41,6 +41,13 @@ public class RangedWeapon : WeaponBase
         }
     }
 
+    public override string GetAmmoDisplayText(PlayerAmmo ammo)
+    {
+        int inMag = ammo != null ? ammo.ammo_in_mag : 0;
+        int carried = ammo != null ? ammo.ammo_carried : 0;
+        return inMag + " / " + carried;
+    }
+
     protected virtual void SpawnProjectile(Vector3 pos, Vector2 dir, int dmg)
     {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

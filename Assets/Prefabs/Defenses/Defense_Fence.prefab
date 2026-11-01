@@ -192,8 +192,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4470649284379613115}
   - component: {fileID: 4831859493566764715}
-  - component: {fileID: 4863331607018453725}
   - component: {fileID: 6390250602417889137}
+  - component: {fileID: -7522887613618735612}
   m_Layer: 11
   m_Name: Defense_Fence
   m_TagString: Defense
@@ -242,26 +242,6 @@ MonoBehaviour:
   on_death:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4863331607018453725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 647055581999548009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c403fc3eeac9ef84a928d5093900f81c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DefenseObject
-  defense_data: {fileID: 0}
-  health: {fileID: 0}
-  ammo_current: 0
-  projectile_prefab: {fileID: 0}
-  roll_speed: 9
-  prompt_text: {fileID: 6122668463093166680}
-  visuals: {fileID: 0}
-  fence_repair_heal: 30
 --- !u!61 &6390250602417889137
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -308,6 +288,24 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9, y: 1.1}
   m_EdgeRadius: 0
+--- !u!114 &-7522887613618735612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647055581999548009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3df3b93d955d8041a723439af440aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefenseBarricade
+  defense_data: {fileID: 0}
+  health: {fileID: 4831859493566764715}
+  ammo_current: 0
+  prompt_text: {fileID: 0}
+  visuals: {fileID: 0}
+  repair_heal: 30
 --- !u!1 &1461457925159376566
 GameObject:
   m_ObjectHideFlags: 0

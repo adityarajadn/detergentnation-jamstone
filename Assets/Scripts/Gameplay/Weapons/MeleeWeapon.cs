@@ -60,4 +60,9 @@ public class MeleeWeapon : WeaponBase
             AudioManager.PlaySFX(hitSound);
         }
     }
+
+    public override string GetAmmoDisplayText(PlayerAmmo ammo)
+    {
+        return weapon_data != null ? weapon_data.weapon_name : "MELEE";
+    }
 }
