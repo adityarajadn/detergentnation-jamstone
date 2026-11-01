@@ -266,7 +266,11 @@ public class GameplayUI : MonoBehaviour
 
         if (ammo_text != null)
         {
-            if (player_combat.active_weapon_type == WeaponType.Melee)
+            if (player_combat.active_weapon != null)
+            {
+                ammo_text.text = player_combat.active_weapon.GetAmmoDisplayText(player_ammo);
+            }
+            else if (player_combat.active_weapon_type == WeaponType.Melee)
             {
                 ammo_text.text = player_combat.melee_weapon != null ? player_combat.melee_weapon.weapon_name : "MELEE";
             }

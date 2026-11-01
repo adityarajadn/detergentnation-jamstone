@@ -6,6 +6,13 @@ public abstract class ConsumableBase : MonoBehaviour
     public string consumable_name;
     public int price;
 
+    [Header("Popup Info")]
+    [SerializeField] protected string popup_label = "USED!";
+    [SerializeField] protected Color popup_color = Color.white;
+
+    public string PopupLabel => !string.IsNullOrEmpty(popup_label) ? popup_label : consumable_name.ToUpper();
+    public Color PopupColor => popup_color;
+
     [Header("Visual")]
     [SerializeField] protected SpriteRenderer sr;
 
