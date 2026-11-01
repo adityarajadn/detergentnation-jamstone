@@ -20,6 +20,16 @@ public class Minimarket : MonoBehaviour
     {
         instance = this;
         if (health == null) health = GetComponent<Health>();
+        if (health != null)
+        {
+            health.on_health_changed.AddListener((cur, max) =>
+            {
+                if (cur < max && cur > 0)
+                {
+                    AudioManager.PlaySFX("base_hit");
+                }
+            });
+        }
     }
 
     private void Start()

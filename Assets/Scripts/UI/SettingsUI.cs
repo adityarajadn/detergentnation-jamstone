@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using DG.Tweening;
 
 [Serializable]
 public class KeybindRow
@@ -17,6 +18,9 @@ public class KeybindRow
 
 public class SettingsUI : MonoBehaviour
 {
+    [Header("Modal Animation")]
+    [SerializeField] private RectTransform modal_box;
+
     [Header("Tab Navigation")]
     [SerializeField] private Button tab_audio_btn;
     [SerializeField] private Button tab_controls_btn;
@@ -72,6 +76,7 @@ public class SettingsUI : MonoBehaviour
         RefreshAudioSliders();
         RefreshKeybindLabels();
         SwitchTab(0);
+        AnimateOpen();
     }
 
     private void OnDisable()
@@ -110,25 +115,33 @@ public class SettingsUI : MonoBehaviour
     {
         if (music_volume_slider != null)
         {
-            music_volume_slider.value = PlayerPrefs.GetFloat(GameConstants.PrefKeys.MusicVolume, 0.8f);
+            float max = music_volume_slider.maxValue > 0 ? music_volume_slider.maxValue : 1f;
+            float normalized = PlayerPrefs.GetFloat(GameConstants.PrefKeys.MusicVolume, 0.8f);
+            music_volume_slider.value = normalized * max;
         }
         if (sfx_volume_slider != null)
         {
-            sfx_volume_slider.value = PlayerPrefs.GetFloat(GameConstants.PrefKeys.SfxVolume, 1f);
+            float max = sfx_volume_slider.maxValue > 0 ? sfx_volume_slider.maxValue : 1f;
+            float normalized = PlayerPrefs.GetFloat(GameConstants.PrefKeys.SfxVolume, 1f);
+            sfx_volume_slider.value = normalized * max;
         }
     }
 
     private void OnMusicVolumeChanged(float val)
     {
-        AudioManager.SetMusicVolume(val);
-        PlayerPrefs.SetFloat(GameConstants.PrefKeys.MusicVolume, val);
+        float max = music_volume_slider != null && music_volume_slider.maxValue > 0 ? music_volume_slider.maxValue : 1f;
+        float normalized = Mathf.Clamp01(val / max);
+        AudioManager.SetMusicVolume(normalized);
+        PlayerPrefs.SetFloat(GameConstants.PrefKeys.MusicVolume, normalized);
         PlayerPrefs.Save();
     }
 
     private void OnSfxVolumeChanged(float val)
     {
-        AudioManager.SetSFXVolume(val);
-        PlayerPrefs.SetFloat(GameConstants.PrefKeys.SfxVolume, val);
+        float max = sfx_volume_slider != null && sfx_volume_slider.maxValue > 0 ? sfx_volume_slider.maxValue : 1f;
+        float normalized = Mathf.Clamp01(val / max);
+        AudioManager.SetSFXVolume(normalized);
+        PlayerPrefs.SetFloat(GameConstants.PrefKeys.SfxVolume, normalized);
         PlayerPrefs.Save();
     }
 
@@ -237,9 +250,44 @@ public class SettingsUI : MonoBehaviour
         RefreshKeybindLabels();
     }
 
+    private RectTransform GetModalBox()
+    {
+        if (modal_box != null) return modal_box;
+        Transform child = transform.Find("SettingsModal");
+        if (child != null) modal_box = child.GetComponent<RectTransform>();
+        return modal_box;
+    }
+
+    private void AnimateOpen()
+    {
+        RectTransform target = GetModalBox();
+        if (target != null)
+        {
+            target.DOKill();
+            target.anchoredPosition = new Vector2(0f, 900f);
+            target.DOAnchorPos(Vector2.zero, 0.35f).SetEase(Ease.OutBack).SetUpdate(true);
+        }
+    }
+
     public void Close()
     {
-        gameObject.SetActive(false);
-        on_closed?.Invoke();
+        RectTransform target = GetModalBox();
+        if (target != null)
+        {
+            target.DOKill();
+            target.DOAnchorPos(new Vector2(0f, 900f), 0.25f)
+                .SetEase(Ease.InQuad)
+                .SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    gameObject.SetActive(false);
+                    on_closed?.Invoke();
+                });
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            on_closed?.Invoke();
+        }
     }
 }

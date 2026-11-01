@@ -9,6 +9,7 @@ public class EnemyBase : MonoBehaviour
     [Header("Visual & Effects")]
     [SerializeField] protected SpriteRenderer sr;
     [SerializeField] protected Transform visual_transform;
+    [SerializeField] protected Animator animator;
     [SerializeField] protected Color freeze_tint_color = new Color(0.4f, 0.8f, 1f, 1f);
 
     protected Health health;
@@ -32,17 +33,20 @@ public class EnemyBase : MonoBehaviour
             sr = GetComponentInChildren<SpriteRenderer>();
         }
 
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
+
         if (visual_transform == null && sr != null)
         {
             visual_transform = sr.transform;
         }
 
         int en_layer = LayerMask.NameToLayer(GameConstants.Layers.Enemy);
-        int pl_layer = LayerMask.NameToLayer(GameConstants.Layers.Player);
         if (en_layer != -1)
         {
             Physics2D.IgnoreLayerCollision(en_layer, en_layer, true);
-            if (pl_layer != -1) Physics2D.IgnoreLayerCollision(en_layer, pl_layer, true);
         }
     }
 
@@ -99,6 +103,8 @@ public class EnemyBase : MonoBehaviour
         if (dist <= range)
         {
             if (rb != null) rb.linearVelocity = Vector2.zero;
+            if (animator != null) animator.SetBool("is_moving", false);
+            UpdateFacing(target_transform.position.x - transform.position.x);
             if (Time.time >= next_attack_time)
             {
                 StartCoroutine(AttackRoutine());
@@ -137,7 +143,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void CheckPathObstacles()
     {
-        float facing_dir = transform.localScale.x >= 0 ? 1f : -1f;
+        float facing_dir = visual_transform != null && visual_transform.localScale.x < 0 ? 1f : -1f;
         Vector2 check_pos = (Vector2)transform.position + new Vector2(facing_dir * 0.8f, 0f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(check_pos, 0.7f);
@@ -218,40 +224,38 @@ public class EnemyBase : MonoBehaviour
             rb.linearVelocity = new Vector2(Mathf.Sign(dir.x) * enemy_data.move_speed, rb.linearVelocity.y);
         }
 
+        if (animator != null) animator.SetBool("is_moving", true);
         UpdateFacing(dir.x);
     }
 
     protected virtual void UpdateFacing(float xDir)
     {
+        if (visual_transform == null) return;
+        float absX = Mathf.Abs(visual_transform.localScale.x);
+        // Sprite default faces Left: right (xDir > 0) -> -absX, left (xDir < 0) -> +absX
         if (xDir > 0.05f)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            visual_transform.localScale = new Vector3(-absX, visual_transform.localScale.y, visual_transform.localScale.z);
         }
         else if (xDir < -0.05f)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            visual_transform.localScale = new Vector3(absX, visual_transform.localScale.y, visual_transform.localScale.z);
         }
     }
 
     protected virtual IEnumerator AttackRoutine()
     {
         is_attacking = true;
+        if (animator != null)
+        {
+            animator.SetBool("is_moving", false);
+            animator.SetTrigger("attack");
+        }
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 1f;
         next_attack_time = Time.time + attack_rate;
 
-        Color original_color = sr != null ? sr.color : Color.white;
-        Vector3 original_scale = transform.localScale;
-
-        // 1. Wind-up anticipation
-        float windup_time = 0.22f;
-        float elapsed = 0f;
-        while (elapsed < windup_time)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / windup_time;
-            if (sr != null) sr.color = Color.Lerp(original_color, Color.red, t * 0.7f);
-            yield return null;
-        }
+        // 1. Wind-up anticipation (no red color tint)
+        yield return new WaitForSeconds(0.22f);
 
         // 2. Active Strike Hitbox
         AudioManager.PlaySFX("enemy_attack");
@@ -266,8 +270,6 @@ public class EnemyBase : MonoBehaviour
 
         // 3. Recovery
         yield return new WaitForSeconds(0.12f);
-        if (sr != null) sr.color = original_color;
-        transform.localScale = original_scale;
         is_attacking = false;
     }
 
@@ -275,7 +277,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (enemy_data == null) return;
 
-        float facing_dir = transform.localScale.x >= 0 ? 1f : -1f;
+        float facing_dir = visual_transform != null && visual_transform.localScale.x < 0 ? 1f : -1f;
         Vector2 attack_center = (Vector2)transform.position + new Vector2(facing_dir * (enemy_data.attack_range * 0.6f), 0f);
         float attack_radius = Mathf.Max(0.7f, enemy_data.attack_range * 0.7f);
 
@@ -316,13 +318,17 @@ public class EnemyBase : MonoBehaviour
     {
         if (current < max && current > 0)
         {
-            AudioManager.PlaySFX("enemy_hurt");
+            AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyHurt);
+            if (animator != null && HasParameter(animator, "hit"))
+            {
+                animator.SetTrigger("hit");
+            }
         }
     }
 
     protected virtual void OnDeath()
     {
-        AudioManager.PlaySFX("enemy_death");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyDeath);
         if (KillStreakManager.instance != null)
         {
             KillStreakManager.instance.RegisterKill();
@@ -338,6 +344,37 @@ public class EnemyBase : MonoBehaviour
             WaveManager.instance.OnEnemyKilled(this);
         }
 
-        Destroy(gameObject);
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false;
+        }
+
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+        for (int i = 0; i < cols.Length; i++)
+        {
+            cols[i].enabled = false;
+        }
+
+        if (animator != null && HasParameter(animator, "death"))
+        {
+            animator.SetTrigger("death");
+            Destroy(gameObject, 0.75f);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    protected bool HasParameter(Animator anim, string paramName)
+    {
+        if (anim == null || anim.runtimeAnimatorController == null) return false;
+        AnimatorControllerParameter[] parameters = anim.parameters;
+        for (int i = 0; i < parameters.Length; i++)
+        {
+            if (parameters[i].name == paramName) return true;
+        }
+        return false;
     }
 }

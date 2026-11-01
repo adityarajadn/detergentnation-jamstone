@@ -654,7 +654,7 @@ public class ShopUI : MonoBehaviour
 
     private void OnBuyConsumable(ConsumableShopEntry entry)
     {
-        int count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(entry.item_name) : PlayerPrefs.GetInt("consumable_" + entry.item_name, 0);
+        int count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(entry.item_name) : PlayerPrefs.GetInt(GameConstants.PrefKeys.ConsumablePrefix + entry.item_name, 0);
         if (count >= 5)
         {
             NotificationToast.Show("Max capacity reached for " + entry.item_name + " (5/5)!", ToastType.Warning);

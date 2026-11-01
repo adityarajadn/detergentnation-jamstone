@@ -51,6 +51,12 @@ MonoBehaviour:
   soap_projectile_prefab: {fileID: 88275635079728158, guid: 9ad958ec61fdcc14aae9c9002b8b98f2, type: 3}
   throw_interval: 15
   soap_damage: 30
+  max_throw_distance: 8
+  flight_duration: 0.55
+  arc_height: 2
+  obstacle_mask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &3775344880239590835
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,8 +18,13 @@ public class PlayerCombat : MonoBehaviour
     [Header("Mount & Targeting")]
     public Transform fire_point;
     public Transform melee_point;
-    public Transform weapon_mount;
+    public Transform hand_mount;
+    public Transform weapon_attachment;
     public LayerMask enemy_layer;
+
+    // Backward compatibility property
+    public Transform weapon_mount { get => hand_mount; set => hand_mount = value; }
+    public Transform weapon_holder { get => weapon_attachment; set => weapon_attachment = value; }
 
     [Header("Resources")]
     public int repair_points = 0;
@@ -42,6 +47,8 @@ public class PlayerCombat : MonoBehaviour
     private Camera main_camera;
     private int weapon_damage_bonus = 0;
     private float fire_rate_mod = 1f;
+    private Animator hand_animator;
+    private Coroutine melee_attack_coroutine;
 
     private void Awake()
     {
@@ -56,6 +63,16 @@ public class PlayerCombat : MonoBehaviour
         ammo_comp = GetComponent<PlayerAmmo>();
         consumable_inv = GetComponent<PlayerConsumableInventory>();
         main_camera = Camera.main;
+        if (enemy_layer.value == 0)
+        {
+            enemy_layer = LayerMask.GetMask(GameConstants.Layers.Enemy);
+        }
+
+        if (hand_mount != null)
+        {
+            Transform hand = hand_mount.Find("Hand");
+            if (hand != null) hand_animator = hand.GetComponent<Animator>();
+        }
     }
 
     private void Start()
@@ -179,11 +196,11 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string shootSound = "shoot_water_pistol";
+            string shootSound = "pistol_shoot";
             string wn = ranged_weapon.weapon_name.ToLower();
-            if (wn.Contains("rifle")) shootSound = "shoot_water_rifle";
-            else if (wn.Contains("plasma")) shootSound = "shoot_water_plasma";
-            else if (wn.Contains("bubble")) shootSound = "shoot_bubble_gun";
+            if (wn.Contains("rifle")) shootSound = "rifle_loop";
+            else if (wn.Contains("plasma")) shootSound = "plasma_shoot";
+            else if (wn.Contains("bubble")) shootSound = "bubble_shoot";
             AudioManager.PlaySFX(shootSound);
         }
 
@@ -201,6 +218,7 @@ public class PlayerCombat : MonoBehaviour
         if (melee_weapon == null || active_melee_comp == null) return;
 
         next_melee_time = Time.time + melee_weapon.attack_rate;
+        string weaponName = melee_weapon.weapon_name.ToLower();
 
         if (melee_weapon.attack_sound != null)
         {
@@ -208,15 +226,59 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string swingSound = "swing_curse_sword";
-            string wn = melee_weapon.weapon_name.ToLower();
-            if (wn.Contains("hammer")) swingSound = "swing_soap_hammer";
-            else if (wn.Contains("stick")) swingSound = "swing_bubble_stick";
+            string swingSound = "swing_imelda";
+            if (weaponName.Contains("hammer")) swingSound = "swing_hammer";
+            else if (weaponName.Contains("stick")) swingSound = "swing_stick";
             AudioManager.PlaySFX(swingSound);
         }
 
-        Vector3 origin = melee_point != null ? melee_point.position : transform.position;
-        active_melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
+        // Trigger hand attack animation and toggle weapon attachment visual
+        string triggerName = null;
+        if (weaponName.Contains("imelda") || weaponName.Contains("curse"))
+        {
+            triggerName = "Attack_ImeldaSword";
+        }
+        else if (weaponName.Contains("hammer") || weaponName.Contains("soap"))
+        {
+            triggerName = "Attack_SoapHammer";
+        }
+
+        // For weapons without animated hand colliders, use raycast/overlap strike
+        if (triggerName == null)
+        {
+            Vector3 origin = melee_point != null ? melee_point.position : transform.position;
+            active_melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
+        }
+        else
+        {
+            if (hand_animator == null && hand_mount != null)
+            {
+                Transform hand = hand_mount.Find("Hand");
+                if (hand != null) hand_animator = hand.GetComponent<Animator>();
+            }
+
+            if (hand_animator != null)
+            {
+                hand_animator.SetTrigger(triggerName);
+            }
+
+            if (weapon_attachment != null)
+            {
+                if (melee_attack_coroutine != null) StopCoroutine(melee_attack_coroutine);
+                melee_attack_coroutine = StartCoroutine(HideWeaponDuringAttack(0.33f));
+            }
+        }
+    }
+
+    private System.Collections.IEnumerator HideWeaponDuringAttack(float duration)
+    {
+        weapon_attachment.gameObject.SetActive(false);
+        yield return new WaitForSeconds(duration);
+        if (weapon_attachment != null)
+        {
+            weapon_attachment.gameObject.SetActive(true);
+        }
+        melee_attack_coroutine = null;
     }
 
     public void Reload()
@@ -249,12 +311,12 @@ public class PlayerCombat : MonoBehaviour
 
     public void UpdateWeaponVisual()
     {
-        if (weapon_mount == null && weapon_aim != null)
+        if (hand_mount == null && weapon_aim != null)
         {
-            weapon_mount = weapon_aim.weapon_mount;
+            hand_mount = weapon_aim.hand_mount;
         }
 
-        if (weapon_mount == null || weapon_mount == transform) return;
+        if (hand_mount == null || hand_mount == transform) return;
 
         if (current_weapon_instance != null)
         {
@@ -267,11 +329,12 @@ public class PlayerCombat : MonoBehaviour
         WeaponData active_data = active_weapon_type == WeaponType.Melee ? melee_weapon : ranged_weapon;
         if (active_data != null && active_data.weapon_prefab != null)
         {
-            SpriteRenderer arm_sr = weapon_mount.GetComponent<SpriteRenderer>();
+            SpriteRenderer arm_sr = hand_mount.GetComponentInChildren<SpriteRenderer>();
             if (arm_sr != null) arm_sr.enabled = true;
 
-            current_weapon_instance = Instantiate(active_data.weapon_prefab, weapon_mount);
-            current_weapon_instance.transform.localPosition = new Vector3(0.25f, 0f, 0f);
+            Transform parent_target = weapon_attachment != null ? weapon_attachment : hand_mount;
+            current_weapon_instance = Instantiate(active_data.weapon_prefab, parent_target);
+            current_weapon_instance.transform.localPosition = Vector3.zero;
             current_weapon_instance.transform.localRotation = Quaternion.identity;
 
             WeaponBase wb = current_weapon_instance.GetComponent<WeaponBase>();

@@ -26,4 +26,4 @@ MonoBehaviour:
   candy_reward_max: 2
   projectile_prefab: {fileID: 0}
   enemy_prefab: {fileID: 9198058260674344058, guid: 9b3ae3ed71c0411fa66622a979d178a1, type: 3}
-  body_color: {r: 0.9, g: 0.4, b: 0.6, a: 1}
+  body_color: {r: 1, g: 1, b: 1, a: 1}

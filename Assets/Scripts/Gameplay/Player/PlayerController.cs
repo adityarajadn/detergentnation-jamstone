@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform visuals;
     [SerializeField] private Transform armor_mount;
     [SerializeField] private Transform jetpack_mount;
+    [SerializeField] private Transform hand_mount;
 
     [Header("Jetpack Modifiers")]
     [SerializeField] private float joyride_speed_multiplier = 1.1f;
@@ -40,6 +44,8 @@ public class PlayerController : MonoBehaviour
     public float MoveInput => move_input;
     private float speed_boost_multiplier = 1f;
     private Coroutine speed_boost_coroutine = null;
+    private bool is_dying = false;
+    public bool IsDying => is_dying;
 
     private void Awake()
     {
@@ -57,6 +63,8 @@ public class PlayerController : MonoBehaviour
         transform.localScale = Vector3.one;
 
         if (visuals == null) visuals = transform.Find("Visuals");
+        if (hand_mount == null && visuals != null) hand_mount = visuals.Find("HandMount");
+        if (hand_mount == null) hand_mount = transform.Find("HandMount");
 
         if (ground_layer.value == 0)
         {
@@ -73,12 +81,27 @@ public class PlayerController : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
+    private int last_health = -1;
+    private Coroutine hit_disable_coroutine = null;
+
     private void Start()
     {
         Health hp = GetComponent<Health>();
         if (hp != null)
         {
-            hp.on_health_changed.AddListener((cur, max) => { if (cur < max && cur > 0) AudioManager.PlaySFX("player_hurt"); });
+            last_health = hp.health_current;
+            hp.on_health_changed.AddListener((cur, max) =>
+            {
+                if (last_health > 0 && cur < last_health && cur > 0)
+                {
+                    AudioManager.PlaySFX("player_hurt");
+                    if (animator != null) animator.SetTrigger("hit");
+                    if (PlayerCameraController.Instance != null) PlayerCameraController.Instance.Shake(0.2f, 0.35f);
+                    if (hit_disable_coroutine != null) StopCoroutine(hit_disable_coroutine);
+                    hit_disable_coroutine = StartCoroutine(DisableHandMountOnHit(0.25f));
+                }
+                last_health = cur;
+            });
             hp.on_death.AddListener(() => AudioManager.PlaySFX("player_death"));
         }
 
@@ -162,6 +185,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (is_dying) return;
         CheckGround();
         ApplyMovement();
     }
@@ -169,6 +193,7 @@ public class PlayerController : MonoBehaviour
     private void ReadInput()
     {
         move_input = 0f;
+        if (is_dying) return;
         if (Time.timeScale == 0f) return;
         if (LevelManager.instance != null)
         {
@@ -199,6 +224,7 @@ public class PlayerController : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * 1.05f);
                 can_double_jump = false;
+                AudioManager.PlaySFX("jetpack");
             }
         }
 
@@ -307,5 +333,84 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.35f);
             Physics2D.IgnoreLayerCollision(gameObject.layer, platform_layer, false);
         }
+    }
+
+    private IEnumerator DisableHandMountOnHit(float duration)
+    {
+        if (hand_mount != null) hand_mount.gameObject.SetActive(false);
+        yield return new WaitForSeconds(duration);
+        if (hand_mount != null) hand_mount.gameObject.SetActive(true);
+        hit_disable_coroutine = null;
+    }
+
+    public void TriggerDeathSequence(Action on_complete)
+    {
+        if (is_dying) return;
+        is_dying = true;
+        StartCoroutine(DeathSequenceCoroutine(on_complete));
+    }
+
+    private IEnumerator DeathSequenceCoroutine(Action on_complete)
+    {
+        if (hit_disable_coroutine != null)
+        {
+            StopCoroutine(hit_disable_coroutine);
+            hit_disable_coroutine = null;
+        }
+
+        // Disable weapons aiming & combat
+        PlayerWeaponAim pwa = GetComponent<PlayerWeaponAim>();
+        if (pwa != null) pwa.enabled = false;
+        PlayerCombat pc = GetComponent<PlayerCombat>();
+        if (pc != null) pc.enabled = false;
+
+        // Stop player physical movement
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        // Collect equipment to fling off
+        List<Transform> items_to_drop = new List<Transform>();
+
+        if (active_armor != null) items_to_drop.Add(active_armor.transform);
+        else if (armor_mount != null && armor_mount.childCount > 0) items_to_drop.Add(armor_mount.GetChild(0));
+
+        if (active_jetpack != null) items_to_drop.Add(active_jetpack.transform);
+        else if (jetpack_mount != null && jetpack_mount.childCount > 0) items_to_drop.Add(jetpack_mount.GetChild(0));
+
+        if (hand_mount != null)
+        {
+            hand_mount.gameObject.SetActive(true);
+            items_to_drop.Add(hand_mount);
+        }
+
+        // Fling each item using DOTween
+        float ground_y = transform.position.y - 0.45f;
+        for (int i = 0; i < items_to_drop.Count; i++)
+        {
+            Transform item = items_to_drop[i];
+            if (item == null) continue;
+
+            item.SetParent(null, true);
+
+            float dir_x = (i % 2 == 0 ? 1f : -1f) * UnityEngine.Random.Range(1.2f, 2.2f);
+            Vector3 drop_target = new Vector3(item.position.x + dir_x, ground_y, item.position.z);
+
+            // Pop up arc and rotate towards ground
+            item.DOJump(drop_target, jumpPower: 1.2f, numJumps: 1, duration: 0.65f)
+                .SetEase(Ease.OutQuad);
+            item.DORotate(new Vector3(0f, 0f, UnityEngine.Random.Range(-90f, 90f)), 0.65f)
+                .SetEase(Ease.OutQuad);
+        }
+
+        // Trigger Death animation
+        if (animator != null)
+        {
+            animator.SetTrigger("death");
+        }
+
+        // Wait for fling and death animation to complete
+        yield return new WaitForSeconds(1.1f);
+
+        on_complete?.Invoke();
     }
 }

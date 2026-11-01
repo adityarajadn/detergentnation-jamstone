@@ -34,6 +34,15 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         BuildSoundMap();
+        LoadVolumeSettings();
+    }
+
+    public void LoadVolumeSettings()
+    {
+        float musicVol = PlayerPrefs.GetFloat(GameConstants.PrefKeys.MusicVolume, 0.8f);
+        float sfxVol = PlayerPrefs.GetFloat(GameConstants.PrefKeys.SfxVolume, 1f);
+        SetMusicVolume(musicVol);
+        SetSFXVolume(sfxVol);
     }
 
     private void OnValidate()
@@ -83,16 +92,22 @@ public class AudioManager : MonoBehaviour
     public static void PlayMusic(AudioClip clip, bool loop = true)
     {
         if (instance == null || instance.bgm_source == null) return;
-        instance.bgm_source.clip = clip;
-        instance.bgm_source.loop = loop;
-        if (clip != null)
-        {
-            instance.bgm_source.Play();
-        }
-        else
+        if (clip == null)
         {
             instance.bgm_source.Stop();
+            instance.bgm_source.clip = null;
+            return;
         }
+
+        // Do not restart if the exact same music is already playing
+        if (instance.bgm_source.clip == clip && instance.bgm_source.isPlaying)
+        {
+            return;
+        }
+
+        instance.bgm_source.clip = clip;
+        instance.bgm_source.loop = loop;
+        instance.bgm_source.Play();
     }
 
     public static void StopMusic()

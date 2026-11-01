@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerCameraController : MonoBehaviour
 {
@@ -15,6 +16,30 @@ public class PlayerCameraController : MonoBehaviour
     public float max_y = 7f;
 
     private Vector3 current_velocity;
+    private Vector3 shake_offset = Vector3.zero;
+    private Tweener shake_tweener;
+
+    public static PlayerCameraController Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+        shake_tweener?.Kill();
+    }
+
+    public void Shake(float duration = 0.2f, float intensity = 0.3f)
+    {
+        shake_tweener?.Kill();
+        shake_offset = Vector3.zero;
+        shake_tweener = DOTween.Shake(() => shake_offset, x => shake_offset = x, duration, intensity, 20, 90f, false, true)
+            .SetUpdate(true)
+            .OnComplete(() => shake_offset = Vector3.zero);
+    }
 
     private void LateUpdate()
     {
@@ -53,6 +78,10 @@ public class PlayerCameraController : MonoBehaviour
         desired_pos.y = Mathf.Clamp(desired_pos.y, min_y, max_y);
         desired_pos.z = offset.z;
 
-        transform.position = Vector3.SmoothDamp(transform.position, desired_pos, ref current_velocity, smooth_time);
+        Vector3 target_pos = Vector3.SmoothDamp(transform.position, desired_pos, ref current_velocity, smooth_time);
+
+        target_pos += shake_offset;
+
+        transform.position = target_pos;
     }
 }
