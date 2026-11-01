@@ -75,3 +75,8 @@ ai-assistant/
 /[Aa]ssets/ClassDiagramGenerator.meta
 /[Aa]ssets/ClassDiagramGeneratorOutput/
 /[Aa]ssets/ClassDiagramGeneratorOutput.meta
+
+# Obsidian
+.obsidian/
+Docs/
+AGENTS.md
