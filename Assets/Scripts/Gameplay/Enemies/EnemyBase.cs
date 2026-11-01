@@ -318,13 +318,17 @@ public class EnemyBase : MonoBehaviour
     {
         if (current < max && current > 0)
         {
-            AudioManager.PlaySFX("enemy_hurt");
+            AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyHurt);
+            if (animator != null && HasParameter(animator, "hit"))
+            {
+                animator.SetTrigger("hit");
+            }
         }
     }
 
     protected virtual void OnDeath()
     {
-        AudioManager.PlaySFX("enemy_death");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyDeath);
         if (KillStreakManager.instance != null)
         {
             KillStreakManager.instance.RegisterKill();
@@ -340,6 +344,37 @@ public class EnemyBase : MonoBehaviour
             WaveManager.instance.OnEnemyKilled(this);
         }
 
-        Destroy(gameObject);
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false;
+        }
+
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+        for (int i = 0; i < cols.Length; i++)
+        {
+            cols[i].enabled = false;
+        }
+
+        if (animator != null && HasParameter(animator, "death"))
+        {
+            animator.SetTrigger("death");
+            Destroy(gameObject, 0.75f);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    protected bool HasParameter(Animator anim, string paramName)
+    {
+        if (anim == null || anim.runtimeAnimatorController == null) return false;
+        AnimatorControllerParameter[] parameters = anim.parameters;
+        for (int i = 0; i < parameters.Length; i++)
+        {
+            if (parameters[i].name == paramName) return true;
+        }
+        return false;
     }
 }

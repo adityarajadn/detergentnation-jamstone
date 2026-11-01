@@ -1,49 +1,37 @@
 fileFormatVersion: 2
-guid: 125bd75de52cd3c4e9cd32e9c494ac57
+guid: d256759ddc8f00a42a229bf13991ca32
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8153689178804507810
-    second: jellien_attack_test_0
+      213: -3922385825892185017
+    second: jellien_death_0
   - first:
-      213: -175495233624894814
-    second: jellien_attack_test_1
+      213: -3457547370859124001
+    second: jellien_death_1
   - first:
-      213: -7278763801347310815
-    second: jellien_attack_test_2
+      213: 8063958317785652974
+    second: jellien_death_2
   - first:
-      213: 4466065422115779674
-    second: jellien_attack_test_3
+      213: 507108126362391622
+    second: jellien_death_3
   - first:
-      213: 237227889692926937
-    second: jellien_attack_test_4
+      213: -5731904058840725964
+    second: jellien_death_4
   - first:
-      213: -1465911383739355369
-    second: jellien_attack_test_5
+      213: 4868753192682206755
+    second: jellien_death_5
   - first:
-      213: -1490192091197290812
-    second: jellien_attack_test_6
+      213: 44038418961395350
+    second: jellien_death_6
   - first:
-      213: 4895151149137632550
-    second: jellien_attack_test_7
+      213: 3637905996795754858
+    second: jellien_death_7
   - first:
-      213: 6942163632916024847
-    second: jellien_attack_test_8
+      213: 7201070194500330368
+    second: jellien_death_8
   - first:
-      213: 6287910798813077924
-    second: jellien_attack_test_9
-  - first:
-      213: 1114085591854412161
-    second: jellien_attack_test_10
-  - first:
-      213: -7138611963145909771
-    second: jellien_attack_test_11
-  - first:
-      213: -4390508750696531673
-    second: jellien_attack_test_12
-  - first:
-      213: -4550228845321206016
-    second: jellien_attack_test_13
+      213: 7104296675850263122
+    second: jellien_death_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -76,7 +64,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -152,12 +140,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jellien_attack_test_0
+      name: jellien_death_0
       rect:
         serializedVersion: 2
-        x: 19
+        x: 20
         y: 15
-        width: 28
+        width: 26
         height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -167,19 +155,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a4d697ab19b72170800000000000000
-      internalID: 8153689178804507810
+      spriteID: 74c4baf7fd2e099c0800000000000000
+      internalID: -3922385825892185017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_1
+      name: jellien_death_1
       rect:
         serializedVersion: 2
-        x: 83
+        x: 84
         y: 15
-        width: 28
+        width: 26
         height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -189,19 +177,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a2930cc304809df0800000000000000
-      internalID: -175495233624894814
+      spriteID: fda2bdd2cf25400d0800000000000000
+      internalID: -3457547370859124001
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_2
+      name: jellien_death_2
       rect:
         serializedVersion: 2
-        x: 147
+        x: 148
         y: 15
-        width: 28
+        width: 26
         height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -211,19 +199,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 12bb8b023e2acfa90800000000000000
-      internalID: -7278763801347310815
+      spriteID: eee9b278d5fe8ef60800000000000000
+      internalID: 8063958317785652974
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_3
+      name: jellien_death_3
       rect:
         serializedVersion: 2
-        x: 211
+        x: 212
         y: 15
-        width: 28
+        width: 26
         height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -233,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a54bdd4d6d6aafd30800000000000000
-      internalID: 4466065422115779674
+      spriteID: 6445b86772c990700800000000000000
+      internalID: 507108126362391622
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_4
+      name: jellien_death_4
       rect:
         serializedVersion: 2
-        x: 274
-        y: 15
-        width: 29
-        height: 21
+        x: 281
+        y: 16
+        width: 16
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,107 +243,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d366ff328dca4300800000000000000
-      internalID: 237227889692926937
+      spriteID: 436cd2e90af2470b0800000000000000
+      internalID: -5731904058840725964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_5
+      name: jellien_death_5
       rect:
         serializedVersion: 2
-        x: 331
-        y: 18
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 71fa30cfc5908abe0800000000000000
-      internalID: -1465911383739355369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jellien_attack_test_6
-      rect:
-        serializedVersion: 2
-        x: 339
-        y: 15
-        width: 28
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4c6c61d3036c15be0800000000000000
-      internalID: -1490192091197290812
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jellien_attack_test_7
-      rect:
-        serializedVersion: 2
-        x: 388
-        y: 17
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 62d9136d8021fe340800000000000000
-      internalID: 4895151149137632550
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jellien_attack_test_8
-      rect:
-        serializedVersion: 2
-        x: 403
-        y: 15
-        width: 28
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f0e48900b05875060800000000000000
-      internalID: 6942163632916024847
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jellien_attack_test_9
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 15
-        width: 11
+        x: 346
+        y: 31
+        width: 13
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -365,20 +265,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4a1a8968e85234750800000000000000
-      internalID: 6287910798813077924
+      spriteID: 3263fd4ab39419340800000000000000
+      internalID: 4868753192682206755
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_10
+      name: jellien_death_6
       rect:
         serializedVersion: 2
-        x: 467
-        y: 15
-        width: 28
-        height: 21
+        x: 409
+        y: 27
+        width: 14
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -387,19 +287,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 181fcdf61f6067f00800000000000000
-      internalID: 1114085591854412161
+      spriteID: 69ee9ae65b47c9000800000000000000
+      internalID: 44038418961395350
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_11
+      name: jellien_death_7
       rect:
         serializedVersion: 2
-        x: 511
-        y: 15
-        width: 13
+        x: 475
+        y: 29
+        width: 78
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a693649ca307c7230800000000000000
+      internalID: 3637905996795754858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jellien_death_8
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 35
+        width: 10
         height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -409,20 +331,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5f98553dd3e8eec90800000000000000
-      internalID: -7138611963145909771
+      spriteID: 08368d160375fe360800000000000000
+      internalID: 7201070194500330368
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jellien_attack_test_12
+      name: jellien_death_9
       rect:
         serializedVersion: 2
-        x: 531
-        y: 15
-        width: 28
-        height: 21
+        x: 346
+        y: 21
+        width: 14
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -431,30 +353,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7293d7b9d87c113c0800000000000000
-      internalID: -4390508750696531673
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jellien_attack_test_13
-      rect:
-        serializedVersion: 2
-        x: 577
-        y: 15
-        width: 46
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 007c4eb29f65ad0c0800000000000000
-      internalID: -4550228845321206016
+      spriteID: 25a1b0fbf28879260800000000000000
+      internalID: 7104296675850263122
       vertices: []
       indices: 
       edges: []
@@ -473,20 +373,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jellien_attack_test_0: 8153689178804507810
-      jellien_attack_test_1: -175495233624894814
-      jellien_attack_test_10: 1114085591854412161
-      jellien_attack_test_11: -7138611963145909771
-      jellien_attack_test_12: -4390508750696531673
-      jellien_attack_test_13: -4550228845321206016
-      jellien_attack_test_2: -7278763801347310815
-      jellien_attack_test_3: 4466065422115779674
-      jellien_attack_test_4: 237227889692926937
-      jellien_attack_test_5: -1465911383739355369
-      jellien_attack_test_6: -1490192091197290812
-      jellien_attack_test_7: 4895151149137632550
-      jellien_attack_test_8: 6942163632916024847
-      jellien_attack_test_9: 6287910798813077924
+      jellien_death_0: -3922385825892185017
+      jellien_death_1: -3457547370859124001
+      jellien_death_2: 8063958317785652974
+      jellien_death_3: 507108126362391622
+      jellien_death_4: -5731904058840725964
+      jellien_death_5: 4868753192682206755
+      jellien_death_6: 44038418961395350
+      jellien_death_7: 3637905996795754858
+      jellien_death_8: 7201070194500330368
+      jellien_death_9: 7104296675850263122
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
