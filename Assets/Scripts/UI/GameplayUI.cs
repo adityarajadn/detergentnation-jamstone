@@ -47,6 +47,10 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private GameObject streak_panel;
     [SerializeField] private TMP_Text streak_text;
 
+    [Header("Pickup Feedback UI")]
+    [SerializeField] private CanvasGroup pickup_feedback_group;
+    [SerializeField] private TMP_Text pickup_feedback_text;
+
     [Header("Game Over / Victory")]
     [SerializeField] private GameObject victory_panel;
     [SerializeField] private TMP_Text victory_stars_text;
@@ -71,6 +75,15 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Color slot_inactive_color = new Color(0.12f, 0.14f, 0.2f, 0.75f);
     [SerializeField] private Color defense_btn_selected_color = new Color(1f, 0.85f, 0.2f, 1f);
     [SerializeField] private Color defense_btn_normal_color = new Color(0.18f, 0.22f, 0.32f, 0.95f);
+
+    public static GameplayUI Instance { get; private set; }
+
+    private Coroutine pickup_feedback_routine;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private PlayerCombat player_combat;
     private PlayerAmmo player_ammo;
@@ -219,6 +232,7 @@ public class GameplayUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (Instance == this) Instance = null;
         Time.timeScale = 1f;
     }
 
@@ -325,6 +339,7 @@ public class GameplayUI : MonoBehaviour
         {
             Sprite s1 = GetConsumableSprite(c1_name);
             consumable_slot1_icon.sprite = s1;
+            consumable_slot1_icon.color = s1 != null ? Color.white : Color.clear;
             consumable_slot1_icon.enabled = s1 != null;
         }
 
@@ -332,6 +347,7 @@ public class GameplayUI : MonoBehaviour
         {
             Sprite s2 = GetConsumableSprite(c2_name);
             consumable_slot2_icon.sprite = s2;
+            consumable_slot2_icon.color = s2 != null ? Color.white : Color.clear;
             consumable_slot2_icon.enabled = s2 != null;
         }
 
@@ -489,6 +505,54 @@ public class GameplayUI : MonoBehaviour
     private void OnStreakReset()
     {
         if (streak_panel != null) streak_panel.SetActive(false);
+    }
+
+    public void ShowPickupFeedback(string message, Color color)
+    {
+        if (pickup_feedback_text == null || pickup_feedback_group == null) return;
+
+        pickup_feedback_text.text = message;
+        pickup_feedback_text.color = color;
+
+        if (pickup_feedback_routine != null)
+        {
+            StopCoroutine(pickup_feedback_routine);
+        }
+        pickup_feedback_routine = StartCoroutine(PickupFeedbackRoutine());
+    }
+
+    private System.Collections.IEnumerator PickupFeedbackRoutine()
+    {
+        pickup_feedback_group.gameObject.SetActive(true);
+        float fadeIn = 0.15f;
+        float hold = 0.85f;
+        float fadeOut = 0.35f;
+
+        // Fade in
+        float t = 0f;
+        while (t < fadeIn)
+        {
+            t += Time.unscaledDeltaTime;
+            pickup_feedback_group.alpha = Mathf.Clamp01(t / fadeIn);
+            yield return null;
+        }
+        pickup_feedback_group.alpha = 1f;
+
+        // Hold
+        yield return new WaitForSecondsRealtime(hold);
+
+        // Fade out
+        t = 0f;
+        while (t < fadeOut)
+        {
+            t += Time.unscaledDeltaTime;
+            pickup_feedback_group.alpha = Mathf.Clamp01(1f - (t / fadeOut));
+            yield return null;
+        }
+
+        pickup_feedback_group.alpha = 0f;
+        pickup_feedback_group.gameObject.SetActive(false);
+        pickup_feedback_routine = null;
     }
 
     private void OnVictory(int stars)
