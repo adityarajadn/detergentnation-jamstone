@@ -52,13 +52,12 @@ public class DamagePopup : MonoBehaviour
         }
     }
 
-    public static DamagePopup Spawn(Vector3 world_position, int amount, Color? custom_color = null)
+    public static DamagePopup Spawn(Vector3 world_position, int amount)
     {
-        Color color = custom_color ?? new Color(1f, 0.88f, 0.32f, 1f); // Vibrant Yellow #FFE052
-        return SpawnText(world_position, amount.ToString(), color);
+        return SpawnText(world_position, amount.ToString());
     }
 
-    public static DamagePopup SpawnText(Vector3 world_position, string message, Color color)
+    public static DamagePopup SpawnText(Vector3 world_position, string message)
     {
         if (cached_prefab == null)
         {
@@ -75,28 +74,28 @@ public class DamagePopup : MonoBehaviour
         {
             popup.transform.position = spawn_pos;
             popup.transform.rotation = Quaternion.identity;
-            popup.Setup(message, color);
+            popup.Setup(message);
         }
         return popup;
     }
 
-    public void Setup(int amount, Color color)
+    public void Setup(int amount)
     {
-        Setup(amount.ToString(), color);
+        Setup(amount.ToString());
     }
 
-    public void Setup(string message, Color color)
+    public void Setup(string message)
     {
         if (text_mesh != null)
         {
             text_mesh.text = message;
-            text_mesh.color = color;
+            text_mesh.alpha = 1f;
         }
 
-        StartCoroutine(AnimateRoutine(color));
+        StartCoroutine(AnimateRoutine());
     }
 
-    private IEnumerator AnimateRoutine(Color base_color)
+    private IEnumerator AnimateRoutine()
     {
         float elapsed = 0f;
         float vx = Random.Range(-0.4f, 0.4f);
@@ -126,8 +125,7 @@ public class DamagePopup : MonoBehaviour
             // Fade alpha in 2nd half
             if (t > 0.5f && text_mesh != null)
             {
-                float alpha = Mathf.Lerp(1f, 0f, (t - 0.5f) / 0.5f);
-                text_mesh.color = new Color(base_color.r, base_color.g, base_color.b, alpha);
+                text_mesh.alpha = Mathf.Lerp(1f, 0f, (t - 0.5f) / 0.5f);
             }
 
             yield return null;

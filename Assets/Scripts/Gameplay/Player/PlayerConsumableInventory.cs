@@ -114,7 +114,7 @@ public class PlayerConsumableInventory : MonoBehaviour
         ConsumableBase used_consumable = ExecuteConsumableEffect(item_name);
         if (used_consumable != null)
         {
-            DamagePopup.SpawnText(transform.position + Vector3.up * 0.8f, used_consumable.PopupLabel, used_consumable.PopupColor);
+            DamagePopup.SpawnText(transform.position + Vector3.up * 0.8f, used_consumable.PopupLabel);
             int new_count = count - 1;
             if (GameManager.instance != null)
             {

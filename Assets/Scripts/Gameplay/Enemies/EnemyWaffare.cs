@@ -27,7 +27,6 @@ public class EnemyWaffare : EnemyBase
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 0.8f;
         next_attack_time = Time.time + attack_rate;
 
-        Color original_color = sr != null ? sr.color : Color.white;
         Vector3 original_scale = transform.localScale;
 
         // Strike 1
@@ -41,7 +40,6 @@ public class EnemyWaffare : EnemyBase
         PerformMeleeStrike();
 
         yield return new WaitForSeconds(0.1f);
-        if (sr != null) sr.color = original_color;
         transform.localScale = original_scale;
         is_attacking = false;
     }

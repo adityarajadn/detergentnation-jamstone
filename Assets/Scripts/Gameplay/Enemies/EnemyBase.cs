@@ -10,7 +10,6 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer sr;
     [SerializeField] protected Transform visual_transform;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected Color freeze_tint_color = new Color(0.4f, 0.8f, 1f, 1f);
 
     protected Health health;
     protected Rigidbody2D rb;
@@ -83,7 +82,6 @@ public class EnemyBase : MonoBehaviour
             if (stun_timer <= 0f)
             {
                 is_stunned = false;
-                if (sr != null) sr.color = enemy_data != null ? enemy_data.body_color : Color.white;
             }
             return;
         }
@@ -206,7 +204,6 @@ public class EnemyBase : MonoBehaviour
         is_stunned = true;
         stun_timer = Mathf.Max(stun_timer, duration);
         if (rb != null) rb.linearVelocity = Vector2.zero;
-        if (sr != null) sr.color = freeze_tint_color;
     }
 
     protected virtual void MoveTowardsTarget()

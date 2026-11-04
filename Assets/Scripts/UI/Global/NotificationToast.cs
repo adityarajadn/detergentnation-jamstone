@@ -18,7 +18,6 @@ public class NotificationToast : MonoBehaviour
     [SerializeField] private RectTransform container;
     [SerializeField] private CanvasGroup canvas_group;
     [SerializeField] private Image background_image;
-    [SerializeField] private Image accent_bar;
     [SerializeField] private TMP_Text message_text;
 
     [Header("Settings")]
@@ -26,10 +25,6 @@ public class NotificationToast : MonoBehaviour
     [SerializeField] private float anim_duration = 0.2f;
     [SerializeField] private float display_duration = 1.8f;
 
-    [Header("Color Schemes")]
-    [SerializeField] private Color success_color = new Color(0.20f, 0.75f, 0.45f, 1f);
-    [SerializeField] private Color warning_color = new Color(0.92f, 0.32f, 0.32f, 1f);
-    [SerializeField] private Color info_color = new Color(0.25f, 0.65f, 0.95f, 1f);
 
     private Coroutine active_toast_routine;
     private Vector2 base_anchored_pos;
@@ -63,25 +58,6 @@ public class NotificationToast : MonoBehaviour
         if (message_text != null)
         {
             message_text.text = message;
-        }
-
-        Color target_accent = info_color;
-        switch (type)
-        {
-            case ToastType.Success:
-                target_accent = success_color;
-                break;
-            case ToastType.Warning:
-                target_accent = warning_color;
-                break;
-            case ToastType.Info:
-                target_accent = info_color;
-                break;
-        }
-
-        if (accent_bar != null)
-        {
-            accent_bar.color = target_accent;
         }
 
         if (active_toast_routine != null)

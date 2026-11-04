@@ -6,10 +6,6 @@ public class DefensePlacementSlot : MonoBehaviour
     public GameObject current_defense_instance;
     public DefenseData current_defense_data;
 
-    [Header("Indicator Colors")]
-    [SerializeField] private Color hover_color = new Color(0.3f, 1f, 0.4f, 0.9f);
-    [SerializeField] private Color idle_color = new Color(0.2f, 0.7f, 1f, 0.5f);
-
     private SpriteRenderer indicator;
     private Collider2D slot_collider;
 
@@ -54,7 +50,6 @@ public class DefensePlacementSlot : MonoBehaviour
         if (indicator != null)
         {
             indicator.enabled = should_show;
-            if (should_show) indicator.color = idle_color;
         }
 
         if (slot_collider != null)
@@ -79,22 +74,6 @@ public class DefensePlacementSlot : MonoBehaviour
     private void OnMouseDown()
     {
         HandleInteraction();
-    }
-
-    private void OnMouseEnter()
-    {
-        if (indicator != null && !HasDefense())
-        {
-            indicator.color = hover_color;
-        }
-    }
-
-    private void OnMouseExit()
-    {
-        if (indicator != null && !HasDefense())
-        {
-            indicator.color = idle_color;
-        }
     }
 
     public void HandleInteraction()

@@ -6,10 +6,8 @@ public class Portal : MonoBehaviour
     [Header("Components & Anchors")]
     [SerializeField] private Transform visuals;
     [SerializeField] private Transform spawn_point;
-    [SerializeField] private SpriteRenderer sprite_renderer;
 
     [Header("Visual Settings")]
-    [SerializeField] private Color portal_color = Color.white;
     [SerializeField] private bool enable_pulse = true;
     [SerializeField] private float pulse_speed = 2.5f;
     [SerializeField] private float pulse_scale_amount = 0.08f;
@@ -34,17 +32,11 @@ public class Portal : MonoBehaviour
             spawn_point = transform.Find("SpawnPoint");
         }
 
-        if (sprite_renderer == null && visuals != null)
-        {
-            sprite_renderer = visuals.GetComponent<SpriteRenderer>();
-        }
-
         if (visuals != null)
         {
             base_visual_scale = visuals.localScale;
         }
 
-        ApplyColor();
     }
 
     private void Update()
@@ -53,20 +45,6 @@ public class Portal : MonoBehaviour
         {
             float wave = Mathf.Sin(Time.time * pulse_speed) * pulse_scale_amount;
             visuals.localScale = base_visual_scale * (1f + wave);
-        }
-    }
-
-    public void SetColor(Color color)
-    {
-        portal_color = color;
-        ApplyColor();
-    }
-
-    private void ApplyColor()
-    {
-        if (sprite_renderer != null)
-        {
-            sprite_renderer.color = portal_color;
         }
     }
 

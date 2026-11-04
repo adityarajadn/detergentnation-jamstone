@@ -9,14 +9,12 @@ public class ConsumableFirstAidKit : ConsumableBase
         consumable_name = GameConstants.EquipmentNames.DefaultConsumable2;
         price = 25;
         popup_label = "+50 HP";
-        popup_color = new Color(0.29f, 0.87f, 0.5f, 1f);
     }
 
     protected override void Awake()
     {
         base.Awake();
         if (string.IsNullOrEmpty(popup_label) || popup_label == "USED!") popup_label = "+50 HP";
-        if (popup_color == Color.white) popup_color = new Color(0.29f, 0.87f, 0.5f, 1f);
     }
 
     public override bool Use(PlayerCombat combat, Vector3 target_world_pos)

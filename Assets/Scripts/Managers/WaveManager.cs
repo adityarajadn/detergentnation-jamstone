@@ -188,12 +188,6 @@ public class WaveManager : MonoBehaviour
             enemy.enemy_data = data;
         }
 
-        SpriteRenderer sr = obj.GetComponentInChildren<SpriteRenderer>();
-        if (sr != null)
-        {
-            sr.color = data.body_color;
-        }
-
         active_enemies_count++;
     }
 

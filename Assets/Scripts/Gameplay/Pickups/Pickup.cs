@@ -59,7 +59,7 @@ public class Pickup : MonoBehaviour
                 }
                 if (GameplayUI.Instance != null)
                 {
-                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " CANDY", new Color(1f, 0.88f, 0.32f, 1f));
+                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " CANDY");
                 }
             }
             else if (pickup_type == PickupType.HealthPoint)
@@ -71,7 +71,7 @@ public class Pickup : MonoBehaviour
                 }
                 if (GameplayUI.Instance != null)
                 {
-                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " HP", new Color(0.29f, 0.87f, 0.5f, 1f));
+                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " HP");
                 }
             }
             else if (pickup_type == PickupType.RepairPoint)
@@ -83,7 +83,7 @@ public class Pickup : MonoBehaviour
                 }
                 if (GameplayUI.Instance != null)
                 {
-                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " REPAIR POINT", new Color(0.98f, 0.57f, 0.24f, 1f));
+                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " REPAIR POINT");
                 }
             }
 

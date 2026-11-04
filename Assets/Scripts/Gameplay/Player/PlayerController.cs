@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -96,7 +94,6 @@ public class PlayerController : MonoBehaviour
                 {
                     AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerHurt);
                     if (animator != null) animator.SetTrigger("hit");
-                    if (PlayerCameraController.Instance != null) PlayerCameraController.Instance.Shake(0.2f, 0.35f);
                     if (hit_disable_coroutine != null) StopCoroutine(hit_disable_coroutine);
                     hit_disable_coroutine = StartCoroutine(DisableHandMountOnHit(0.25f));
                 }
@@ -116,53 +113,17 @@ public class PlayerController : MonoBehaviour
 
     private void InitializeEquipment()
     {
-        // 1. Armor
-        if (!string.IsNullOrEmpty(equipped_armor) && equipped_armor != GameConstants.EquipmentNames.None)
-        {
-            GameObject armor_prefab = FindPrefabByName(armor_prefabs, equipped_armor);
-            if (armor_prefab != null && armor_mount != null)
-            {
-                GameObject armor_obj = Instantiate(armor_prefab, armor_mount);
-                armor_obj.transform.localPosition = Vector3.zero;
-                armor_obj.transform.localRotation = Quaternion.identity;
-                active_armor = armor_obj.GetComponent<ArmorBase>();
+        Health hp = GetComponent<Health>();
 
-                Health hp = GetComponent<Health>();
-                if (hp != null) hp.SetArmor(active_armor);
-            }
+        if (PlayerEquipmentSpawner.TrySpawnArmor(equipped_armor, armor_prefabs, armor_mount, hp, out ArmorBase spawned_armor))
+        {
+            active_armor = spawned_armor;
         }
 
-        // 2. Jetpack
-        if (!string.IsNullOrEmpty(equipped_jetpack) && equipped_jetpack != GameConstants.EquipmentNames.None)
+        if (PlayerEquipmentSpawner.TrySpawnJetpack(equipped_jetpack, jetpack_prefabs, jetpack_mount, out JetpackBase spawned_jetpack))
         {
-            GameObject jetpack_prefab = FindPrefabByName(jetpack_prefabs, equipped_jetpack);
-            if (jetpack_prefab != null && jetpack_mount != null)
-            {
-                GameObject jetpack_obj = Instantiate(jetpack_prefab, jetpack_mount);
-                jetpack_obj.transform.localPosition = Vector3.zero;
-                jetpack_obj.transform.localRotation = Quaternion.identity;
-                active_jetpack = jetpack_obj.GetComponent<JetpackBase>();
-            }
+            active_jetpack = spawned_jetpack;
         }
-    }
-
-    private GameObject FindPrefabByName(GameObject[] list, string match_name)
-    {
-        if (list == null) return null;
-        for (int i = 0; i < list.Length; i++)
-        {
-            if (list[i] == null) continue;
-            string n = list[i].name.Replace("Armor_", "").Replace("Jetpack_", "").Replace("_", " ");
-            if (n.Equals(match_name, System.StringComparison.OrdinalIgnoreCase) || list[i].name.Contains(match_name))
-            {
-                return list[i];
-            }
-            ArmorBase ab = list[i].GetComponent<ArmorBase>();
-            if (ab != null && ab.armor_name == match_name) return list[i];
-            JetpackBase jb = list[i].GetComponent<JetpackBase>();
-            if (jb != null && jb.jetpack_name == match_name) return list[i];
-        }
-        return null;
     }
 
     private void Update()
@@ -347,70 +308,13 @@ public class PlayerController : MonoBehaviour
     {
         if (is_dying) return;
         is_dying = true;
-        StartCoroutine(DeathSequenceCoroutine(on_complete));
-    }
 
-    private IEnumerator DeathSequenceCoroutine(Action on_complete)
-    {
         if (hit_disable_coroutine != null)
         {
             StopCoroutine(hit_disable_coroutine);
             hit_disable_coroutine = null;
         }
 
-        // Disable weapons aiming & combat
-        PlayerWeaponAim pwa = GetComponent<PlayerWeaponAim>();
-        if (pwa != null) pwa.enabled = false;
-        PlayerCombat pc = GetComponent<PlayerCombat>();
-        if (pc != null) pc.enabled = false;
-
-        // Stop player physical movement
-        rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Kinematic;
-
-        // Collect equipment to fling off
-        List<Transform> items_to_drop = new List<Transform>();
-
-        if (active_armor != null) items_to_drop.Add(active_armor.transform);
-        else if (armor_mount != null && armor_mount.childCount > 0) items_to_drop.Add(armor_mount.GetChild(0));
-
-        if (active_jetpack != null) items_to_drop.Add(active_jetpack.transform);
-        else if (jetpack_mount != null && jetpack_mount.childCount > 0) items_to_drop.Add(jetpack_mount.GetChild(0));
-
-        if (hand_mount != null)
-        {
-            hand_mount.gameObject.SetActive(true);
-            items_to_drop.Add(hand_mount);
-        }
-
-        // Fling each item using DOTween
-        float ground_y = transform.position.y - 0.45f;
-        for (int i = 0; i < items_to_drop.Count; i++)
-        {
-            Transform item = items_to_drop[i];
-            if (item == null) continue;
-
-            item.SetParent(null, true);
-
-            float dir_x = (i % 2 == 0 ? 1f : -1f) * UnityEngine.Random.Range(1.2f, 2.2f);
-            Vector3 drop_target = new Vector3(item.position.x + dir_x, ground_y, item.position.z);
-
-            // Pop up arc and rotate towards ground
-            item.DOJump(drop_target, jumpPower: 1.2f, numJumps: 1, duration: 0.65f)
-                .SetEase(Ease.OutQuad);
-            item.DORotate(new Vector3(0f, 0f, UnityEngine.Random.Range(-90f, 90f)), 0.65f)
-                .SetEase(Ease.OutQuad);
-        }
-
-        // Trigger Death animation
-        if (animator != null)
-        {
-            animator.SetTrigger("death");
-        }
-
-        // Wait for fling and death animation to complete
-        yield return new WaitForSeconds(1.1f);
-
-        on_complete?.Invoke();
+        StartCoroutine(PlayerDeathSequence.Run(this, rb, animator, active_armor, armor_mount, active_jetpack, jetpack_mount, hand_mount, on_complete));
     }
 }
