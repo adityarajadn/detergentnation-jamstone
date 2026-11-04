@@ -46,7 +46,7 @@ public class Health : MonoBehaviour
         health_current -= amount;
         if (health_current < 0) health_current = 0;
 
-        if (GetComponent<EnemyBase>() != null || CompareTag("Enemy"))
+        if (GetComponent<EnemyBase>() != null || CompareTag(GameConstants.Tags.Enemy))
         {
             DamagePopup.Spawn(transform.position + Vector3.up * 0.5f, amount);
         }

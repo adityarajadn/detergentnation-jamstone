@@ -207,13 +207,7 @@ public class GameplayUI : MonoBehaviour
         }
         if (settings_panel != null)
         {
-            settings_panel.on_closed += () =>
-            {
-                if (pause_panel != null && Time.timeScale == 0f)
-                {
-                    pause_panel.SetActive(true);
-                }
-            };
+            settings_panel.on_closed += OnSettingsClosed;
             settings_panel.gameObject.SetActive(false);
         }
         if (pause_menu_button != null)
@@ -231,8 +225,20 @@ public class GameplayUI : MonoBehaviour
         if (pause_panel != null) pause_panel.SetActive(false);
     }
 
+    private void OnSettingsClosed()
+    {
+        if (pause_panel != null && Time.timeScale == 0f)
+        {
+            pause_panel.SetActive(true);
+        }
+    }
+
     private void OnDestroy()
     {
+        if (settings_panel != null)
+        {
+            settings_panel.on_closed -= OnSettingsClosed;
+        }
         if (Instance == this) Instance = null;
         Time.timeScale = 1f;
     }

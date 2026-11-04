@@ -68,8 +68,8 @@ public class DefensePlacementSlot : MonoBehaviour
         UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
         if (kb != null && kb.eKey.wasPressedThisFrame)
         {
-            GameObject player = PlayerController.Instance != null ? PlayerController.Instance.gameObject : GameObject.FindWithTag(GameConstants.Tags.Player);
-            if (player != null && Vector2.Distance(player.transform.position, transform.position) <= 2.2f)
+            PlayerController pc = PlayerController.Instance;
+            if (pc != null && Vector2.Distance(pc.transform.position, transform.position) <= 2.2f)
             {
                 HandleInteraction();
             }

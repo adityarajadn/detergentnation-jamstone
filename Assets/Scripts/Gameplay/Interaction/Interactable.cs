@@ -73,9 +73,8 @@ public class Interactable : MonoBehaviour
                 return;
             }
 
-            Collider2D col = GetComponent<Collider2D>();
-            float distance = col != null
-                ? Vector2.Distance(col.ClosestPoint(player_transform.position), player_transform.position)
+            float distance = trigger_collider != null
+                ? Vector2.Distance(trigger_collider.ClosestPoint(player_transform.position), player_transform.position)
                 : Vector2.Distance(player_transform.position, transform.position);
 
             is_player_in_range = distance <= interaction_radius;

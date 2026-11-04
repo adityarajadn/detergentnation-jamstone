@@ -50,8 +50,8 @@ public class MeleeHitbox : MonoBehaviour
         }
 
         // Only target enemies (layer or tag or EnemyBase component)
-        bool isEnemy = other.gameObject.layer == LayerMask.NameToLayer("Enemy")
-            || other.CompareTag("Enemy")
+        bool isEnemy = other.gameObject.layer == LayerMask.NameToLayer(GameConstants.Layers.Enemy)
+            || other.CompareTag(GameConstants.Tags.Enemy)
             || other.GetComponentInParent<EnemyBase>() != null;
 
         if (!isEnemy) return;

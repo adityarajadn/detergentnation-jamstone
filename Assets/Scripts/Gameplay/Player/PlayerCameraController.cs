@@ -41,6 +41,14 @@ public class PlayerCameraController : MonoBehaviour
             .OnComplete(() => shake_offset = Vector3.zero);
     }
 
+    private void Start()
+    {
+        if (target == null && PlayerController.Instance != null)
+        {
+            target = PlayerController.Instance.transform;
+        }
+    }
+
     private void LateUpdate()
     {
         if (target == null)
@@ -48,13 +56,6 @@ public class PlayerCameraController : MonoBehaviour
             if (PlayerController.Instance != null)
             {
                 target = PlayerController.Instance.transform;
-                return;
-            }
-
-            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
-            if (player != null)
-            {
-                target = player.transform;
             }
             return;
         }
