@@ -6,7 +6,7 @@ public class ConsumableSonarBatarang : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = "Sonar Batarang";
+        consumable_name = GameConstants.EquipmentNames.ConsumableSonarBatarang;
         popup_label = "SONAR!";
     }
 

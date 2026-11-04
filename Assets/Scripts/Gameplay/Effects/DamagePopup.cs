@@ -1,12 +1,20 @@
-using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class DamagePopup : MonoBehaviour
 {
+    private const float DriftHeightFactor = 0.7f;
+    private const float PunchStartScale = 0.6f;
+    private const float PunchPeakScale = 1.3f;
+    private const float PunchUpFraction = 0.2f;
+    private const float FadeStartFraction = 0.5f;
+
     private static GameObject cached_prefab;
     private static ObjectPool<DamagePopup> pool;
+
+    private Sequence sequence;
 
     [SerializeField] private TMP_Text text_mesh;
     [SerializeField] private float lifetime = 0.55f;
@@ -92,46 +100,40 @@ public class DamagePopup : MonoBehaviour
             text_mesh.alpha = 1f;
         }
 
-        StartCoroutine(AnimateRoutine());
+        PlayAnimation();
     }
 
-    private IEnumerator AnimateRoutine()
+    private void PlayAnimation()
     {
-        float elapsed = 0f;
+        sequence?.Kill();
+
         float vx = Random.Range(-0.4f, 0.4f);
-        Vector3 initial_scale = Vector3.one;
+        Vector3 end_pos = transform.position + new Vector3(vx * lifetime, move_speed_y * lifetime * DriftHeightFactor, 0f);
 
-        while (elapsed < lifetime)
+        transform.localScale = Vector3.one * PunchStartScale;
+
+        sequence = DOTween.Sequence();
+
+        // Float upwards & drift
+        sequence.Append(transform.DOMove(end_pos, lifetime).SetEase(Ease.OutQuad));
+
+        // Punch scale: pop up fast, then settle
+        sequence.Insert(0f, transform.DOScale(PunchPeakScale, lifetime * PunchUpFraction).SetEase(Ease.Linear));
+        sequence.Insert(lifetime * PunchUpFraction, transform.DOScale(1f, lifetime * (1f - PunchUpFraction)).SetEase(Ease.Linear));
+
+        // Fade alpha in 2nd half
+        if (text_mesh != null)
         {
-            elapsed += Time.deltaTime;
-            float t = elapsed / lifetime;
-
-            // Float upwards & drift
-            float cur_vy = move_speed_y * (1f - t * 0.6f);
-            transform.position += new Vector3(vx * Time.deltaTime, cur_vy * Time.deltaTime, 0f);
-
-            // Punch scale
-            float scale_factor;
-            if (t < 0.2f)
-            {
-                scale_factor = Mathf.Lerp(0.6f, 1.3f, t / 0.2f);
-            }
-            else
-            {
-                scale_factor = Mathf.Lerp(1.3f, 1.0f, (t - 0.2f) / 0.8f);
-            }
-            transform.localScale = initial_scale * scale_factor;
-
-            // Fade alpha in 2nd half
-            if (t > 0.5f && text_mesh != null)
-            {
-                text_mesh.alpha = Mathf.Lerp(1f, 0f, (t - 0.5f) / 0.5f);
-            }
-
-            yield return null;
+            sequence.Insert(lifetime * FadeStartFraction,
+                DOTween.To(() => text_mesh.alpha, a => text_mesh.alpha = a, 0f, lifetime * (1f - FadeStartFraction)).SetEase(Ease.Linear));
         }
 
-        transform.localScale = initial_scale;
+        sequence.OnComplete(ReleaseToPool);
+    }
+
+    private void ReleaseToPool()
+    {
+        transform.localScale = Vector3.one;
         if (pool != null)
         {
             pool.Release(this);
@@ -140,5 +142,17 @@ public class DamagePopup : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        sequence?.Kill();
+        sequence = null;
+    }
+
+    private void OnDestroy()
+    {
+        sequence?.Kill();
+        sequence = null;
     }
 }

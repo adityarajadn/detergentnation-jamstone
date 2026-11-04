@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +16,7 @@ public class Portal : MonoBehaviour
     public UnityEvent<GameObject> on_entity_entered;
 
     private Vector3 base_visual_scale = Vector3.one;
+    private Tween pulse_tween;
 
     private void Awake()
     {
@@ -27,15 +29,42 @@ public class Portal : MonoBehaviour
         {
             base_visual_scale = visuals.localScale;
         }
-
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (enable_pulse && visuals != null)
+        StartPulse();
+    }
+
+    private void OnDisable()
+    {
+        KillPulse();
+    }
+
+    private void OnDestroy()
+    {
+        KillPulse();
+    }
+
+    private void StartPulse()
+    {
+        KillPulse();
+        if (!enable_pulse || visuals == null) return;
+
+        // Smooth back-and-forth scale between (1 - amount) and (1 + amount); one half cycle = PI / speed
+        visuals.localScale = base_visual_scale * (1f - pulse_scale_amount);
+        pulse_tween = visuals
+            .DOScale(base_visual_scale * (1f + pulse_scale_amount), Mathf.PI / Mathf.Max(pulse_speed, 0.01f))
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
+
+    private void KillPulse()
+    {
+        if (pulse_tween != null)
         {
-            float wave = Mathf.Sin(Time.time * pulse_speed) * pulse_scale_amount;
-            visuals.localScale = base_visual_scale * (1f + wave);
+            pulse_tween.Kill();
+            pulse_tween = null;
         }
     }
 

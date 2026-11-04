@@ -6243,7 +6243,7 @@ MonoBehaviour:
     slot1_button_text: {fileID: 1021949197}
     slot2_button: {fileID: 1167775973}
     slot2_button_text: {fileID: 480808689}
-  - item_name: Soap Bucket
+  - item_name: Soap Water Bucket
     price: 75
     description: Absolutes shield for 3 hits
     preview_sprite: {fileID: 7465072865581079696, guid: 28ebb758864e4554eb0bd06260835607, type: 3}

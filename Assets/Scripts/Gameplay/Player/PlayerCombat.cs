@@ -193,12 +193,7 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string shootSound = "pistol_shoot";
-            string wn = ranged_weapon.weapon_name.ToLower();
-            if (wn.Contains("rifle")) shootSound = "rifle_loop";
-            else if (wn.Contains("plasma")) shootSound = "plasma_shoot";
-            else if (wn.Contains("bubble")) shootSound = "bubble_shoot";
-            AudioManager.PlaySFX(shootSound);
+            AudioManager.PlaySFX(ranged_weapon.attack_sound_key);
         }
 
         if (main_camera == null) main_camera = Camera.main;
@@ -215,7 +210,6 @@ public class PlayerCombat : MonoBehaviour
         if (melee_weapon == null || active_melee_comp == null) return;
 
         next_melee_time = Time.time + melee_weapon.attack_rate;
-        string weaponName = melee_weapon.weapon_name.ToLower();
 
         if (melee_weapon.attack_sound != null)
         {
@@ -223,25 +217,14 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string swingSound = "swing_imelda";
-            if (weaponName.Contains("hammer")) swingSound = "swing_hammer";
-            else if (weaponName.Contains("stick")) swingSound = "swing_stick";
-            AudioManager.PlaySFX(swingSound);
+            AudioManager.PlaySFX(melee_weapon.attack_sound_key);
         }
 
-        // Trigger hand attack animation and toggle weapon attachment visual
-        string triggerName = null;
-        if (weaponName.Contains("imelda") || weaponName.Contains("curse"))
-        {
-            triggerName = "Attack_ImeldaSword";
-        }
-        else if (weaponName.Contains("hammer") || weaponName.Contains("soap"))
-        {
-            triggerName = "Attack_SoapHammer";
-        }
+        // Hand attack animation is chosen by the weapon data (attack_style)
+        bool has_hand_animation = GameConstants.AnimParams.TryGetMeleeTrigger(melee_weapon.attack_style, out int attack_trigger);
 
         // For weapons without animated hand colliders, use raycast/overlap strike
-        if (triggerName == null)
+        if (!has_hand_animation)
         {
             Vector3 origin = melee_point != null ? melee_point.position : transform.position;
             active_melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
@@ -256,7 +239,7 @@ public class PlayerCombat : MonoBehaviour
 
             if (hand_animator != null)
             {
-                hand_animator.SetTrigger(triggerName);
+                hand_animator.SetTrigger(attack_trigger);
             }
 
             if (weapon_attachment != null)

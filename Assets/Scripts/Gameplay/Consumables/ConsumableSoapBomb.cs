@@ -10,7 +10,7 @@ public class ConsumableSoapBomb : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = GameConstants.EquipmentNames.DefaultConsumable1;
+        consumable_name = GameConstants.EquipmentNames.ConsumableSoapBomb;
         popup_label = "SOAP BOMB!";
         obstacle_mask = LayerMask.GetMask(GameConstants.Layers.Ground);
     }

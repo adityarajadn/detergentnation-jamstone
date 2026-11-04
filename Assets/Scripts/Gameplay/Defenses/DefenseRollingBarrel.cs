@@ -1,12 +1,17 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class DefenseRollingBarrel : DefenseObject
 {
+    private const float RollLifetimeSeconds = 6f;
+
     [SerializeField] private float roll_speed = 9f;
     [SerializeField] private GameObject explosion_effect_prefab;
 
     private bool is_rolling = false;
     private float roll_direction = 1f;
+    private Tween move_tween;
+    private Tween spin_tween;
 
     protected override bool CanInteract()
     {
@@ -30,20 +35,49 @@ public class DefenseRollingBarrel : DefenseObject
         AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelRoll);
         roll_direction = transform.position.x < 0 ? -1f : 1f;
         HidePrompt();
-        Destroy(gameObject, 6f);
+        StartRolling();
+        Destroy(gameObject, RollLifetimeSeconds);
+    }
+
+    private void StartRolling()
+    {
+        KillTweens();
+
+        // Linear travel along X for the barrel's whole lifetime
+        float travel = roll_direction * roll_speed * RollLifetimeSeconds;
+        move_tween = transform.DOMoveX(transform.position.x + travel, RollLifetimeSeconds).SetEase(Ease.Linear);
+
+        // One full turn per second, looping
+        if (visuals_container != null)
+        {
+            spin_tween = visuals_container.transform
+                .DOLocalRotate(new Vector3(0f, 0f, -roll_direction * 360f), 1f, RotateMode.FastBeyond360)
+                .SetRelative()
+                .SetEase(Ease.Linear)
+                .SetLoops(-1, LoopType.Incremental);
+        }
+    }
+
+    private void KillTweens()
+    {
+        if (move_tween != null) { move_tween.Kill(); move_tween = null; }
+        if (spin_tween != null) { spin_tween.Kill(); spin_tween = null; }
+    }
+
+    private void OnDisable()
+    {
+        KillTweens();
+    }
+
+    protected override void OnDestroy()
+    {
+        KillTweens();
+        base.OnDestroy();
     }
 
     protected override void Update()
     {
-        if (is_rolling)
-        {
-            transform.Translate(Vector3.right * (roll_direction * roll_speed * Time.deltaTime));
-            if (visuals_container != null)
-            {
-                visuals_container.transform.Rotate(0f, 0f, -roll_direction * 360f * Time.deltaTime);
-            }
-            return;
-        }
+        if (is_rolling) return;
 
         base.Update();
     }

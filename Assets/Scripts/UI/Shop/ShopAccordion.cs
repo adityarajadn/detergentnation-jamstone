@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,27 +9,32 @@ using UnityEngine.UI;
 /// </summary>
 public class ShopAccordion
 {
-    private readonly MonoBehaviour host;
+    private const float FallbackHeightPerUpgrade = 65f;
+
     private readonly List<EquipmentShopEntry> entries;
     private readonly float duration;
 
     private EquipmentShopEntry currently_expanded_entry = null;
-    private Coroutine active_routine = null;
+    private Sequence active_sequence = null;
 
-    public ShopAccordion(MonoBehaviour host, List<EquipmentShopEntry> entries, float duration)
+    public ShopAccordion(List<EquipmentShopEntry> entries, float duration)
     {
-        this.host = host;
         this.entries = entries;
         this.duration = duration;
     }
 
+    public void Kill()
+    {
+        if (active_sequence != null)
+        {
+            active_sequence.Kill();
+            active_sequence = null;
+        }
+    }
+
     public void CollapseAll()
     {
-        if (active_routine != null)
-        {
-            host.StopCoroutine(active_routine);
-            active_routine = null;
-        }
+        Kill();
 
         for (int i = 0; i < entries.Count; i++)
         {
@@ -52,16 +57,11 @@ public class ShopAccordion
 
         bool will_expand = (currently_expanded_entry != entry);
 
-        if (active_routine != null)
-        {
-            host.StopCoroutine(active_routine);
-            active_routine = null;
-        }
-
-        active_routine = host.StartCoroutine(AnimateRoutine(entry, will_expand));
+        Kill();
+        Animate(entry, will_expand);
     }
 
-    private IEnumerator AnimateRoutine(EquipmentShopEntry targetEntry, bool will_expand)
+    private void Animate(EquipmentShopEntry targetEntry, bool will_expand)
     {
         EquipmentShopEntry closingEntry = currently_expanded_entry;
         EquipmentShopEntry openingEntry = will_expand ? targetEntry : null;
@@ -83,7 +83,7 @@ public class ShopAccordion
             if (openingLE != null) openingLE.preferredHeight = -1; // unrestricted for measurement
             LayoutRebuilder.ForceRebuildLayoutImmediate(openingRT);
             openingTargetHeight = LayoutUtility.GetPreferredHeight(openingRT);
-            if (openingTargetHeight <= 0f) openingTargetHeight = 65f * Mathf.Max(1, openingEntry.stat_upgrades.Count);
+            if (openingTargetHeight <= 0f) openingTargetHeight = FallbackHeightPerUpgrade * Mathf.Max(1, openingEntry.stat_upgrades.Count);
             if (openingLE != null) openingLE.preferredHeight = 0f;
             if (openingCG != null) openingCG.alpha = 0f;
         }
@@ -105,52 +105,52 @@ public class ShopAccordion
         Transform activePanelContent = targetEntry.expand_panel.transform.parent != null ? targetEntry.expand_panel.transform.parent.parent : null;
         RectTransform contentRT = activePanelContent != null ? activePanelContent.GetComponent<RectTransform>() : null;
 
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
-            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+        // UI tween: keeps running while the game is paused (timeScale = 0)
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
 
-            if (openingLE != null)
-            {
-                openingLE.preferredHeight = Mathf.Lerp(0f, openingTargetHeight, smoothT);
-                if (openingCG != null) openingCG.alpha = smoothT;
-            }
-
-            if (closingLE != null)
-            {
-                closingLE.preferredHeight = Mathf.Lerp(closingStartHeight, 0f, smoothT);
-                if (closingCG != null) closingCG.alpha = 1f - smoothT;
-            }
-
-            if (contentRT != null)
-            {
-                LayoutRebuilder.MarkLayoutForRebuild(contentRT);
-            }
-
-            yield return null;
-        }
-
-        // Finalize state
         if (openingLE != null)
         {
-            openingLE.preferredHeight = openingTargetHeight;
-            if (openingCG != null) openingCG.alpha = 1f;
+            LayoutElement le = openingLE;
+            seq.Join(DOTween.To(() => le.preferredHeight, h => le.preferredHeight = h, openingTargetHeight, duration).SetEase(Ease.InOutSine));
+            if (openingCG != null) seq.Join(openingCG.DOFade(1f, duration).SetEase(Ease.InOutSine));
         }
 
-        if (closingLE != null && closingEntry != null && closingEntry.expand_panel != null)
+        if (closingLE != null)
         {
-            closingLE.preferredHeight = 0f;
-            if (closingCG != null) closingCG.alpha = 0f;
-            closingEntry.expand_panel.SetActive(false);
+            LayoutElement le = closingLE;
+            seq.Join(DOTween.To(() => le.preferredHeight, h => le.preferredHeight = h, 0f, duration).SetEase(Ease.InOutSine));
+            if (closingCG != null) seq.Join(closingCG.DOFade(0f, duration).SetEase(Ease.InOutSine));
         }
 
         if (contentRT != null)
         {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(contentRT);
+            seq.OnUpdate(() => LayoutRebuilder.MarkLayoutForRebuild(contentRT));
         }
 
-        active_routine = null;
+        seq.OnComplete(() =>
+        {
+            // Finalize state
+            if (openingLE != null)
+            {
+                openingLE.preferredHeight = openingTargetHeight;
+                if (openingCG != null) openingCG.alpha = 1f;
+            }
+
+            if (closingLE != null && closingEntry != null && closingEntry.expand_panel != null)
+            {
+                closingLE.preferredHeight = 0f;
+                if (closingCG != null) closingCG.alpha = 0f;
+                closingEntry.expand_panel.SetActive(false);
+            }
+
+            if (contentRT != null)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(contentRT);
+            }
+
+            active_sequence = null;
+        });
+
+        active_sequence = seq;
     }
 }

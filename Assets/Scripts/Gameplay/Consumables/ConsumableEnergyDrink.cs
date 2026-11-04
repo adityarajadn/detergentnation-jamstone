@@ -7,7 +7,7 @@ public class ConsumableEnergyDrink : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = "Energy Drink";
+        consumable_name = GameConstants.EquipmentNames.ConsumableEnergyDrink;
         popup_label = "SPEED UP!";
     }
 

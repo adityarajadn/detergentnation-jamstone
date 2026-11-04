@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,10 @@ public class GameplayUI : MonoBehaviour
     [Header("Kill Streak")]
     [SerializeField] private GameObject streak_panel;
     [SerializeField] private TMP_Text streak_text;
+    [SerializeField] private UnityEngine.UI.Image streak_background_img;
+    [SerializeField] private Sprite streak_bg_normal;
+    [SerializeField] private Sprite streak_bg_high;
+    private Tween streak_tween;
 
     [Header("Pickup Feedback UI")]
     [SerializeField] private CanvasGroup pickup_feedback_group;
@@ -82,7 +87,11 @@ public class GameplayUI : MonoBehaviour
     private HudEndScreens end_screens;
     private HudPauseMenu pause_menu;
 
-    private Coroutine pickup_feedback_routine;
+    private const float PickupFadeInSeconds = 0.15f;
+    private const float PickupHoldSeconds = 0.85f;
+    private const float PickupFadeOutSeconds = 0.35f;
+
+    private Sequence pickup_feedback_tween;
 
     private void Awake()
     {
@@ -172,8 +181,18 @@ public class GameplayUI : MonoBehaviour
         if (streak_panel != null) streak_panel.SetActive(false);
     }
 
+    private void OnDisable()
+    {
+        KillPickupFeedback();
+        streak_tween?.Kill();
+        streak_tween = null;
+    }
+
     private void OnDestroy()
     {
+        KillPickupFeedback();
+        streak_tween?.Kill();
+        streak_tween = null;
         if (pause_menu != null) pause_menu.Unbind();
         if (Instance == this) Instance = null;
         Time.timeScale = 1f;
@@ -196,19 +215,51 @@ public class GameplayUI : MonoBehaviour
 
     private void OnStreakChanged(int count, int bonus)
     {
-        if (streak_panel != null && count >= 2)
+        if (streak_panel == null || count < 2) return;
+
+        bool wasActive = streak_panel.activeSelf;
+        streak_panel.SetActive(true);
+
+        if (streak_background_img != null)
         {
-            streak_panel.SetActive(true);
-            if (streak_text != null)
-            {
-                streak_text.text = count + "x Streak!" + (bonus > 0 ? " (+" + bonus + " Candy)" : "");
-            }
+            streak_background_img.sprite = count >= 10 && streak_bg_high != null ? streak_bg_high : streak_bg_normal;
+        }
+
+        if (streak_text != null)
+        {
+            streak_text.text = count + "x Streak!" + (bonus > 0 ? " (+" + bonus + " Candy)" : "");
+        }
+
+        streak_tween?.Kill();
+        if (!wasActive)
+        {
+            streak_panel.transform.localScale = Vector3.zero;
+            streak_tween = streak_panel.transform.DOScale(1f, 0.25f)
+                .SetEase(Ease.OutBack)
+                .SetUpdate(true);
+        }
+        else
+        {
+            streak_panel.transform.localScale = Vector3.one;
+            float punchAmount = count >= 10 ? 0.35f : 0.2f;
+            streak_tween = streak_panel.transform.DOPunchScale(new Vector3(punchAmount, punchAmount, 0f), 0.2f, 10, 1)
+                .SetUpdate(true);
         }
     }
 
     private void OnStreakReset()
     {
-        if (streak_panel != null) streak_panel.SetActive(false);
+        if (streak_panel == null || !streak_panel.activeSelf) return;
+
+        streak_tween?.Kill();
+        streak_tween = streak_panel.transform.DOScale(0f, 0.18f)
+            .SetEase(Ease.InBack)
+            .SetUpdate(true)
+            .OnComplete(() =>
+            {
+                if (streak_panel != null) streak_panel.SetActive(false);
+                streak_tween = null;
+            });
     }
 
     public void ShowPickupFeedback(string message)
@@ -217,45 +268,29 @@ public class GameplayUI : MonoBehaviour
 
         pickup_feedback_text.text = message;
 
-        if (pickup_feedback_routine != null)
+        KillPickupFeedback();
+
+        pickup_feedback_group.gameObject.SetActive(true);
+        pickup_feedback_group.alpha = 0f;
+
+        pickup_feedback_tween = DOTween.Sequence().SetUpdate(true);
+        pickup_feedback_tween.Append(pickup_feedback_group.DOFade(1f, PickupFadeInSeconds));
+        pickup_feedback_tween.AppendInterval(PickupHoldSeconds);
+        pickup_feedback_tween.Append(pickup_feedback_group.DOFade(0f, PickupFadeOutSeconds));
+        pickup_feedback_tween.OnComplete(() =>
         {
-            StopCoroutine(pickup_feedback_routine);
-        }
-        pickup_feedback_routine = StartCoroutine(PickupFeedbackRoutine());
+            pickup_feedback_group.gameObject.SetActive(false);
+            pickup_feedback_tween = null;
+        });
     }
 
-    private System.Collections.IEnumerator PickupFeedbackRoutine()
+    private void KillPickupFeedback()
     {
-        pickup_feedback_group.gameObject.SetActive(true);
-        float fadeIn = 0.15f;
-        float hold = 0.85f;
-        float fadeOut = 0.35f;
-
-        // Fade in
-        float t = 0f;
-        while (t < fadeIn)
+        if (pickup_feedback_tween != null)
         {
-            t += Time.unscaledDeltaTime;
-            pickup_feedback_group.alpha = Mathf.Clamp01(t / fadeIn);
-            yield return null;
+            pickup_feedback_tween.Kill();
+            pickup_feedback_tween = null;
         }
-        pickup_feedback_group.alpha = 1f;
-
-        // Hold
-        yield return new WaitForSecondsRealtime(hold);
-
-        // Fade out
-        t = 0f;
-        while (t < fadeOut)
-        {
-            t += Time.unscaledDeltaTime;
-            pickup_feedback_group.alpha = Mathf.Clamp01(1f - (t / fadeOut));
-            yield return null;
-        }
-
-        pickup_feedback_group.alpha = 0f;
-        pickup_feedback_group.gameObject.SetActive(false);
-        pickup_feedback_routine = null;
     }
 
     public void TogglePause()

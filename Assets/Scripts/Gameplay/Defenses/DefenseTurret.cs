@@ -1,10 +1,17 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class DefenseTurret : DefenseObject
 {
+    private const float RecoilDistance = 0.15f;
+    private const float RecoilKickSeconds = 0.03f;
+    private const float RecoilReturnSeconds = 0.12f;
+
     [SerializeField] private GameObject projectile_prefab;
     private float next_cannon_fire_time = 0f;
+    private Tween recoil_tween;
+    private float recoil_origin_x;
+    private bool recoil_origin_set;
 
     protected override bool CanInteract()
     {
@@ -60,7 +67,7 @@ public class DefenseTurret : DefenseObject
             }
         }
 
-        StartCoroutine(RecoilRoutine());
+        PlayRecoil();
 
         if (ammo_current <= 0)
         {
@@ -68,15 +75,43 @@ public class DefenseTurret : DefenseObject
         }
     }
 
-    private IEnumerator RecoilRoutine()
+    private void PlayRecoil()
     {
-        if (visuals_container != null)
+        if (visuals_container == null) return;
+
+        Transform visual = visuals_container.transform;
+        if (!recoil_origin_set)
         {
-            Vector3 orig_pos = visuals_container.transform.localPosition;
-            float dir = transform.position.x < 0 ? 0.15f : -0.15f;
-            visuals_container.transform.localPosition = orig_pos + new Vector3(dir, 0f, 0f);
-            yield return new WaitForSeconds(0.08f);
-            visuals_container.transform.localPosition = orig_pos;
+            recoil_origin_x = visual.localPosition.x;
+            recoil_origin_set = true;
         }
+
+        KillRecoil();
+        visual.localPosition = new Vector3(recoil_origin_x, visual.localPosition.y, visual.localPosition.z);
+
+        float dir = transform.position.x < 0 ? RecoilDistance : -RecoilDistance;
+        recoil_tween = DOTween.Sequence()
+            .Append(visual.DOLocalMoveX(recoil_origin_x + dir, RecoilKickSeconds))
+            .Append(visual.DOLocalMoveX(recoil_origin_x, RecoilReturnSeconds).SetEase(Ease.OutQuad));
+    }
+
+    private void KillRecoil()
+    {
+        if (recoil_tween != null)
+        {
+            recoil_tween.Kill();
+            recoil_tween = null;
+        }
+    }
+
+    private void OnDisable()
+    {
+        KillRecoil();
+    }
+
+    protected override void OnDestroy()
+    {
+        KillRecoil();
+        base.OnDestroy();
     }
 }

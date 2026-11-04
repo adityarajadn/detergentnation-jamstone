@@ -50,12 +50,10 @@ public class MeleeWeapon : WeaponBase
         if (hp != null && !hp.is_dead)
         {
             hp.TakeDamage(damage);
-            string hitSound = "hit_imelda";
+            string hitSound = GameConstants.AudioKeys.HitImelda;
             if (weapon_data != null)
             {
-                string wn = weapon_data.weapon_name.ToLower();
-                if (wn.Contains("hammer")) hitSound = "hit_hammer";
-                else if (wn.Contains("stick")) hitSound = "hit_stick";
+                if (!string.IsNullOrEmpty(weapon_data.hit_sound_key)) hitSound = weapon_data.hit_sound_key;
             }
             AudioManager.PlaySFX(hitSound);
         }

@@ -1,7 +1,6 @@
-using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum ToastType
 {
@@ -24,8 +23,7 @@ public class NotificationToast : MonoBehaviour
     [SerializeField] private float anim_duration = 0.2f;
     [SerializeField] private float display_duration = 1.8f;
 
-
-    private Coroutine active_toast_routine;
+    private Sequence toast_sequence;
     private Vector2 base_anchored_pos;
 
     private void Awake()
@@ -47,6 +45,16 @@ public class NotificationToast : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        KillToast();
+    }
+
+    private void OnDestroy()
+    {
+        KillToast();
+    }
+
     public static void Show(string message, ToastType type = ToastType.Info)
     {
         GlobalUIManager.ShowToast(message, type);
@@ -59,58 +67,44 @@ public class NotificationToast : MonoBehaviour
             message_text.text = message;
         }
 
-        if (active_toast_routine != null)
-        {
-            StopCoroutine(active_toast_routine);
-        }
-        active_toast_routine = StartCoroutine(ToastRoutine());
+        PlayToast();
     }
 
-    private IEnumerator ToastRoutine()
+    private void PlayToast()
     {
-        if (container == null || canvas_group == null) yield break;
+        if (container == null || canvas_group == null) return;
 
-        Vector2 startPos = base_anchored_pos + new Vector2(0f, slide_offset_y);
-        Vector2 targetPos = base_anchored_pos;
+        KillToast();
 
-        container.anchoredPosition = startPos;
+        Vector2 start_pos = base_anchored_pos + new Vector2(0f, slide_offset_y);
+        Vector2 target_pos = base_anchored_pos;
+
+        container.anchoredPosition = start_pos;
         canvas_group.alpha = 0f;
         canvas_group.blocksRaycasts = false;
 
+        toast_sequence = DOTween.Sequence().SetUpdate(true);
+
         // Slide In + Fade In
-        float elapsed = 0f;
-        while (elapsed < anim_duration)
-        {
-            elapsed += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(elapsed / anim_duration);
-            float smooth = Mathf.SmoothStep(0f, 1f, t);
-
-            container.anchoredPosition = Vector2.Lerp(startPos, targetPos, smooth);
-            canvas_group.alpha = smooth;
-            yield return null;
-        }
-
-        container.anchoredPosition = targetPos;
-        canvas_group.alpha = 1f;
+        toast_sequence.Append(container.DOAnchorPos(target_pos, anim_duration).SetEase(Ease.InOutSine));
+        toast_sequence.Join(canvas_group.DOFade(1f, anim_duration).SetEase(Ease.InOutSine));
 
         // Display hold
-        yield return new WaitForSecondsRealtime(display_duration);
+        toast_sequence.AppendInterval(display_duration);
 
         // Slide Out + Fade Out
-        elapsed = 0f;
-        while (elapsed < anim_duration)
+        toast_sequence.Append(container.DOAnchorPos(start_pos, anim_duration).SetEase(Ease.InOutSine));
+        toast_sequence.Join(canvas_group.DOFade(0f, anim_duration).SetEase(Ease.InOutSine));
+
+        toast_sequence.OnComplete(() => toast_sequence = null);
+    }
+
+    private void KillToast()
+    {
+        if (toast_sequence != null)
         {
-            elapsed += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(elapsed / anim_duration);
-            float smooth = Mathf.SmoothStep(0f, 1f, t);
-
-            container.anchoredPosition = Vector2.Lerp(targetPos, startPos, smooth);
-            canvas_group.alpha = 1f - smooth;
-            yield return null;
+            toast_sequence.Kill();
+            toast_sequence = null;
         }
-
-        container.anchoredPosition = startPos;
-        canvas_group.alpha = 0f;
-        active_toast_routine = null;
     }
 }

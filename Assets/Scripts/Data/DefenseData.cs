@@ -11,4 +11,5 @@ public class DefenseData : ScriptableObject
     public float attack_range = 5f;
     public GameObject prefab;
     public Sprite icon;
+    public string place_sound_key;
 }

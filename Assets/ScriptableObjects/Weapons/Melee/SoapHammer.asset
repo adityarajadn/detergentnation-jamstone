@@ -15,7 +15,6 @@ MonoBehaviour:
   weapon_name: Soap Hammer
   description: Palu sabun berat berdaya hancur tinggi, knockback besar, serta berpeluang
     memberi efek stun.
-  weapon_type: 1
   price: 100
   damage: 50
   fire_rate: 0.3
@@ -31,3 +30,6 @@ MonoBehaviour:
   projectile_prefab: {fileID: 0}
   weapon_prefab: {fileID: 7922205477950919431, guid: 2112ef242035df04fb8ec59e2191408d, type: 3}
   attack_sound: {fileID: 0}
+  attack_sound_key: swing_hammer
+  hit_sound_key: hit_hammer
+  attack_style: 2

@@ -71,7 +71,7 @@ public static class PlayerDeathSequence
         // Trigger Death animation
         if (animator != null)
         {
-            animator.SetTrigger("death");
+            animator.SetTrigger(GameConstants.AnimParams.Death);
         }
 
         // Wait for fling and death animation to complete

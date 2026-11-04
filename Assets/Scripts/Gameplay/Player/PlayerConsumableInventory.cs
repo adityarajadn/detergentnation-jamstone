@@ -138,9 +138,7 @@ public class PlayerConsumableInventory : MonoBehaviour
             ConsumableBase cb = consumable_prefabs[i].GetComponent<ConsumableBase>();
             if (cb != null)
             {
-                bool match = cb.consumable_name.Equals(item_name, System.StringComparison.OrdinalIgnoreCase) ||
-                    (cb.consumable_name == "Soap Water Bucket" && (item_name == "Soap Water Bucket" || item_name == "Soap Bucket")) ||
-                    (cb.consumable_name == "Tools Box" && (item_name == "Tools Box" || item_name == "Tool Box"));
+                bool match = cb.consumable_name == item_name;
                 if (match)
                 {
                     bool success = cb.Use(combat, mouse_pos);

@@ -6,7 +6,7 @@ public class ConsumableFirstAidKit : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = GameConstants.EquipmentNames.DefaultConsumable2;
+        consumable_name = GameConstants.EquipmentNames.ConsumableFirstAidKit;
         popup_label = "+50 HP";
     }
 

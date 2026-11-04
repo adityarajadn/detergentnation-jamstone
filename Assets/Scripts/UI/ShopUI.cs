@@ -50,7 +50,7 @@ public class ShopUI : MonoBehaviour
 
     private void Start()
     {
-        accordion = new ShopAccordion(this, equipment_entries, accordion_duration);
+        accordion = new ShopAccordion(equipment_entries, accordion_duration);
         equipment_tab = new ShopEquipmentTab(equipment_entries, accordion, BuildPreview(), RefreshAllDisplays);
         consumable_tab = new ShopConsumableTab(consumable_entries, RefreshAllDisplays);
 
@@ -70,6 +70,16 @@ public class ShopUI : MonoBehaviour
 
         SwitchTab(0);
         RefreshAllDisplays();
+    }
+
+    private void OnDisable()
+    {
+        if (accordion != null) accordion.Kill();
+    }
+
+    private void OnDestroy()
+    {
+        if (accordion != null) accordion.Kill();
     }
 
     private ShopLoadoutPreview BuildPreview()

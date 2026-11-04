@@ -65,14 +65,13 @@ public class MeleeHitbox : MonoBehaviour
             hit_targets.Add(other);
 
             int dmg = 25;
-            string hitSound = "hit_imelda";
+            string hitSound = GameConstants.AudioKeys.HitImelda;
 
             if (combat_player != null && combat_player.melee_weapon != null)
             {
                 dmg = combat_player.melee_weapon.damage;
-                string wn = combat_player.melee_weapon.weapon_name.ToLower();
-                if (wn.Contains("hammer") || wn.Contains("mace")) hitSound = "hit_hammer";
-                else if (wn.Contains("stick")) hitSound = "hit_stick";
+                string key = combat_player.melee_weapon.hit_sound_key;
+                if (!string.IsNullOrEmpty(key)) hitSound = key;
             }
 
             hp.TakeDamage(dmg);

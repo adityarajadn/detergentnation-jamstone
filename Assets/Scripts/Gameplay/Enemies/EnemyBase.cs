@@ -101,7 +101,7 @@ public class EnemyBase : MonoBehaviour
         if (dist <= range)
         {
             if (rb != null) rb.linearVelocity = Vector2.zero;
-            if (animator != null) animator.SetBool("is_moving", false);
+            if (animator != null) animator.SetBool(GameConstants.AnimParams.IsMoving, false);
             UpdateFacing(target_transform.position.x - transform.position.x);
             if (Time.time >= next_attack_time)
             {
@@ -221,7 +221,7 @@ public class EnemyBase : MonoBehaviour
             rb.linearVelocity = new Vector2(Mathf.Sign(dir.x) * enemy_data.move_speed, rb.linearVelocity.y);
         }
 
-        if (animator != null) animator.SetBool("is_moving", true);
+        if (animator != null) animator.SetBool(GameConstants.AnimParams.IsMoving, true);
         UpdateFacing(dir.x);
     }
 
@@ -245,8 +245,8 @@ public class EnemyBase : MonoBehaviour
         is_attacking = true;
         if (animator != null)
         {
-            animator.SetBool("is_moving", false);
-            animator.SetTrigger("attack");
+            animator.SetBool(GameConstants.AnimParams.IsMoving, false);
+            animator.SetTrigger(GameConstants.AnimParams.Attack);
         }
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 1f;
         next_attack_time = Time.time + attack_rate;
@@ -316,9 +316,9 @@ public class EnemyBase : MonoBehaviour
         if (current < max && current > 0)
         {
             AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyHurt);
-            if (animator != null && HasParameter(animator, "hit"))
+            if (animator != null && HasParameter(animator, GameConstants.AnimParams.Hit))
             {
-                animator.SetTrigger("hit");
+                animator.SetTrigger(GameConstants.AnimParams.Hit);
             }
         }
     }
@@ -353,9 +353,9 @@ public class EnemyBase : MonoBehaviour
             cols[i].enabled = false;
         }
 
-        if (animator != null && HasParameter(animator, "death"))
+        if (animator != null && HasParameter(animator, GameConstants.AnimParams.Death))
         {
-            animator.SetTrigger("death");
+            animator.SetTrigger(GameConstants.AnimParams.Death);
             Destroy(gameObject, 0.75f);
         }
         else
@@ -364,13 +364,13 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    protected bool HasParameter(Animator anim, string paramName)
+    protected bool HasParameter(Animator anim, int param_hash)
     {
         if (anim == null || anim.runtimeAnimatorController == null) return false;
         AnimatorControllerParameter[] parameters = anim.parameters;
         for (int i = 0; i < parameters.Length; i++)
         {
-            if (parameters[i].name == paramName) return true;
+            if (parameters[i].nameHash == param_hash) return true;
         }
         return false;
     }

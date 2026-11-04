@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
                 if (last_health > 0 && cur < last_health && cur > 0)
                 {
                     AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerHurt);
-                    if (animator != null) animator.SetTrigger("hit");
+                    if (animator != null) animator.SetTrigger(GameConstants.AnimParams.Hit);
                     if (hit_disable_coroutine != null) StopCoroutine(hit_disable_coroutine);
                     hit_disable_coroutine = StartCoroutine(DisableHandMountOnHit(0.25f));
                 }
@@ -135,11 +135,11 @@ public class PlayerController : MonoBehaviour
     private void UpdateAnimator()
     {
         if (animator == null) return;
-        animator.SetFloat("speed", Mathf.Abs(move_input));
-        animator.SetBool("is_grounded", is_grounded);
+        animator.SetFloat(GameConstants.AnimParams.Speed, Mathf.Abs(move_input));
+        animator.SetBool(GameConstants.AnimParams.IsGrounded, is_grounded);
         if (rb != null)
         {
-            animator.SetFloat("y_velocity", rb.linearVelocity.y);
+            animator.SetFloat(GameConstants.AnimParams.YVelocity, rb.linearVelocity.y);
         }
     }
 

@@ -6,7 +6,7 @@ public class ConsumableSoapWaterBucket : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = "Soap Water Bucket";
+        consumable_name = GameConstants.EquipmentNames.ConsumableSoapWaterBucket;
         popup_label = "SOAP BUCKET!";
     }
 

@@ -7,7 +7,7 @@ public class ConsumableToolsBox : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = "Tools Box";
+        consumable_name = GameConstants.EquipmentNames.ConsumableToolsBox;
         popup_label = "+REPAIR";
     }
 

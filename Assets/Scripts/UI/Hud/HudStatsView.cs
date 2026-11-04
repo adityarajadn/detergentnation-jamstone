@@ -143,12 +143,15 @@ public class HudStatsView
     public Sprite GetConsumableSprite(string itemName)
     {
         if (string.IsNullOrEmpty(itemName)) return null;
-        if (itemName == "Soap Bomb") return icon_soap_bomb;
-        if (itemName == "First Aid Kit") return icon_first_aid;
-        if (itemName == "Tools Box" || itemName == "Tool Box") return icon_tools_box;
-        if (itemName == "Energy Drink") return icon_energy_drink;
-        if (itemName == "Soap Water Bucket" || itemName == "Soap Bucket") return icon_soap_bucket;
-        if (itemName == "Sonar Batarang") return icon_sonar_batarang;
+        switch (itemName)
+        {
+            case GameConstants.EquipmentNames.ConsumableSoapBomb: return icon_soap_bomb;
+            case GameConstants.EquipmentNames.ConsumableFirstAidKit: return icon_first_aid;
+            case GameConstants.EquipmentNames.ConsumableToolsBox: return icon_tools_box;
+            case GameConstants.EquipmentNames.ConsumableEnergyDrink: return icon_energy_drink;
+            case GameConstants.EquipmentNames.ConsumableSoapWaterBucket: return icon_soap_bucket;
+            case GameConstants.EquipmentNames.ConsumableSonarBatarang: return icon_sonar_batarang;
+        }
         return null;
     }
 

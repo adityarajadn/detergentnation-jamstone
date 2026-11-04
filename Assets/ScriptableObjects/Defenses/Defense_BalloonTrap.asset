@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Defense_BalloonTrap
   m_EditorClassIdentifier: Assembly-CSharp::DefenseData
   defense_name: Balloon Trap
-  defense_type: 2
   point_cost: 1
   max_health: 1
   max_ammo: 1
@@ -21,3 +20,4 @@ MonoBehaviour:
   attack_range: 5
   prefab: {fileID: 3910117041043908084, guid: c84a47869a74ee347b0fb5cb85568af8, type: 3}
   icon: {fileID: 0}
+  place_sound_key: balloon_inflate
