@@ -21,19 +21,19 @@ public class Pickup : MonoBehaviour
         if (PlayerController.Instance != null)
         {
             player_transform = PlayerController.Instance.transform;
-            return;
-        }
-
-        GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
-        if (player != null)
-        {
-            player_transform = player.transform;
         }
     }
 
     private void Update()
     {
-        if (player_transform == null) return;
+        if (player_transform == null)
+        {
+            if (PlayerController.Instance != null)
+            {
+                player_transform = PlayerController.Instance.transform;
+            }
+            return;
+        }
 
         float dist = Vector2.Distance(transform.position, player_transform.position);
         if (dist < 3f)

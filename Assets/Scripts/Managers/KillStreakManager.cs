@@ -29,6 +29,8 @@ public class KillStreakManager : MonoBehaviour
     private float timer = 0f;
     private int highest_streak_achieved = 0;
 
+    private Health cached_player_health;
+
     private void Awake()
     {
         instance = this;
@@ -36,17 +38,20 @@ public class KillStreakManager : MonoBehaviour
 
     private void Start()
     {
-        Health player_health = PlayerController.Instance != null ? PlayerController.Instance.GetComponent<Health>() : null;
-        if (player_health == null)
+        cached_player_health = PlayerController.Instance != null ? PlayerController.Instance.GetComponent<Health>() : null;
+        if (cached_player_health != null)
         {
-            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
-            if (player != null) player_health = player.GetComponent<Health>();
+            cached_player_health.on_health_changed.AddListener(OnPlayerHealthChanged);
         }
+    }
 
-        if (player_health != null)
+    private void OnDestroy()
+    {
+        if (cached_player_health != null)
         {
-            player_health.on_health_changed.AddListener(OnPlayerHealthChanged);
+            cached_player_health.on_health_changed.RemoveListener(OnPlayerHealthChanged);
         }
+        if (instance == this) instance = null;
     }
 
     private void Update()

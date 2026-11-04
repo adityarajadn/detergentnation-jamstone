@@ -37,6 +37,11 @@ public class WaveManager : MonoBehaviour
         instance = this;
     }
 
+    private void OnDestroy()
+    {
+        if (instance == this) instance = null;
+    }
+
     public void InitLevel(LevelData level_data)
     {
         current_level_data = level_data;

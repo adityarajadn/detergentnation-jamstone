@@ -117,20 +117,17 @@ public class Minimarket : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (instance == this) instance = null;
+    }
+
     private void ResolvePlayerReferences()
     {
         if (PlayerCombat.Instance != null)
         {
             player_combat = PlayerCombat.Instance;
             player_transform = PlayerCombat.Instance.transform;
-            return;
-        }
-
-        GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
-        if (player != null)
-        {
-            player_combat = player.GetComponent<PlayerCombat>();
-            player_transform = player.transform;
         }
     }
 }

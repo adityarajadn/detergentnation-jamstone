@@ -21,6 +21,11 @@ public class DefensePlacementManager : MonoBehaviour
         instance = this;
     }
 
+    private void OnDestroy()
+    {
+        if (instance == this) instance = null;
+    }
+
     private void Update()
     {
         HandleShortcuts();

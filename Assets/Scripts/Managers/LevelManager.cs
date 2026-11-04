@@ -30,6 +30,11 @@ public class LevelManager : MonoBehaviour
         instance = this;
     }
 
+    private void OnDestroy()
+    {
+        if (instance == this) instance = null;
+    }
+
     private void Start()
     {
         AudioManager.PlayMusic(GameConstants.AudioKeys.MusicInGameBattle);
@@ -57,12 +62,6 @@ public class LevelManager : MonoBehaviour
         }
 
         Health player_health = PlayerController.Instance != null ? PlayerController.Instance.GetComponent<Health>() : null;
-        if (player_health == null)
-        {
-            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
-            if (player != null) player_health = player.GetComponent<Health>();
-        }
-
         if (player_health != null)
         {
             // Player death sequence will invoke OnLevelDefeat after animation and equipment fling finish

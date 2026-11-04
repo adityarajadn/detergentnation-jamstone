@@ -19,6 +19,11 @@ public class DropSystem : MonoBehaviour
         instance = this;
     }
 
+    private void OnDestroy()
+    {
+        if (instance == this) instance = null;
+    }
+
     public void SpawnDrops(Vector3 position, EnemyData enemy_data)
     {
         float roll_candy = Random.value;
