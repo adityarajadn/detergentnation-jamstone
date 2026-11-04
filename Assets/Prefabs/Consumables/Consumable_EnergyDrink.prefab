@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableEnergyDrink
   consumable_name: Energy Drink
   price: 10
+  popup_label: USED!
+  popup_color: {r: 1, g: 1, b: 1, a: 1}
   sr: {fileID: 8185042636509215226}
   speed_multiplier: 1.4
   duration: 8
@@ -131,7 +133,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 5457249038dbee64fb8373fd6210f05c, type: 3}
+  m_Sprite: {fileID: 4282316897254225874, guid: 5a6807ee973957d40a51610d89cb5812, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

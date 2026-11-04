@@ -2730,11 +2730,11 @@ MonoBehaviour:
   consumable_slot2_bg: {fileID: 1983580728}
   consumable_slot1_icon: {fileID: 855243259}
   consumable_slot2_icon: {fileID: 1242385254}
-  icon_soap_bomb: {fileID: -6518813641902180415, guid: f4e26021d0a7d2949bbb12682f833373, type: 3}
-  icon_first_aid: {fileID: 2616343441511125068, guid: 5422e1339b8717a45926be39a0b5853a, type: 3}
-  icon_tools_box: {fileID: -4421165508793359571, guid: 107f462fec7d1a74e89e9016b03bc7e6, type: 3}
-  icon_energy_drink: {fileID: 1338023835199056024, guid: c1e61c7bf218a704a8f94a8f334d1c9a, type: 3}
-  icon_soap_bucket: {fileID: 8208513671369850685, guid: 7a91bf8044ca87f44964337693f5feb3, type: 3}
+  icon_soap_bomb: {fileID: -6740036801979081183, guid: 02778d4605711a84ca87db361335d93d, type: 3}
+  icon_first_aid: {fileID: 5493368934420057545, guid: dd083297e6705fa448288eccfc0e8c7e, type: 3}
+  icon_tools_box: {fileID: -4904081600167416783, guid: 688db9b63e8af5149b2142adbac666aa, type: 3}
+  icon_energy_drink: {fileID: 4282316897254225874, guid: 5a6807ee973957d40a51610d89cb5812, type: 3}
+  icon_soap_bucket: {fileID: 7465072865581079696, guid: 28ebb758864e4554eb0bd06260835607, type: 3}
   icon_sonar_batarang: {fileID: 2944027493523839480, guid: 184264eed724b1c44b6f0e77d4217923, type: 3}
   minimarket_health_slider: {fileID: 0}
   wave_text: {fileID: 658952115}
@@ -5369,7 +5369,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 3875527103
   m_fontColor: {r: 0.75, g: 0.85, b: 1, a: 0.9}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5382,7 +5382,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -7257,7 +7257,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 34, y: 34}
+  m_SizeDelta: {x: 64, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1444720406
 CanvasRenderer:

@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 8208513671369850685, guid: 7a91bf8044ca87f44964337693f5feb3, type: 3}
+  m_Sprite: {fileID: 7465072865581079696, guid: 28ebb758864e4554eb0bd06260835607, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -138,5 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableSoapWaterBucket
   consumable_name: Soap Water Bucket
   price: 75
+  popup_label: USED!
+  popup_color: {r: 1, g: 1, b: 1, a: 1}
   sr: {fileID: 7059806622875656141}
   shield_charges: 3
