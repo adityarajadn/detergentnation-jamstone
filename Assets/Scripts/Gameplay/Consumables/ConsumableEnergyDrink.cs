@@ -27,7 +27,7 @@ public class ConsumableEnergyDrink : ConsumableBase
         if (pc == null) return false;
 
         pc.ApplySpeedBoost(speed_multiplier, duration);
-        AudioManager.PlaySFX("player_drink");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerDrink);
         return true;
     }
 }

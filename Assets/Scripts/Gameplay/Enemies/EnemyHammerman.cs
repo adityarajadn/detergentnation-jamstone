@@ -21,7 +21,7 @@ public class EnemyHammerman : EnemyBase
         yield return new WaitForSeconds(0.45f);
 
         // Slam down!
-        AudioManager.PlaySFX("enemy_attack");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyAttack);
         PerformMeleeStrike();
 
         yield return new WaitForSeconds(0.2f);

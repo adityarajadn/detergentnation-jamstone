@@ -33,7 +33,7 @@ public class ConsumableSonarBatarang : ConsumableBase
         SonarBatarangProjectile sbp = bat.GetComponent<SonarBatarangProjectile>();
         if (sbp != null) sbp.Launch(fly_dir);
 
-        AudioManager.PlaySFX("whistle_blow");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.WhistleBlow);
 
         return true;
     }

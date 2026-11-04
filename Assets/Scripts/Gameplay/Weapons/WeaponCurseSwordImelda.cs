@@ -29,7 +29,7 @@ public class WeaponCurseSwordImelda : MeleeWeapon
         if (hp != null && !hp.is_dead)
         {
             hp.TakeDamage(LethalDamage);
-            AudioManager.PlaySFX("hit_imelda");
+            AudioManager.PlaySFX(GameConstants.AudioKeys.HitImelda);
         }
     }
 }

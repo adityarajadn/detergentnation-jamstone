@@ -76,7 +76,7 @@ public class WaveManager : MonoBehaviour
                 }
                 else
                 {
-                    AudioManager.PlaySFX("huge_wave_incoming");
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.HugeWaveIncoming);
                 }
                 if (on_huge_wave_alert != null)
                 {
@@ -142,7 +142,7 @@ public class WaveManager : MonoBehaviour
             LevelManager.instance.StartWaveBreak();
         }
 
-        AudioManager.PlaySFX("victory_small");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.VictorySmall);
         NotificationToast.Show("Wave Cleared! Break Time: Restock & Repair!", ToastType.Success);
 
         on_break_started?.Invoke(duration);

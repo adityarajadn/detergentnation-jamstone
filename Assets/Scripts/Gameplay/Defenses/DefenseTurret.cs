@@ -31,7 +31,7 @@ public class DefenseTurret : DefenseObject
 
         ammo_current--;
         next_cannon_fire_time = Time.time + 0.5f;
-        AudioManager.PlaySFX("cannon_fire");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.CannonFire);
 
         Vector2 fire_dir = transform.position.x < 0 ? Vector2.left : Vector2.right;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(GameConstants.Tags.Enemy);

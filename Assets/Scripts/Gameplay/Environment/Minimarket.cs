@@ -26,7 +26,7 @@ public class Minimarket : MonoBehaviour
             {
                 if (cur < max && cur > 0)
                 {
-                    AudioManager.PlaySFX("base_hit");
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.BaseHit);
                 }
             });
         }

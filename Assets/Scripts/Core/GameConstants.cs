@@ -105,5 +105,6 @@ public static class GameConstants
         public const string WhistleBlow = "whistle_blow";
         public const string Repair = "repair";
         public const string HitImelda = "hit_imelda";
+        public const string VictorySmall = "victory_small";
     }
 }

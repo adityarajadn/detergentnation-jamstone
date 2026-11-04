@@ -27,7 +27,7 @@ public class EnemyJellien : EnemyBase
             rb.linearVelocity = new Vector2(facing_dir * leap_force, 2.5f);
         }
 
-        AudioManager.PlaySFX("enemy_attack");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyAttack);
         PerformMeleeStrike();
 
         // 3. Recovery

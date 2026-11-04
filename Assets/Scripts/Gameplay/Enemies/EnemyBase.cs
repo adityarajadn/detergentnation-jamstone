@@ -258,7 +258,7 @@ public class EnemyBase : MonoBehaviour
         yield return new WaitForSeconds(0.22f);
 
         // 2. Active Strike Hitbox
-        AudioManager.PlaySFX("enemy_attack");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyAttack);
         if (enemy_data != null && enemy_data.attack_type == EnemyAttackType.Ranged && enemy_data.projectile_prefab != null)
         {
             PerformRangedStrike();

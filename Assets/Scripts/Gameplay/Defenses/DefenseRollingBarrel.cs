@@ -27,7 +27,7 @@ public class DefenseRollingBarrel : DefenseObject
     {
         if (is_rolling) return;
         is_rolling = true;
-        AudioManager.PlaySFX("barrel_roll");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelRoll);
         roll_direction = transform.position.x < 0 ? -1f : 1f;
         HidePrompt();
         Destroy(gameObject, 6f);
@@ -58,7 +58,7 @@ public class DefenseRollingBarrel : DefenseObject
 
     private void ExplodeBarrel()
     {
-        AudioManager.PlaySFX("barrel_break");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelBreak);
 
         if (explosion_effect_prefab != null)
         {
@@ -85,7 +85,7 @@ public class DefenseRollingBarrel : DefenseObject
     {
         if (!is_rolling)
         {
-            AudioManager.PlaySFX("barrel_break");
+            AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelBreak);
         }
     }
 }

@@ -14,7 +14,7 @@ public class DefenseTrap : DefenseObject
 
     public void TriggerTrap()
     {
-        AudioManager.PlaySFX("balloon_pop");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.BalloonPop);
         float radius = 2.5f;
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
         for (int i = 0; i < hits.Length; i++)

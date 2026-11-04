@@ -106,8 +106,8 @@ public class DefensePlacementManager : MonoBehaviour
             defense.defense_data = data;
         }
 
-        if (data.defense_name.Contains("Fence")) AudioManager.PlaySFX("fence_place");
-        else if (data.defense_name.Contains("Trap") || data.defense_name.Contains("Balloon")) AudioManager.PlaySFX("balloon_inflate");
+        if (data.defense_name.Contains("Fence")) AudioManager.PlaySFX(GameConstants.AudioKeys.FencePlace);
+        else if (data.defense_name.Contains("Trap") || data.defense_name.Contains("Balloon")) AudioManager.PlaySFX(GameConstants.AudioKeys.BalloonInflate);
 
         if (on_points_changed != null)
         {

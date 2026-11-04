@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (last_health > 0 && cur < last_health && cur > 0)
                 {
-                    AudioManager.PlaySFX("player_hurt");
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerHurt);
                     if (animator != null) animator.SetTrigger("hit");
                     if (PlayerCameraController.Instance != null) PlayerCameraController.Instance.Shake(0.2f, 0.35f);
                     if (hit_disable_coroutine != null) StopCoroutine(hit_disable_coroutine);
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
                 }
                 last_health = cur;
             });
-            hp.on_death.AddListener(() => AudioManager.PlaySFX("player_death"));
+            hp.on_death.AddListener(() => AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerDeath));
         }
 
         if (GameManager.instance != null)
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * 1.05f);
                 can_double_jump = false;
-                AudioManager.PlaySFX("jetpack");
+                AudioManager.PlaySFX(GameConstants.AudioKeys.Jetpack);
             }
         }
 
