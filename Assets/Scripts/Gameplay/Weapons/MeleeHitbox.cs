@@ -5,11 +5,9 @@ public class MeleeHitbox : MonoBehaviour
 {
     private PlayerCombat combat_player;
     private readonly HashSet<Collider2D> hit_targets = new HashSet<Collider2D>();
-    private Collider2D col;
 
     private void Awake()
     {
-        col = GetComponent<Collider2D>();
         combat_player = GetComponentInParent<PlayerCombat>();
     }
 

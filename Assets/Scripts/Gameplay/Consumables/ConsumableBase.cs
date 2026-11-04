@@ -4,7 +4,6 @@ public abstract class ConsumableBase : MonoBehaviour
 {
     [Header("Consumable Info")]
     public string consumable_name;
-    public int price;
 
     [Header("Popup Info")]
     [SerializeField] protected string popup_label = "USED!";

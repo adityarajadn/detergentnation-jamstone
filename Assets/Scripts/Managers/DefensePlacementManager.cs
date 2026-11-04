@@ -12,9 +12,6 @@ public class DefensePlacementManager : MonoBehaviour
     public DefenseData selected_defense;
     public bool is_refund_mode = false;
     public UnityEvent<int, int> on_points_changed;
-    public UnityEvent<DefenseData, bool> on_selection_changed;
-
-    private int points_spent_total = 0;
 
     private void Awake()
     {
@@ -49,38 +46,22 @@ public class DefensePlacementManager : MonoBehaviour
         }
 
         selected_defense = data;
-        is_refund_mode = false;
-        if (on_selection_changed != null)
-        {
-            on_selection_changed.Invoke(selected_defense, is_refund_mode);
-        }
-    }
+        is_refund_mode = false;    }
 
     public void ToggleRefundMode()
     {
         is_refund_mode = !is_refund_mode;
-        if (is_refund_mode) selected_defense = null;
-        if (on_selection_changed != null)
-        {
-            on_selection_changed.Invoke(selected_defense, is_refund_mode);
-        }
-    }
+        if (is_refund_mode) selected_defense = null;    }
 
     public void ClearSelection()
     {
         selected_defense = null;
-        is_refund_mode = false;
-        if (on_selection_changed != null)
-        {
-            on_selection_changed.Invoke(selected_defense, is_refund_mode);
-        }
-    }
+        is_refund_mode = false;    }
 
     public void InitPoints(int starting_points)
     {
         defense_points_max = starting_points;
         defense_points_current = starting_points;
-        points_spent_total = 0;
         if (on_points_changed != null)
         {
             on_points_changed.Invoke(defense_points_current, defense_points_max);
@@ -98,7 +79,6 @@ public class DefensePlacementManager : MonoBehaviour
         if (!CanAfford(data) || data.prefab == null) return null;
 
         defense_points_current -= data.point_cost;
-        points_spent_total += data.point_cost;
 
         GameObject obj = Instantiate(data.prefab, position, Quaternion.identity, parent);
         if (data.prefab != null)
@@ -132,10 +112,5 @@ public class DefensePlacementManager : MonoBehaviour
         {
             on_points_changed.Invoke(defense_points_current, defense_points_max);
         }
-    }
-
-    public int GetTotalPointsSpent()
-    {
-        return points_spent_total;
     }
 }

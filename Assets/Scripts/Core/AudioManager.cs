@@ -110,12 +110,6 @@ public class AudioManager : MonoBehaviour
         instance.bgm_source.Play();
     }
 
-    public static void StopMusic()
-    {
-        if (instance == null || instance.bgm_source == null) return;
-        instance.bgm_source.Stop();
-    }
-
     public static void SetSFXVolume(float volume)
     {
         if (instance == null || instance.sfx_source == null) return;

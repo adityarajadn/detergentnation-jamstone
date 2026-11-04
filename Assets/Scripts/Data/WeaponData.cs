@@ -11,7 +11,6 @@ public class WeaponData : ScriptableObject
 {
     public string weapon_name;
     [TextArea(2, 4)] public string description;
-    public WeaponType weapon_type;
     public int price = 0;
     public int damage = 15;
     public float fire_rate = 0.3f;

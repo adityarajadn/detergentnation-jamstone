@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2934509524686386171}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb3b3f6cc358cce4f91a64cf53dc4985, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e5c4bffdb1da4c4494511af427b65a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponBubbleGun
   weapon_data: {fileID: 11400000, guid: 19fad022df2b3d34bad8f8b0edb35c4d, type: 2}

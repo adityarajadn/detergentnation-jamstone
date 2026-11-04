@@ -19,12 +19,6 @@ public class Interactable : MonoBehaviour
     private bool is_player_in_range = false;
     private Collider2D trigger_collider;
 
-    public TMP_Text PromptText
-    {
-        get => prompt_text;
-        set => prompt_text = value;
-    }
-
     private void Awake()
     {
         trigger_collider = GetComponent<Collider2D>();
@@ -155,11 +149,6 @@ public class Interactable : MonoBehaviour
     {
         action_label = label;
         UpdatePromptText();
-    }
-
-    public void SetInteractionRadius(float radius)
-    {
-        interaction_radius = radius;
     }
 
     private void OnDisable()

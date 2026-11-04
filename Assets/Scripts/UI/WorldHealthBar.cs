@@ -57,30 +57,6 @@ public class WorldHealthBar : MonoBehaviour
         }
     }
 
-    public void SetTarget(Health health)
-    {
-        if (target_health != null)
-        {
-            target_health.on_health_changed.RemoveListener(OnHealthChanged);
-        }
-
-        target_health = health;
-
-        if (target_health != null)
-        {
-            target_health.on_health_changed.AddListener(OnHealthChanged);
-            UpdateBar(target_health.health_current, target_health.health_max);
-        }
-    }
-
-    public void SetLabel(string text)
-    {
-        if (label_text != null)
-        {
-            label_text.text = text;
-        }
-    }
-
     private void OnHealthChanged(int current, int max)
     {
         UpdateBar(current, max);

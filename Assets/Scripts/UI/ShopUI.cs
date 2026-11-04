@@ -44,7 +44,6 @@ public class ShopUI : MonoBehaviour
 
     [SerializeField] private float accordion_duration = 0.22f;
 
-    private int active_tab = 0; // 0=Melee, 1=Range, 2=Armor, 3=Jetpack, 4=Consume
     private ShopAccordion accordion;
     private ShopEquipmentTab equipment_tab;
     private ShopConsumableTab consumable_tab;
@@ -90,7 +89,6 @@ public class ShopUI : MonoBehaviour
 
     public void SwitchTab(int tab_index)
     {
-        active_tab = tab_index;
         if (melee_panel != null) melee_panel.SetActive(tab_index == 0);
         if (range_panel != null) range_panel.SetActive(tab_index == 1);
         if (armor_panel != null) armor_panel.SetActive(tab_index == 2);
@@ -99,11 +97,6 @@ public class ShopUI : MonoBehaviour
 
         // Collapse all when switching tabs
         if (accordion != null) accordion.CollapseAll();
-    }
-
-    public void ToggleRowExpand(EquipmentShopEntry entry)
-    {
-        if (accordion != null) accordion.Toggle(entry);
     }
 
     public void RefreshAllDisplays()

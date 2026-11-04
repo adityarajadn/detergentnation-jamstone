@@ -8,7 +8,6 @@ public class ConsumableEnergyDrink : ConsumableBase
     private void Reset()
     {
         consumable_name = "Energy Drink";
-        price = 10;
         popup_label = "SPEED UP!";
     }
 

@@ -82,7 +82,6 @@ public class Minimarket : MonoBehaviour
         if (ammo != null && ammo.ammo_carried < ammo.ammo_carried_max)
         {
             combat.Restock();
-            if (LevelManager.instance != null) LevelManager.instance.RegisterRestock();
             NotificationToast.Show("Ammo restocked to MAX!", ToastType.Success);
         }
         else

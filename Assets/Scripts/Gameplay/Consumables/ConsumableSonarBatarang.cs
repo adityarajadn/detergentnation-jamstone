@@ -7,7 +7,6 @@ public class ConsumableSonarBatarang : ConsumableBase
     private void Reset()
     {
         consumable_name = "Sonar Batarang";
-        price = 100;
         popup_label = "SONAR!";
     }
 

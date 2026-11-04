@@ -7,7 +7,6 @@ public class ConsumableFirstAidKit : ConsumableBase
     private void Reset()
     {
         consumable_name = GameConstants.EquipmentNames.DefaultConsumable2;
-        price = 25;
         popup_label = "+50 HP";
     }
 

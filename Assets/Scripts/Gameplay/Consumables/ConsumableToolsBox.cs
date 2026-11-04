@@ -8,7 +8,6 @@ public class ConsumableToolsBox : ConsumableBase
     private void Reset()
     {
         consumable_name = "Tools Box";
-        price = 25;
         popup_label = "+REPAIR";
     }
 

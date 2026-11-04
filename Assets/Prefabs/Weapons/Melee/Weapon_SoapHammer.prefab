@@ -165,7 +165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7922205477950919431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef649b8193cf3b94487f5deb477223fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 47a40140ce64d624badf45618f6c6496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSoapHammer
   weapon_data: {fileID: 11400000, guid: 7e63a6558f1989842b7382501871eeff, type: 2}

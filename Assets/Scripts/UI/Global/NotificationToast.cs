@@ -17,7 +17,6 @@ public class NotificationToast : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private RectTransform container;
     [SerializeField] private CanvasGroup canvas_group;
-    [SerializeField] private Image background_image;
     [SerializeField] private TMP_Text message_text;
 
     [Header("Settings")]

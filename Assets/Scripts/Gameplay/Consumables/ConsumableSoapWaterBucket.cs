@@ -7,7 +7,6 @@ public class ConsumableSoapWaterBucket : ConsumableBase
     private void Reset()
     {
         consumable_name = "Soap Water Bucket";
-        price = 75;
         popup_label = "SOAP BUCKET!";
     }
 

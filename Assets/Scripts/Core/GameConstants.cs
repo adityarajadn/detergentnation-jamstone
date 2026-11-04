@@ -7,7 +7,6 @@ public static class GameConstants
         public const string Minimarket = "Minimarket";
         public const string Defense = "Defense";
         public const string Ground = "Ground";
-        public const string Projectile = "Projectile";
     }
 
     public static class Layers
@@ -44,8 +43,6 @@ public static class GameConstants
         public const string WeaponDamage = "weapon_damage";
         public const string WeaponFireRate = "weapon_fire_rate";
         public const string WeaponAmmo = "weapon_ammo";
-        public const string DefenseDamage = "defense_damage";
-        public const string DefenseHealth = "defense_health";
     }
 
     public static class EquipmentNames
@@ -55,16 +52,6 @@ public static class GameConstants
         public const string None = "None";
         public const string DefaultConsumable1 = "Soap Bomb";
         public const string DefaultConsumable2 = "First Aid Kit";
-
-        public const string WaterPistol = "Water Pistol";
-        public const string WaterRifle = "Water Rifle";
-        public const string WaterPlasma = "Water Plasma";
-        public const string BubbleGun = "Bubble Gun";
-
-        public const string BubbleStick = "Bubble Stick";
-        public const string SoapHammer = "Soap Hammer";
-        public const string LoofahMace = "Loofah Mace";
-        public const string CurseSwordImelda = "Curse Sword Imelda";
 
         public const string ArmorWorkersHat = "Worker's Hat";
         public const string ArmorIAmNumberOne = "I am Number One";

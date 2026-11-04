@@ -30,7 +30,6 @@ public class WaveManager : MonoBehaviour
     private bool is_in_break = false;
 
     public bool is_running { get; private set; } = false;
-    public bool IsInBreak => is_in_break;
 
     private void Awake()
     {
@@ -210,10 +209,5 @@ public class WaveManager : MonoBehaviour
     {
         active_enemies_count--;
         if (active_enemies_count < 0) active_enemies_count = 0;
-    }
-
-    public int GetActiveEnemiesCount()
-    {
-        return active_enemies_count;
     }
 }

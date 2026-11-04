@@ -22,7 +22,6 @@ public class LevelManager : MonoBehaviour
     public UnityEvent<int> on_victory; // stars earned
     public UnityEvent on_defeat;
 
-    private int restock_count = 0;
     private int stars_earned = 0;
 
     private void Awake()
@@ -108,11 +107,6 @@ public class LevelManager : MonoBehaviour
     {
         if (current_phase == GamePhase.Victory || current_phase == GamePhase.Defeat) return;
         SetPhase(GamePhase.Planning);
-    }
-
-    public void RegisterRestock()
-    {
-        restock_count++;
     }
 
     private void OnLevelVictory()

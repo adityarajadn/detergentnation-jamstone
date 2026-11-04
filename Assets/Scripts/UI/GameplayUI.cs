@@ -262,9 +262,4 @@ public class GameplayUI : MonoBehaviour
     {
         pause_menu.Toggle();
     }
-
-    public void ResumeGame()
-    {
-        pause_menu.Resume();
-    }
 }

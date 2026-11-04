@@ -22,9 +22,6 @@ public class PlayerCombat : MonoBehaviour
     public Transform weapon_attachment;
     public LayerMask enemy_layer;
 
-    // Backward compatibility property
-    public Transform weapon_mount { get => hand_mount; set => hand_mount = value; }
-    public Transform weapon_holder { get => weapon_attachment; set => weapon_attachment = value; }
 
     [Header("Resources")]
     public int repair_points = 0;
@@ -35,7 +32,6 @@ public class PlayerCombat : MonoBehaviour
     // Components
     private PlayerWeaponAim weapon_aim;
     private PlayerAmmo ammo_comp;
-    private PlayerConsumableInventory consumable_inv;
 
     // Weapon Instances
     private GameObject current_weapon_instance;
@@ -63,7 +59,6 @@ public class PlayerCombat : MonoBehaviour
 
         weapon_aim = GetComponent<PlayerWeaponAim>();
         ammo_comp = GetComponent<PlayerAmmo>();
-        consumable_inv = GetComponent<PlayerConsumableInventory>();
         main_camera = Camera.main;
         if (enemy_layer.value == 0)
         {

@@ -1,14 +1,5 @@
 using UnityEngine;
 
-public enum EnemyType
-{
-    Normal,
-    Tiny,
-    Brawler,
-    Brute,
-    Tanker
-}
-
 public enum EnemyAttackType
 {
     Melee,
@@ -18,8 +9,6 @@ public enum EnemyAttackType
 [CreateAssetMenu(fileName = "NewEnemyData", menuName = "Detergentnation/Enemy Data")]
 public class EnemyData : ScriptableObject
 {
-    public string enemy_name;
-    public EnemyType enemy_type;
     public EnemyAttackType attack_type;
     public bool is_flying;
     public int health_max = 50;

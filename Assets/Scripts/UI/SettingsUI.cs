@@ -11,7 +11,6 @@ using DG.Tweening;
 public class KeybindRow
 {
     public KeyAction action;
-    public string display_name;
     public Button rebind_button;
     public TMP_Text key_text;
 }

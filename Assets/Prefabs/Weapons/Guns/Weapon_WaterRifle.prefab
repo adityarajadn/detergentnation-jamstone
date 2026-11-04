@@ -74,7 +74,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4458002152450059228}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a12f0fd85c6e51f4a86062a2a3bfc6cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e5c4bffdb1da4c4494511af427b65a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponWaterRifle
   weapon_data: {fileID: 11400000, guid: 941cc5ac53411fe458a71fa581ed696b, type: 2}

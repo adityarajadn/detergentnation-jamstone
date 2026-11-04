@@ -27,7 +27,6 @@ public class EnemyWaffare : EnemyBase
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 0.8f;
         next_attack_time = Time.time + attack_rate;
 
-        Vector3 original_scale = transform.localScale;
 
         // Strike 1
         yield return new WaitForSeconds(0.12f);
@@ -40,7 +39,6 @@ public class EnemyWaffare : EnemyBase
         PerformMeleeStrike();
 
         yield return new WaitForSeconds(0.1f);
-        transform.localScale = original_scale;
         is_attacking = false;
     }
 }

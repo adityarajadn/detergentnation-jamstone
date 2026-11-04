@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
     private float speed_boost_multiplier = 1f;
     private Coroutine speed_boost_coroutine = null;
     private bool is_dying = false;
-    public bool IsDying => is_dying;
 
     private void Awake()
     {
