@@ -308,6 +308,14 @@ public class ShopUI : MonoBehaviour
                 entry.expand_panel.SetActive(false);
             }
 
+            // Bind tooltip hover to row expand button / main row
+            if (entry.row_expand_button != null)
+            {
+                UITooltipTrigger trigger = entry.row_expand_button.GetComponent<UITooltipTrigger>();
+                if (trigger == null) trigger = entry.row_expand_button.gameObject.AddComponent<UITooltipTrigger>();
+                trigger.SetTooltip(entry.item_name, entry.description);
+            }
+
             // Bind inline stat upgrade buttons
             if (entry.stat_upgrades != null)
             {

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ImeldaCurseSword
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Curse Sword Imelda
+  description: Pedang terkutuk berdaya serang dahsyat yang menyerap sedikit darah
+    musuh (lifesteal) saat menebas.
   weapon_type: 1
   price: 400
   damage: 99999

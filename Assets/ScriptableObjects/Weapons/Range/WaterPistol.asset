@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WaterPistol
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Water Pistol
+  description: Senjata awal standar berakurasi tinggi dengan tembakan air cepat.
   weapon_type: 0
   price: 0
   damage: 15

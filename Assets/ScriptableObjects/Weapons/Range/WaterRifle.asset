@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: WaterRifle
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Water Rifle
+  description: Tembakan cepat burst 3 peluru, sangat efektif menghalau kerumunan
+    musuh.
   weapon_type: 0
   price: 140
   damage: 18

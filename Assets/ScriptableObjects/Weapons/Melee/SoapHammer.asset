@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: SoapHammer
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Soap Hammer
+  description: Palu sabun berat berdaya hancur tinggi, knockback besar, serta berpeluang
+    memberi efek stun.
   weapon_type: 1
   price: 100
   damage: 50

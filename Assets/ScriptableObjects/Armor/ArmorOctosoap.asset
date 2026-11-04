@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1bbb866fe584584db383c7871f2721c, type: 3}
+  m_Name: ArmorOctosoap
+  m_EditorClassIdentifier: Assembly-CSharp::ArmorData
+  armor_name: Octosoap
+  description: Perisai sabun nano licin; membuat musuh di sekitar terpeleset dan
+    memicu lemparan bom sabun saat terkena serangan.
+  price: 400
+  icon: {fileID: 0}
+  armor_prefab: {fileID: 0}
+  hp_bonus_percent: 0
+  damage_reduction_percent: 0

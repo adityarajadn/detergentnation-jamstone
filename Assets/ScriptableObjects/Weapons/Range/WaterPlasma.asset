@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: WaterPlasma
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Water Plasma
+  description: Menembakkan bola plasma berdaya rusak tinggi yang menembus banyak
+    musuh sekaligus.
   weapon_type: 0
   price: 220
   damage: 12

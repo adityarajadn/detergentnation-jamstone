@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BubbleStick
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Bubble Stick
+  description: Senjata pukul awal standar dengan ayunan cepat dan knockback ringan.
   weapon_type: 1
   price: 0
   damage: 25
