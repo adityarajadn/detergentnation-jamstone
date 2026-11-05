@@ -48,9 +48,4 @@ public class PlayerAmmo : MonoBehaviour
     {
         ammo_carried = ammo_carried_max;
     }
-
-    public void AddCarriedAmmo(int amount)
-    {
-        ammo_carried = Mathf.Min(ammo_carried + amount, ammo_carried_max);
-    }
 }

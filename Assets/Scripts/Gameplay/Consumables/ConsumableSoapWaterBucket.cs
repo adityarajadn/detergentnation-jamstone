@@ -6,17 +6,14 @@ public class ConsumableSoapWaterBucket : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = "Soap Water Bucket";
-        price = 75;
+        consumable_name = GameConstants.EquipmentNames.ConsumableSoapWaterBucket;
         popup_label = "SOAP BUCKET!";
-        popup_color = new Color(0.4f, 0.9f, 1f, 1f);
     }
 
     protected override void Awake()
     {
         base.Awake();
         if (string.IsNullOrEmpty(popup_label) || popup_label == "USED!") popup_label = "SOAP BUCKET!";
-        if (popup_color == Color.white) popup_color = new Color(0.4f, 0.9f, 1f, 1f);
     }
 
     public override bool Use(PlayerCombat combat, Vector3 target_world_pos)
@@ -25,7 +22,7 @@ public class ConsumableSoapWaterBucket : ConsumableBase
         Health hp = combat.GetComponent<Health>();
         if (hp == null) return false;
 
-        hp.shield_charges = shield_charges;
+        hp.SetShieldCharges(shield_charges);
         return true;
     }
 }

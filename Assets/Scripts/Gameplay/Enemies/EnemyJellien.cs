@@ -10,8 +10,8 @@ public class EnemyJellien : EnemyBase
         is_attacking = true;
         if (animator != null)
         {
-            animator.SetBool("is_moving", false);
-            animator.SetTrigger("attack");
+            animator.SetBool(GameConstants.AnimParams.IsMoving, false);
+            animator.SetTrigger(GameConstants.AnimParams.Attack);
         }
 
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 1f;
@@ -27,7 +27,7 @@ public class EnemyJellien : EnemyBase
             rb.linearVelocity = new Vector2(facing_dir * leap_force, 2.5f);
         }
 
-        AudioManager.PlaySFX("enemy_attack");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyAttack);
         PerformMeleeStrike();
 
         // 3. Recovery

@@ -168,7 +168,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.27, y: 0.32}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -294,8 +294,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.72, y: 0.52}
+  m_Offset: {x: 0, y: -0.074141264}
+  m_Size: {x: 0.72, y: 0.72}
   m_Direction: 0
 --- !u!114 &3204413972950787758
 MonoBehaviour:
@@ -336,7 +336,6 @@ MonoBehaviour:
   sr: {fileID: 1510714780108698901}
   visual_transform: {fileID: 3254770299925109018}
   animator: {fileID: 5105009605962872649}
-  freeze_tint_color: {r: 0.4, g: 0.8, b: 1, a: 1}
   leap_force: 3
 --- !u!70 &5404652397608681650
 CapsuleCollider2D:

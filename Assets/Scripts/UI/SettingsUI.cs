@@ -11,7 +11,6 @@ using DG.Tweening;
 public class KeybindRow
 {
     public KeyAction action;
-    public string display_name;
     public Button rebind_button;
     public TMP_Text key_text;
 }
@@ -98,17 +97,6 @@ public class SettingsUI : MonoBehaviour
         if (audio_panel != null) audio_panel.SetActive(index == 0);
         if (controls_panel != null) controls_panel.SetActive(index == 1);
 
-        if (tab_audio_btn != null)
-        {
-            var img = tab_audio_btn.GetComponent<Image>();
-            if (img != null) img.color = index == 0 ? new Color(0.2f, 0.7f, 0.9f, 0.9f) : new Color(0.15f, 0.17f, 0.25f, 0.8f);
-        }
-
-        if (tab_controls_btn != null)
-        {
-            var img = tab_controls_btn.GetComponent<Image>();
-            if (img != null) img.color = index == 1 ? new Color(0.2f, 0.7f, 0.9f, 0.9f) : new Color(0.15f, 0.17f, 0.25f, 0.8f);
-        }
     }
 
     private void RefreshAudioSliders()

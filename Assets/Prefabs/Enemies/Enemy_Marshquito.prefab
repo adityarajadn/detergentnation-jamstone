@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3396217903319652872}
   - component: {fileID: 5927581654334279484}
   - component: {fileID: 4784697680660634542}
+  - component: {fileID: 2010166998513756456}
   m_Layer: 8
   m_Name: Enemy_Marshquito
   m_TagString: Enemy
@@ -98,8 +99,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.64, y: 0.32}
+  m_Offset: {x: 0.0038904345, y: 0.075863786}
+  m_Size: {x: 0.8423074, y: 0.7907544}
   m_Direction: 1
 --- !u!114 &5927581654334279484
 MonoBehaviour:
@@ -140,10 +141,46 @@ MonoBehaviour:
   sr: {fileID: 5320195656148769495}
   visual_transform: {fileID: 5740323125895954376}
   animator: {fileID: 6607871777947308857}
-  freeze_tint_color: {r: 0.4, g: 0.8, b: 1, a: 1}
   hover_wobble_freq: 6
   hover_wobble_amp: 0.8
   preferred_standoff_distance: 4.5
+--- !u!70 &2010166998513756456
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255937372232528640}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.0038904345, y: 0.075863786}
+  m_Size: {x: 0.8423074, y: 0.7907544}
+  m_Direction: 1
 --- !u!1 &7448977701151549567
 GameObject:
   m_ObjectHideFlags: 0

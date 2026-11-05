@@ -141,7 +141,6 @@ MonoBehaviour:
   sr: {fileID: 2894959938422670225}
   visual_transform: {fileID: 4562688370281765614}
   animator: {fileID: 991579613614459495}
-  freeze_tint_color: {r: 0.4, g: 0.8, b: 1, a: 1}
   thrust_reach_multiplier: 1.4
 --- !u!70 &1359221666101273182
 CapsuleCollider2D:

@@ -44,18 +44,16 @@ public class MeleeWeapon : WeaponBase
 
         if (!isEnemy) return;
 
-        Health hp = enemy_col.GetComponent<Health>();
-        if (hp == null) hp = enemy_col.GetComponentInParent<Health>();
+        IDamageable damageable = enemy_col.GetComponent<IDamageable>();
+        if (damageable == null) damageable = enemy_col.GetComponentInParent<IDamageable>();
 
-        if (hp != null && !hp.is_dead)
+        if (damageable != null && !damageable.IsDead)
         {
-            hp.TakeDamage(damage);
-            string hitSound = "hit_imelda";
+            damageable.TakeDamage(damage);
+            string hitSound = GameConstants.AudioKeys.HitImelda;
             if (weapon_data != null)
             {
-                string wn = weapon_data.weapon_name.ToLower();
-                if (wn.Contains("hammer")) hitSound = "hit_hammer";
-                else if (wn.Contains("stick")) hitSound = "hit_stick";
+                if (!string.IsNullOrEmpty(weapon_data.hit_sound_key)) hitSound = weapon_data.hit_sound_key;
             }
             AudioManager.PlaySFX(hitSound);
         }

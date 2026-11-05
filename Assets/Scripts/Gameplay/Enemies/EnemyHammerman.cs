@@ -10,8 +10,8 @@ public class EnemyHammerman : EnemyBase
         is_attacking = true;
         if (animator != null)
         {
-            animator.SetBool("is_moving", false);
-            animator.SetTrigger("attack");
+            animator.SetBool(GameConstants.AnimParams.IsMoving, false);
+            animator.SetTrigger(GameConstants.AnimParams.Attack);
         }
 
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 1.6f;
@@ -21,7 +21,7 @@ public class EnemyHammerman : EnemyBase
         yield return new WaitForSeconds(0.45f);
 
         // Slam down!
-        AudioManager.PlaySFX("enemy_attack");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyAttack);
         PerformMeleeStrike();
 
         yield return new WaitForSeconds(0.2f);

@@ -5,11 +5,9 @@ public class MeleeHitbox : MonoBehaviour
 {
     private PlayerCombat combat_player;
     private readonly HashSet<Collider2D> hit_targets = new HashSet<Collider2D>();
-    private Collider2D col;
 
     private void Awake()
     {
-        col = GetComponent<Collider2D>();
         combat_player = GetComponentInParent<PlayerCombat>();
     }
 
@@ -50,8 +48,8 @@ public class MeleeHitbox : MonoBehaviour
         }
 
         // Only target enemies (layer or tag or EnemyBase component)
-        bool isEnemy = other.gameObject.layer == LayerMask.NameToLayer("Enemy")
-            || other.CompareTag("Enemy")
+        bool isEnemy = other.gameObject.layer == LayerMask.NameToLayer(GameConstants.Layers.Enemy)
+            || other.CompareTag(GameConstants.Tags.Enemy)
             || other.GetComponentInParent<EnemyBase>() != null;
 
         if (!isEnemy) return;
@@ -67,14 +65,13 @@ public class MeleeHitbox : MonoBehaviour
             hit_targets.Add(other);
 
             int dmg = 25;
-            string hitSound = "hit_imelda";
+            string hitSound = GameConstants.AudioKeys.HitImelda;
 
             if (combat_player != null && combat_player.melee_weapon != null)
             {
                 dmg = combat_player.melee_weapon.damage;
-                string wn = combat_player.melee_weapon.weapon_name.ToLower();
-                if (wn.Contains("hammer") || wn.Contains("mace")) hitSound = "hit_hammer";
-                else if (wn.Contains("stick")) hitSound = "hit_stick";
+                string key = combat_player.melee_weapon.hit_sound_key;
+                if (!string.IsNullOrEmpty(key)) hitSound = key;
             }
 
             hp.TakeDamage(dmg);

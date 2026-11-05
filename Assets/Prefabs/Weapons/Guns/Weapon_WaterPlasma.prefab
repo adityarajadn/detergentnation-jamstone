@@ -110,7 +110,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4678784114830581866, guid: 4689753d69a638841b48ceda54f1b2d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7021825839117331225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 535b5e487293cfc4294253622e9e8f9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e5c4bffdb1da4c4494511af427b65a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponWaterPlasma
   weapon_data: {fileID: 11400000, guid: 3edf18040f071f04c9018338586b960e, type: 2}

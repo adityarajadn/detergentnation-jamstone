@@ -10,10 +10,8 @@ public class ConsumableSoapBomb : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = GameConstants.EquipmentNames.DefaultConsumable1;
-        price = 100;
+        consumable_name = GameConstants.EquipmentNames.ConsumableSoapBomb;
         popup_label = "SOAP BOMB!";
-        popup_color = new Color(1f, 0.88f, 0.32f, 1f);
         obstacle_mask = LayerMask.GetMask(GameConstants.Layers.Ground);
     }
 
@@ -21,7 +19,6 @@ public class ConsumableSoapBomb : ConsumableBase
     {
         base.Awake();
         if (string.IsNullOrEmpty(popup_label) || popup_label == "USED!") popup_label = "SOAP BOMB!";
-        if (popup_color == Color.white) popup_color = new Color(1f, 0.88f, 0.32f, 1f);
     }
 
     public override bool Use(PlayerCombat combat, Vector3 target_world_pos)

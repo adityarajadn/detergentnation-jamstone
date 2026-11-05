@@ -10,10 +10,12 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer sr;
     [SerializeField] protected Transform visual_transform;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected Color freeze_tint_color = new Color(0.4f, 0.8f, 1f, 1f);
 
     protected Health health;
     protected Rigidbody2D rb;
+
+    public static event System.Action<EnemyBase> OnAnyEnemyDied;
+    public event System.Action<EnemyBase> OnDied;
 
     protected Transform target_transform;
     protected Health target_health;
@@ -22,6 +24,9 @@ public class EnemyBase : MonoBehaviour
     protected bool is_attacking = false;
     protected bool is_stunned = false;
     protected float stun_timer = 0f;
+    private GameObject active_stun_effect_instance;
+
+    public bool IsDead => health != null && health.is_dead;
 
     protected virtual void Awake()
     {
@@ -83,7 +88,7 @@ public class EnemyBase : MonoBehaviour
             if (stun_timer <= 0f)
             {
                 is_stunned = false;
-                if (sr != null) sr.color = enemy_data != null ? enemy_data.body_color : Color.white;
+                RemoveStunEffect();
             }
             return;
         }
@@ -103,7 +108,7 @@ public class EnemyBase : MonoBehaviour
         if (dist <= range)
         {
             if (rb != null) rb.linearVelocity = Vector2.zero;
-            if (animator != null) animator.SetBool("is_moving", false);
+            if (animator != null) animator.SetBool(GameConstants.AnimParams.IsMoving, false);
             UpdateFacing(target_transform.position.x - transform.position.x);
             if (Time.time >= next_attack_time)
             {
@@ -206,7 +211,29 @@ public class EnemyBase : MonoBehaviour
         is_stunned = true;
         stun_timer = Mathf.Max(stun_timer, duration);
         if (rb != null) rb.linearVelocity = Vector2.zero;
-        if (sr != null) sr.color = freeze_tint_color;
+        SpawnStunEffect();
+    }
+
+    private void SpawnStunEffect()
+    {
+        if (active_stun_effect_instance == null)
+        {
+            GameObject stunPrefab = Resources.Load<GameObject>("Effects/FX_StunStars");
+            if (stunPrefab != null)
+            {
+                active_stun_effect_instance = Instantiate(stunPrefab, transform);
+                active_stun_effect_instance.transform.localPosition = new Vector3(0f, 0.75f, 0f);
+            }
+        }
+    }
+
+    private void RemoveStunEffect()
+    {
+        if (active_stun_effect_instance != null)
+        {
+            Destroy(active_stun_effect_instance);
+            active_stun_effect_instance = null;
+        }
     }
 
     protected virtual void MoveTowardsTarget()
@@ -224,7 +251,7 @@ public class EnemyBase : MonoBehaviour
             rb.linearVelocity = new Vector2(Mathf.Sign(dir.x) * enemy_data.move_speed, rb.linearVelocity.y);
         }
 
-        if (animator != null) animator.SetBool("is_moving", true);
+        if (animator != null) animator.SetBool(GameConstants.AnimParams.IsMoving, true);
         UpdateFacing(dir.x);
     }
 
@@ -248,8 +275,8 @@ public class EnemyBase : MonoBehaviour
         is_attacking = true;
         if (animator != null)
         {
-            animator.SetBool("is_moving", false);
-            animator.SetTrigger("attack");
+            animator.SetBool(GameConstants.AnimParams.IsMoving, false);
+            animator.SetTrigger(GameConstants.AnimParams.Attack);
         }
         float attack_rate = enemy_data != null ? enemy_data.attack_rate : 1f;
         next_attack_time = Time.time + attack_rate;
@@ -258,7 +285,7 @@ public class EnemyBase : MonoBehaviour
         yield return new WaitForSeconds(0.22f);
 
         // 2. Active Strike Hitbox
-        AudioManager.PlaySFX("enemy_attack");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyAttack);
         if (enemy_data != null && enemy_data.attack_type == EnemyAttackType.Ranged && enemy_data.projectile_prefab != null)
         {
             PerformRangedStrike();
@@ -319,30 +346,19 @@ public class EnemyBase : MonoBehaviour
         if (current < max && current > 0)
         {
             AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyHurt);
-            if (animator != null && HasParameter(animator, "hit"))
+            if (animator != null && HasParameter(animator, GameConstants.AnimParams.Hit))
             {
-                animator.SetTrigger("hit");
+                animator.SetTrigger(GameConstants.AnimParams.Hit);
             }
         }
     }
 
     protected virtual void OnDeath()
     {
+        RemoveStunEffect();
         AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyDeath);
-        if (KillStreakManager.instance != null)
-        {
-            KillStreakManager.instance.RegisterKill();
-        }
-
-        if (DropSystem.instance != null && enemy_data != null)
-        {
-            DropSystem.instance.SpawnDrops(transform.position, enemy_data);
-        }
-
-        if (WaveManager.instance != null)
-        {
-            WaveManager.instance.OnEnemyKilled(this);
-        }
+        OnDied?.Invoke(this);
+        OnAnyEnemyDied?.Invoke(this);
 
         if (rb != null)
         {
@@ -356,9 +372,9 @@ public class EnemyBase : MonoBehaviour
             cols[i].enabled = false;
         }
 
-        if (animator != null && HasParameter(animator, "death"))
+        if (animator != null && HasParameter(animator, GameConstants.AnimParams.Death))
         {
-            animator.SetTrigger("death");
+            animator.SetTrigger(GameConstants.AnimParams.Death);
             Destroy(gameObject, 0.75f);
         }
         else
@@ -367,13 +383,13 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    protected bool HasParameter(Animator anim, string paramName)
+    protected bool HasParameter(Animator anim, int param_hash)
     {
         if (anim == null || anim.runtimeAnimatorController == null) return false;
         AnimatorControllerParameter[] parameters = anim.parameters;
         for (int i = 0; i < parameters.Length; i++)
         {
-            if (parameters[i].name == paramName) return true;
+            if (parameters[i].nameHash == param_hash) return true;
         }
         return false;
     }

@@ -5826,9 +5826,8 @@ MonoBehaviour:
   - item_name: Bubble Stick
     category: 1
     price: 0
-    description: Default Melee
+    description: Senjata pukul awal standar dengan ayunan cepat dan knockback ringan.
     preview_sprite: {fileID: -792859449625526860, guid: a84423f87899ca24cae6e772eb13a17b, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 546118750}
     expand_panel: {fileID: 1947613924}
@@ -5849,9 +5848,9 @@ MonoBehaviour:
   - item_name: Soap Hammer
     category: 1
     price: 100
-    description: Heavy Soap Hammer
+    description: Palu sabun berat berdaya hancur tinggi, knockback besar, serta berpeluang
+      memberi efek stun.
     preview_sprite: {fileID: 8139947380414667663, guid: 1520277e6016ce2428705384792f1441, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 62601152}
     expand_panel: {fileID: 1176864761}
@@ -5872,9 +5871,9 @@ MonoBehaviour:
   - item_name: Loofah Mace
     category: 1
     price: 200
-    description: Fast Loofah Mace
+    description: Mace spons bersudut ayun lebar, optimal membersihkan musuh di area
+      sekeliling.
     preview_sprite: {fileID: -4407156738309008878, guid: 9a82bdddd63331949a5458d0a637a90f, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1669574687}
     expand_panel: {fileID: 358849761}
@@ -5895,9 +5894,9 @@ MonoBehaviour:
   - item_name: Curse Sword Imelda
     category: 1
     price: 400
-    description: Legendary Foodo Sword
+    description: Pedang terkutuk berdaya serang dahsyat yang menyerap sedikit darah
+      musuh (lifesteal) saat menebas.
     preview_sprite: {fileID: 9010560868807495507, guid: 6ba6d5bc3aded7c4b8f161aa88e0da9c, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1294591252}
     expand_panel: {fileID: 766574568}
@@ -5918,9 +5917,8 @@ MonoBehaviour:
   - item_name: Water Pistol
     category: 0
     price: 0
-    description: Default Ranged
+    description: Senjata awal standar berakurasi tinggi dengan tembakan air cepat.
     preview_sprite: {fileID: -6768715193755453775, guid: 045e5d184f50d8f4382a6cda951c2c53, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 521338319}
     expand_panel: {fileID: 976811482}
@@ -5957,9 +5955,9 @@ MonoBehaviour:
   - item_name: Water Rifle
     category: 0
     price: 140
-    description: Burst Water Rifle
+    description: Tembakan cepat burst 3 peluru, sangat efektif menghalau kerumunan
+      musuh.
     preview_sprite: {fileID: 8609919863068727619, guid: 4b659eb4244014c43bf58955cb8283c3, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1405980843}
     expand_panel: {fileID: 1293093371}
@@ -5996,9 +5994,9 @@ MonoBehaviour:
   - item_name: Water Plasma
     category: 0
     price: 220
-    description: High Damage Plasma
+    description: Menembakkan bola plasma berdaya rusak tinggi yang menembus banyak
+      musuh sekaligus.
     preview_sprite: {fileID: 4678784114830581866, guid: 4689753d69a638841b48ceda54f1b2d3, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 360880881}
     expand_panel: {fileID: 25819315}
@@ -6035,9 +6033,9 @@ MonoBehaviour:
   - item_name: Bubble Gun
     category: 0
     price: 140
-    description: Bubble Mines (50 Mag)
+    description: Menembakkan rentetan gelembung sabun yang memperlambat laju gerakan
+      musuh.
     preview_sprite: {fileID: 877903833251634843, guid: ef85b03cc8d2d614f9f34b1978266424, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1017560070}
     expand_panel: {fileID: 308406868}
@@ -6074,9 +6072,9 @@ MonoBehaviour:
   - item_name: Worker's Hat
     category: 2
     price: 75
-    description: Sturdy Hard Hat (+25 HP)
+    description: Helm pelindung proyek kokoh yang meningkatkan kapasitas Max HP sebesar
+      20%.
     preview_sprite: {fileID: 4462932120348938567, guid: da9a66a69a81937459e1d1bc72c3e9f3, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1411711069}
     expand_panel: {fileID: 1573760035}
@@ -6097,9 +6095,9 @@ MonoBehaviour:
   - item_name: I am Number One
     category: 2
     price: 125
-    description: Hero Blue Jacket (+50 HP)
+    description: Rompi pelindung tangguh yang meredam benturan dan tabrakan musuh
+      sebesar 25%.
     preview_sprite: {fileID: -8664401213119919609, guid: bedc7a33d4384224cb1cb994ebd8e6e0, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1937051581}
     expand_panel: {fileID: 1449435398}
@@ -6120,9 +6118,9 @@ MonoBehaviour:
   - item_name: Octosoap
     category: 2
     price: 400
-    description: Nano Soap Shield (+75 HP)
+    description: Perisai sabun nano licin; membuat musuh di sekitar terpeleset dan
+      memicu lemparan bom sabun saat diserang.
     preview_sprite: {fileID: 236204173789307413, guid: c7637cb7c98929d45abcf14a1b2b3fb8, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 2020060636}
     expand_panel: {fileID: 14965770}
@@ -6143,9 +6141,9 @@ MonoBehaviour:
   - item_name: Joyride
     category: 3
     price: 100
-    description: Double Jump Jetpack
-    preview_sprite: {fileID: -7559335286566603207, guid: 9270a01c7d9b85c43a883c85b7fe88bf, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    description: Jetpack pendorong udara yang memberikan lompatan ganda (Double Jump)
+      dan melayang stabil.
+    preview_sprite: {fileID: -2640089873255853024, guid: e88d4f5f303de2548b1c80f72b3db467, type: 3}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1353827667}
     expand_panel: {fileID: 345731596}
@@ -6166,9 +6164,9 @@ MonoBehaviour:
   - item_name: I am Vengeance
     category: 3
     price: 400
-    description: Glide & Boost Jetpack
-    preview_sprite: {fileID: -8951251301511139612, guid: 3f97434863678f34195eea5abb8b5669, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    description: Jetpack bermanuver cepat yang meninggalkan jejak busa sabun beracun
+      perusak musuh di bawahnya.
+    preview_sprite: {fileID: 7044706754297474640, guid: fd2fe507b7df1e847999f4dfd9e8a82e, type: 3}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 282228519}
     expand_panel: {fileID: 2097307017}
@@ -6190,7 +6188,7 @@ MonoBehaviour:
   - item_name: Soap Bomb
     price: 100
     description: Explosive soap tin area bomb
-    preview_sprite: {fileID: -6518813641902180415, guid: f4e26021d0a7d2949bbb12682f833373, type: 3}
+    preview_sprite: {fileID: -6740036801979081183, guid: 02778d4605711a84ca87db361335d93d, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 1667034309}
     name_text: {fileID: 23680192}
@@ -6205,7 +6203,7 @@ MonoBehaviour:
   - item_name: First Aid Kit
     price: 25
     description: Restores +50 Health Points
-    preview_sprite: {fileID: 21300000, guid: 90d31c7fbecea06458c5d7c6222711fc, type: 3}
+    preview_sprite: {fileID: 5493368934420057545, guid: dd083297e6705fa448288eccfc0e8c7e, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 638808459}
     name_text: {fileID: 1343292123}
@@ -6220,7 +6218,7 @@ MonoBehaviour:
   - item_name: Energy Drink
     price: 10
     description: Increases movement speed
-    preview_sprite: {fileID: 21300000, guid: 5457249038dbee64fb8373fd6210f05c, type: 3}
+    preview_sprite: {fileID: 4282316897254225874, guid: 5a6807ee973957d40a51610d89cb5812, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 720911182}
     name_text: {fileID: 1582643210}
@@ -6232,10 +6230,10 @@ MonoBehaviour:
     slot1_button_text: {fileID: 1021949197}
     slot2_button: {fileID: 1167775973}
     slot2_button_text: {fileID: 480808689}
-  - item_name: Soap Bucket
+  - item_name: Soap Water Bucket
     price: 75
     description: Absolutes shield for 3 hits
-    preview_sprite: {fileID: 8208513671369850685, guid: 7a91bf8044ca87f44964337693f5feb3, type: 3}
+    preview_sprite: {fileID: 7465072865581079696, guid: 28ebb758864e4554eb0bd06260835607, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 1664304938}
     name_text: {fileID: 1863373579}
@@ -6250,7 +6248,7 @@ MonoBehaviour:
   - item_name: Tools Box
     price: 25
     description: Provides +30 repair points
-    preview_sprite: {fileID: 21300000, guid: dc558b34e60fb3d4399a5938c279a17e, type: 3}
+    preview_sprite: {fileID: -4904081600167416783, guid: 688db9b63e8af5149b2142adbac666aa, type: 3}
     item_prefab: {fileID: 0}
     item_icon_img: {fileID: 1262946056}
     name_text: {fileID: 236950552}
@@ -6365,6 +6363,7 @@ RectTransform:
   - {fileID: 1024360644}
   - {fileID: 1467928475}
   - {fileID: 1593033778}
+  - {fileID: 1207160409}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -18483,7 +18482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.95, g: 0.75, b: 0.1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -19666,6 +19665,164 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &925049253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 925049254}
+  - component: {fileID: 925049257}
+  - component: {fileID: 925049256}
+  - component: {fileID: 925049255}
+  m_Layer: 0
+  m_Name: ContentText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &925049254
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925049253}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207160409}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &925049255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925049253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 220
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &925049256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925049253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 0.9, g: 0.95, b: 1, a: 0.95}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 11.5
+  m_fontSizeBase: 11.5
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &925049257
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925049253}
+  m_CullTransparentMesh: 1
 --- !u!1 &927435013
 GameObject:
   m_ObjectHideFlags: 0
@@ -25707,6 +25864,156 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1207160408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207160409}
+  - component: {fileID: 1207160415}
+  - component: {fileID: 1207160414}
+  - component: {fileID: 1207160413}
+  - component: {fileID: 1207160412}
+  - component: {fileID: 1207160411}
+  - component: {fileID: 1207160410}
+  m_Layer: 0
+  m_Name: CursorTooltip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1207160409
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207160408}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1870050545}
+  - {fileID: 925049254}
+  m_Father: {fileID: 273421794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1207160410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207160408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ac7f9ed8caec048bdd251405824354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UITooltip
+  canvas_group: {fileID: 1207160415}
+  tooltip_rect: {fileID: 1207160409}
+  title_text: {fileID: 1870050546}
+  content_text: {fileID: 925049256}
+  cursor_offset: {x: 16, y: -16}
+--- !u!114 &1207160411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207160408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
+--- !u!114 &1207160412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207160408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 12
+    m_Right: 12
+    m_Top: 10
+    m_Bottom: 10
+  m_ChildAlignment: 0
+  m_Spacing: 6
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &1207160413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207160408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.08, g: 0.1, b: 0.16, a: 0.95}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1207160414
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207160408}
+  m_CullTransparentMesh: 1
+--- !u!225 &1207160415
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207160408}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1208598645
 GameObject:
   m_ObjectHideFlags: 0
@@ -33608,7 +33915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3, g: 0.85, b: 0.95, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -33617,7 +33924,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 9202713574010850225, guid: d1913b80f4db3924fae95a353aab5514, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -35295,7 +35602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3, g: 0.8, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -35452,7 +35759,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7559335286566603207, guid: 9270a01c7d9b85c43a883c85b7fe88bf, type: 3}
+  m_Sprite: {fileID: -2640089873255853024, guid: e88d4f5f303de2548b1c80f72b3db467, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -38905,6 +39212,143 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1870050544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1870050545}
+  - component: {fileID: 1870050547}
+  - component: {fileID: 1870050546}
+  m_Layer: 0
+  m_Name: TitleText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1870050545
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870050544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207160409}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1870050546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870050544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_sharedMaterial: {fileID: 257628993052425660, guid: d95afa5c6e759044fb0124ed4e87f245, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 0.85, b: 0.35, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 14
+  m_fontSizeBase: 14
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1870050547
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870050544}
+  m_CullTransparentMesh: 1
 --- !u!1 &1873714736
 GameObject:
   m_ObjectHideFlags: 0

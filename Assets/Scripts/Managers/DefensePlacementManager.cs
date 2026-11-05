@@ -12,13 +12,18 @@ public class DefensePlacementManager : MonoBehaviour
     public DefenseData selected_defense;
     public bool is_refund_mode = false;
     public UnityEvent<int, int> on_points_changed;
-    public UnityEvent<DefenseData, bool> on_selection_changed;
-
-    private int points_spent_total = 0;
+    public UnityEvent<DefenseData, bool> on_selection_changed = new UnityEvent<DefenseData, bool>();
 
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<DefensePlacementManager>(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<DefensePlacementManager>();
+        if (instance == this) instance = null;
     }
 
     private void Update()
@@ -30,6 +35,11 @@ public class DefensePlacementManager : MonoBehaviour
     {
         UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
         if (kb == null) return;
+
+        if ((kb.digit1Key.wasPressedThisFrame || kb.numpad1Key.wasPressedThisFrame) && available_defenses.Count > 0) SelectDefense(available_defenses[0]);
+        if ((kb.digit2Key.wasPressedThisFrame || kb.numpad2Key.wasPressedThisFrame) && available_defenses.Count > 1) SelectDefense(available_defenses[1]);
+        if ((kb.digit3Key.wasPressedThisFrame || kb.numpad3Key.wasPressedThisFrame) && available_defenses.Count > 2) SelectDefense(available_defenses[2]);
+        if ((kb.digit4Key.wasPressedThisFrame || kb.numpad4Key.wasPressedThisFrame) && available_defenses.Count > 3) SelectDefense(available_defenses[3]);
 
         if (kb.xKey.wasPressedThisFrame) ToggleRefundMode();
         if (kb.escapeKey.wasPressedThisFrame) ClearSelection();
@@ -45,26 +55,25 @@ public class DefensePlacementManager : MonoBehaviour
 
         selected_defense = data;
         is_refund_mode = false;
-        if (on_selection_changed != null)
-        {
-            on_selection_changed.Invoke(selected_defense, is_refund_mode);
-        }
+        NotifySelectionChanged();
     }
 
     public void ToggleRefundMode()
     {
         is_refund_mode = !is_refund_mode;
         if (is_refund_mode) selected_defense = null;
-        if (on_selection_changed != null)
-        {
-            on_selection_changed.Invoke(selected_defense, is_refund_mode);
-        }
+        NotifySelectionChanged();
     }
 
     public void ClearSelection()
     {
         selected_defense = null;
         is_refund_mode = false;
+        NotifySelectionChanged();
+    }
+
+    private void NotifySelectionChanged()
+    {
         if (on_selection_changed != null)
         {
             on_selection_changed.Invoke(selected_defense, is_refund_mode);
@@ -75,7 +84,6 @@ public class DefensePlacementManager : MonoBehaviour
     {
         defense_points_max = starting_points;
         defense_points_current = starting_points;
-        points_spent_total = 0;
         if (on_points_changed != null)
         {
             on_points_changed.Invoke(defense_points_current, defense_points_max);
@@ -93,7 +101,6 @@ public class DefensePlacementManager : MonoBehaviour
         if (!CanAfford(data) || data.prefab == null) return null;
 
         defense_points_current -= data.point_cost;
-        points_spent_total += data.point_cost;
 
         GameObject obj = Instantiate(data.prefab, position, Quaternion.identity, parent);
         if (data.prefab != null)
@@ -106,12 +113,20 @@ public class DefensePlacementManager : MonoBehaviour
             defense.defense_data = data;
         }
 
-        if (data.defense_name.Contains("Fence")) AudioManager.PlaySFX("fence_place");
-        else if (data.defense_name.Contains("Trap") || data.defense_name.Contains("Balloon")) AudioManager.PlaySFX("balloon_inflate");
+        AudioManager.PlaySFX(data.place_sound_key);
 
         if (on_points_changed != null)
         {
             on_points_changed.Invoke(defense_points_current, defense_points_max);
+        }
+
+        if (selected_defense != null && !CanAfford(selected_defense))
+        {
+            ClearSelection();
+        }
+        else
+        {
+            NotifySelectionChanged();
         }
 
         return obj;
@@ -127,10 +142,5 @@ public class DefensePlacementManager : MonoBehaviour
         {
             on_points_changed.Invoke(defense_points_current, defense_points_max);
         }
-    }
-
-    public int GetTotalPointsSpent()
-    {
-        return points_spent_total;
     }
 }

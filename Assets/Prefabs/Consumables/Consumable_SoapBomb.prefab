@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6518813641902180415, guid: f4e26021d0a7d2949bbb12682f833373, type: 3}
+  m_Sprite: {fileID: -6740036801979081183, guid: 02778d4605711a84ca87db361335d93d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -138,6 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableSoapBomb
   consumable_name: Soap Bomb
   price: 100
+  popup_label: USED!
+  popup_color: {r: 1, g: 1, b: 1, a: 1}
   sr: {fileID: 3976471502592068613}
   soap_bomb_projectile_prefab: {fileID: 88275635079728158, guid: 9ad958ec61fdcc14aae9c9002b8b98f2, type: 3}
   max_throw_distance: 8

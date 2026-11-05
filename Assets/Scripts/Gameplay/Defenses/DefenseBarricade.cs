@@ -26,12 +26,12 @@ public class DefenseBarricade : DefenseObject
     {
         if (cur < max && cur > 0)
         {
-            AudioManager.PlaySFX("fence_damage");
+            AudioManager.PlaySFX(GameConstants.AudioKeys.FenceDamage);
         }
     }
 
     protected override void PlayBreakAudio()
     {
-        AudioManager.PlaySFX("fence_break");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.FenceBreak);
     }
 }

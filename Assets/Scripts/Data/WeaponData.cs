@@ -6,11 +6,19 @@ public enum WeaponType
     Melee
 }
 
+/// <summary>Which hand animation a melee weapon plays. None = instant overlap strike.</summary>
+public enum MeleeAttackStyle
+{
+    None,
+    ImeldaSword,
+    SoapHammer
+}
+
 [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Detergentnation/Weapon Data")]
 public class WeaponData : ScriptableObject
 {
     public string weapon_name;
-    public WeaponType weapon_type;
+    [TextArea(2, 4)] public string description;
     public int price = 0;
     public int damage = 15;
     public float fire_rate = 0.3f;
@@ -26,4 +34,11 @@ public class WeaponData : ScriptableObject
     public GameObject projectile_prefab;
     public GameObject weapon_prefab;
     public AudioClip attack_sound;
+
+    [Header("Audio Keys (AudioManager ids, used when attack_sound is empty)")]
+    public string attack_sound_key;
+    public string hit_sound_key;
+
+    [Header("Melee Animation")]
+    public MeleeAttackStyle attack_style = MeleeAttackStyle.None;
 }

@@ -1,12 +1,39 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class DefenseRollingBarrel : DefenseObject
 {
+    private const float RollLifetimeSeconds = 6f;
+
     [SerializeField] private float roll_speed = 9f;
     [SerializeField] private GameObject explosion_effect_prefab;
+    [SerializeField] private Animator roll_animator;
+    [SerializeField] private Rigidbody2D rb;
 
     private bool is_rolling = false;
     private float roll_direction = 1f;
+    private Tween move_tween;
+    private Tween spin_tween;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        if (roll_animator == null && visuals_container != null)
+        {
+            roll_animator = visuals_container.GetComponent<Animator>();
+        }
+        if (roll_animator != null)
+        {
+            roll_animator.enabled = false;
+        }
+    }
 
     protected override bool CanInteract()
     {
@@ -23,29 +50,104 @@ public class DefenseRollingBarrel : DefenseObject
         ReleaseBarrel();
     }
 
+    public override void SetFacingDirection(FacingDirection direction)
+    {
+        base.SetFacingDirection(direction);
+        roll_direction = direction == FacingDirection.Left ? -1f : 1f;
+    }
+
     public void ReleaseBarrel()
     {
         if (is_rolling) return;
         is_rolling = true;
-        AudioManager.PlaySFX("barrel_roll");
-        roll_direction = transform.position.x < 0 ? -1f : 1f;
+        AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelRoll);
+        if (facing_direction == FacingDirection.Left) roll_direction = -1f;
+        else if (facing_direction == FacingDirection.Right) roll_direction = 1f;
         HidePrompt();
-        Destroy(gameObject, 6f);
+        StartRolling();
+        Destroy(gameObject, RollLifetimeSeconds);
+    }
+
+    private void StartRolling()
+    {
+        KillTweens();
+
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = 3f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.linearVelocity = new Vector2(roll_direction * roll_speed, rb.linearVelocity.y);
+        }
+        else
+        {
+            // Linear travel along X for the barrel's whole lifetime
+            float travel = roll_direction * roll_speed * RollLifetimeSeconds;
+            move_tween = transform.DOMoveX(transform.position.x + travel, RollLifetimeSeconds).SetEase(Ease.Linear);
+        }
+
+        if (roll_animator != null)
+        {
+            roll_animator.enabled = true;
+        }
+        else if (visuals_container != null)
+        {
+            // One full turn per second, looping fallback
+            spin_tween = visuals_container.transform
+                .DOLocalRotate(new Vector3(0f, 0f, -roll_direction * 360f), 1f, RotateMode.FastBeyond360)
+                .SetRelative()
+                .SetEase(Ease.Linear)
+                .SetLoops(-1, LoopType.Incremental);
+        }
+
+        if (visuals_container != null)
+        {
+            SpriteRenderer sr = visuals_container.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.flipX = roll_direction < 0f;
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (is_rolling && rb != null && rb.bodyType == RigidbodyType2D.Dynamic)
+        {
+            rb.linearVelocity = new Vector2(roll_direction * roll_speed, rb.linearVelocity.y);
+        }
+    }
+
+    private void KillTweens()
+    {
+        if (move_tween != null) { move_tween.Kill(); move_tween = null; }
+        if (spin_tween != null) { spin_tween.Kill(); spin_tween = null; }
+    }
+
+    private void OnDisable()
+    {
+        KillTweens();
+    }
+
+    protected override void OnDestroy()
+    {
+        KillTweens();
+        base.OnDestroy();
     }
 
     protected override void Update()
     {
-        if (is_rolling)
-        {
-            transform.Translate(Vector3.right * (roll_direction * roll_speed * Time.deltaTime));
-            if (visuals_container != null)
-            {
-                visuals_container.transform.Rotate(0f, 0f, -roll_direction * 360f * Time.deltaTime);
-            }
-            return;
-        }
+        if (is_rolling) return;
 
         base.Update();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (is_rolling && collision.gameObject.CompareTag(GameConstants.Tags.Enemy))
+        {
+            ExplodeBarrel();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,7 +160,7 @@ public class DefenseRollingBarrel : DefenseObject
 
     private void ExplodeBarrel()
     {
-        AudioManager.PlaySFX("barrel_break");
+        AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelBreak);
 
         if (explosion_effect_prefab != null)
         {
@@ -85,7 +187,7 @@ public class DefenseRollingBarrel : DefenseObject
     {
         if (!is_rolling)
         {
-            AudioManager.PlaySFX("barrel_break");
+            AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelBreak);
         }
     }
 }

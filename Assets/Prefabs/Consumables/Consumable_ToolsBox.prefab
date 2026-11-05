@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableToolsBox
   consumable_name: Tools Box
   price: 25
+  popup_label: USED!
+  popup_color: {r: 1, g: 1, b: 1, a: 1}
   sr: {fileID: 7241334430729365789}
   repair_points: 30
   minimarket_heal: 30
@@ -131,7 +133,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: dc558b34e60fb3d4399a5938c279a17e, type: 3}
+  m_Sprite: {fileID: -4904081600167416783, guid: 688db9b63e8af5149b2142adbac666aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

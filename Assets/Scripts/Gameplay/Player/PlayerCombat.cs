@@ -22,9 +22,6 @@ public class PlayerCombat : MonoBehaviour
     public Transform weapon_attachment;
     public LayerMask enemy_layer;
 
-    // Backward compatibility property
-    public Transform weapon_mount { get => hand_mount; set => hand_mount = value; }
-    public Transform weapon_holder { get => weapon_attachment; set => weapon_attachment = value; }
 
     [Header("Resources")]
     public int repair_points = 0;
@@ -35,7 +32,6 @@ public class PlayerCombat : MonoBehaviour
     // Components
     private PlayerWeaponAim weapon_aim;
     private PlayerAmmo ammo_comp;
-    private PlayerConsumableInventory consumable_inv;
 
     // Weapon Instances
     private GameObject current_weapon_instance;
@@ -60,10 +56,10 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
         Instance = this;
+        ServiceLocator.Register<PlayerCombat>(this);
 
         weapon_aim = GetComponent<PlayerWeaponAim>();
         ammo_comp = GetComponent<PlayerAmmo>();
-        consumable_inv = GetComponent<PlayerConsumableInventory>();
         main_camera = Camera.main;
         if (enemy_layer.value == 0)
         {
@@ -181,6 +177,8 @@ public class PlayerCombat : MonoBehaviour
         if (ranged_weapon == null || active_ranged_comp == null) return;
         if (ammo_comp == null || !ammo_comp.CanShoot())
         {
+            AudioManager.PlaySFX(GameConstants.AudioKeys.GunEmpty);
+            next_fire_time = Time.time + (ranged_weapon.fire_rate * fire_rate_mod);
             if (ammo_comp != null && ammo_comp.ammo_carried <= 0 && ammo_comp.ammo_in_mag <= 0)
             {
                 NotificationToast.Show("Out of ammo! Restock at Minimarket!", ToastType.Warning);
@@ -198,12 +196,7 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string shootSound = "pistol_shoot";
-            string wn = ranged_weapon.weapon_name.ToLower();
-            if (wn.Contains("rifle")) shootSound = "rifle_loop";
-            else if (wn.Contains("plasma")) shootSound = "plasma_shoot";
-            else if (wn.Contains("bubble")) shootSound = "bubble_shoot";
-            AudioManager.PlaySFX(shootSound);
+            AudioManager.PlaySFX(ranged_weapon.attack_sound_key);
         }
 
         if (main_camera == null) main_camera = Camera.main;
@@ -220,7 +213,6 @@ public class PlayerCombat : MonoBehaviour
         if (melee_weapon == null || active_melee_comp == null) return;
 
         next_melee_time = Time.time + melee_weapon.attack_rate;
-        string weaponName = melee_weapon.weapon_name.ToLower();
 
         if (melee_weapon.attack_sound != null)
         {
@@ -228,25 +220,14 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            string swingSound = "swing_imelda";
-            if (weaponName.Contains("hammer")) swingSound = "swing_hammer";
-            else if (weaponName.Contains("stick")) swingSound = "swing_stick";
-            AudioManager.PlaySFX(swingSound);
+            AudioManager.PlaySFX(melee_weapon.attack_sound_key);
         }
 
-        // Trigger hand attack animation and toggle weapon attachment visual
-        string triggerName = null;
-        if (weaponName.Contains("imelda") || weaponName.Contains("curse"))
-        {
-            triggerName = "Attack_ImeldaSword";
-        }
-        else if (weaponName.Contains("hammer") || weaponName.Contains("soap"))
-        {
-            triggerName = "Attack_SoapHammer";
-        }
+        // Hand attack animation is chosen by the weapon data (attack_style)
+        bool has_hand_animation = GameConstants.AnimParams.TryGetMeleeTrigger(melee_weapon.attack_style, out int attack_trigger);
 
         // For weapons without animated hand colliders, use raycast/overlap strike
-        if (triggerName == null)
+        if (!has_hand_animation)
         {
             Vector3 origin = melee_point != null ? melee_point.position : transform.position;
             active_melee_comp.PerformStrike(origin, melee_weapon.attack_range, melee_weapon.damage + weapon_damage_bonus, enemy_layer);
@@ -261,7 +242,7 @@ public class PlayerCombat : MonoBehaviour
 
             if (hand_animator != null)
             {
-                hand_animator.SetTrigger(triggerName);
+                hand_animator.SetTrigger(attack_trigger);
             }
 
             if (weapon_attachment != null)
@@ -351,5 +332,11 @@ public class PlayerCombat : MonoBehaviour
             Transform mp = current_weapon_instance.transform.Find("MeleePoint");
             if (mp != null) melee_point = mp;
         }
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<PlayerCombat>();
+        if (Instance == this) Instance = null;
     }
 }

@@ -21,19 +21,19 @@ public class Pickup : MonoBehaviour
         if (PlayerController.Instance != null)
         {
             player_transform = PlayerController.Instance.transform;
-            return;
-        }
-
-        GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
-        if (player != null)
-        {
-            player_transform = player.transform;
         }
     }
 
     private void Update()
     {
-        if (player_transform == null) return;
+        if (player_transform == null)
+        {
+            if (PlayerController.Instance != null)
+            {
+                player_transform = PlayerController.Instance.transform;
+            }
+            return;
+        }
 
         float dist = Vector2.Distance(transform.position, player_transform.position);
         if (dist < 3f)
@@ -50,12 +50,31 @@ public class Pickup : MonoBehaviour
             {
                 AudioManager.PlaySFX(pickup_sound);
             }
+            else
+            {
+                if (pickup_type == PickupType.Candy)
+                {
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.PickupCandy);
+                }
+                else if (pickup_type == PickupType.HealthPoint)
+                {
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerHeal);
+                }
+                else if (pickup_type == PickupType.RepairPoint)
+                {
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.Repair);
+                }
+            }
 
             if (pickup_type == PickupType.Candy)
             {
                 if (GameManager.instance != null)
                 {
                     GameManager.instance.AddCandy(amount);
+                }
+                if (GameplayUI.Instance != null)
+                {
+                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " CANDY");
                 }
             }
             else if (pickup_type == PickupType.HealthPoint)
@@ -65,6 +84,10 @@ public class Pickup : MonoBehaviour
                 {
                     player_health.Heal(amount);
                 }
+                if (GameplayUI.Instance != null)
+                {
+                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " HP");
+                }
             }
             else if (pickup_type == PickupType.RepairPoint)
             {
@@ -72,6 +95,10 @@ public class Pickup : MonoBehaviour
                 if (player_combat != null)
                 {
                     player_combat.AddRepairPoints(amount);
+                }
+                if (GameplayUI.Instance != null)
+                {
+                    GameplayUI.Instance.ShowPickupFeedback("+" + amount + " REPAIR POINT");
                 }
             }
 

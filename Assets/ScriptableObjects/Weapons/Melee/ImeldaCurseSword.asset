@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ImeldaCurseSword
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Curse Sword Imelda
-  weapon_type: 1
+  description: Pedang terkutuk berdaya serang dahsyat yang menyerap sedikit darah
+    musuh (lifesteal) saat menebas.
   price: 400
   damage: 99999
   fire_rate: 0.3
@@ -29,3 +30,6 @@ MonoBehaviour:
   projectile_prefab: {fileID: 0}
   weapon_prefab: {fileID: 3505045930079584322, guid: 93dce9d4951c8fa4c9bbce08e0f47240, type: 3}
   attack_sound: {fileID: 0}
+  attack_sound_key: swing_imelda
+  hit_sound_key: hit_imelda
+  attack_style: 1
