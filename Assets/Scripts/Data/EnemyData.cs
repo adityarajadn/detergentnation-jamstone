@@ -1,14 +1,5 @@
 using UnityEngine;
 
-public enum EnemyType
-{
-    Normal,
-    Tiny,
-    Brawler,
-    Brute,
-    Tanker
-}
-
 public enum EnemyAttackType
 {
     Melee,
@@ -18,8 +9,6 @@ public enum EnemyAttackType
 [CreateAssetMenu(fileName = "NewEnemyData", menuName = "Detergentnation/Enemy Data")]
 public class EnemyData : ScriptableObject
 {
-    public string enemy_name;
-    public EnemyType enemy_type;
     public EnemyAttackType attack_type;
     public bool is_flying;
     public int health_max = 50;
@@ -32,5 +21,4 @@ public class EnemyData : ScriptableObject
     public int candy_reward_max = 3;
     public GameObject projectile_prefab;
     public GameObject enemy_prefab;
-    public Color body_color = Color.white;
 }

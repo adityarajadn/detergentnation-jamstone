@@ -17,6 +17,31 @@ public class DropSystem : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<DropSystem>(this);
+    }
+
+    private void OnEnable()
+    {
+        EnemyBase.OnAnyEnemyDied += HandleEnemyDied;
+    }
+
+    private void OnDisable()
+    {
+        EnemyBase.OnAnyEnemyDied -= HandleEnemyDied;
+    }
+
+    private void HandleEnemyDied(EnemyBase enemy)
+    {
+        if (enemy != null && enemy.enemy_data != null)
+        {
+            SpawnDrops(enemy.transform.position, enemy.enemy_data);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<DropSystem>();
+        if (instance == this) instance = null;
     }
 
     public void SpawnDrops(Vector3 position, EnemyData enemy_data)

@@ -7,6 +7,13 @@ public static class SceneLoader
     public const string SCENE_GAMEPLAY = "Gameplay";
     public const string SCENE_SHOP = "Shop";
     public const string SCENE_SETTINGS = "Settings";
+    public const string SCENE_CREDITS = "Credits";
+
+    public static void LoadCredits()
+    {
+        AudioManager.PlaySFX(GameConstants.AudioKeys.UiTransition);
+        SceneTransition.LoadScene(SCENE_CREDITS);
+    }
 
     public static void LoadMainMenu()
     {

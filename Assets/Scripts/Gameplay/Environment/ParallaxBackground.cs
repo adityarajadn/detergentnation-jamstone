@@ -58,9 +58,10 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (camera_transform == null)
         {
-            if (Camera.main != null)
+            Camera cam = Camera.main;
+            if (cam != null)
             {
-                camera_transform = Camera.main.transform;
+                camera_transform = cam.transform;
                 last_camera_pos = camera_transform.position;
             }
             return;

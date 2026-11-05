@@ -31,10 +31,17 @@ public class AudioManager : MonoBehaviour
         }
 
         instance = this;
+        ServiceLocator.Register<AudioManager>(this);
         DontDestroyOnLoad(gameObject);
 
         BuildSoundMap();
         LoadVolumeSettings();
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<AudioManager>();
+        if (instance == this) instance = null;
     }
 
     public void LoadVolumeSettings()
@@ -108,12 +115,6 @@ public class AudioManager : MonoBehaviour
         instance.bgm_source.clip = clip;
         instance.bgm_source.loop = loop;
         instance.bgm_source.Play();
-    }
-
-    public static void StopMusic()
-    {
-        if (instance == null || instance.bgm_source == null) return;
-        instance.bgm_source.Stop();
     }
 
     public static void SetSFXVolume(float volume)

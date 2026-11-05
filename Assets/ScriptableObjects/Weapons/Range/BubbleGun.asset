@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BubbleGun
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Bubble Gun
-  weapon_type: 0
+  description: Menembakkan rentetan gelembung sabun yang memperlambat laju gerakan
+    musuh.
   price: 140
   damage: 12
   fire_rate: 0.1
@@ -29,3 +30,6 @@ MonoBehaviour:
   projectile_prefab: {fileID: 8906204975780619882, guid: de89389d2ba331743b28e2576ca03e18, type: 3}
   weapon_prefab: {fileID: 2934509524686386171, guid: f54f67f6e8a769a44b8aea6e1368a68c, type: 3}
   attack_sound: {fileID: 0}
+  attack_sound_key: bubble_shoot
+  hit_sound_key: 
+  attack_style: 0

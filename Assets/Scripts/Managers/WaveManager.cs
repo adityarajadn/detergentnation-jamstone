@@ -30,11 +30,27 @@ public class WaveManager : MonoBehaviour
     private bool is_in_break = false;
 
     public bool is_running { get; private set; } = false;
-    public bool IsInBreak => is_in_break;
 
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<WaveManager>(this);
+    }
+
+    private void OnEnable()
+    {
+        EnemyBase.OnAnyEnemyDied += OnEnemyKilled;
+    }
+
+    private void OnDisable()
+    {
+        EnemyBase.OnAnyEnemyDied -= OnEnemyKilled;
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<WaveManager>();
+        if (instance == this) instance = null;
     }
 
     public void InitLevel(LevelData level_data)
@@ -137,11 +153,6 @@ public class WaveManager : MonoBehaviour
         is_in_break = true;
         skip_break_requested = false;
 
-        if (LevelManager.instance != null)
-        {
-            LevelManager.instance.StartWaveBreak();
-        }
-
         AudioManager.PlaySFX(GameConstants.AudioKeys.VictorySmall);
         NotificationToast.Show("Wave Cleared! Break Time: Restock & Repair!", ToastType.Success);
 
@@ -160,11 +171,6 @@ public class WaveManager : MonoBehaviour
 
         is_in_break = false;
         skip_break_requested = false;
-
-        if (LevelManager.instance != null)
-        {
-            LevelManager.instance.StartCombatPhase();
-        }
     }
 
     private void SpawnEnemy(EnemyData data, SpawnLocation location)
@@ -181,12 +187,6 @@ public class WaveManager : MonoBehaviour
         if (enemy != null)
         {
             enemy.enemy_data = data;
-        }
-
-        SpriteRenderer sr = obj.GetComponentInChildren<SpriteRenderer>();
-        if (sr != null)
-        {
-            sr.color = data.body_color;
         }
 
         active_enemies_count++;
@@ -211,10 +211,5 @@ public class WaveManager : MonoBehaviour
     {
         active_enemies_count--;
         if (active_enemies_count < 0) active_enemies_count = 0;
-    }
-
-    public int GetActiveEnemiesCount()
-    {
-        return active_enemies_count;
     }
 }

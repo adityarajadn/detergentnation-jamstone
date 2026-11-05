@@ -7,7 +7,7 @@ public class EnemyMoshiMos : EnemyBase
         base.Start();
         if (health != null)
         {
-            health.shield_charges = 2;
+            health.SetShieldCharges(2);
         }
     }
 }

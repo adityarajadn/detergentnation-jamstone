@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Defense_Fence
   m_EditorClassIdentifier: Assembly-CSharp::DefenseData
   defense_name: Soap Fence
-  defense_type: 0
   point_cost: 1
   max_health: 100
   max_ammo: 0
@@ -21,3 +20,4 @@ MonoBehaviour:
   attack_range: 5
   prefab: {fileID: 647055581999548009, guid: a60b1f5549f468b4eb24d45e8521c5eb, type: 3}
   icon: {fileID: 0}
+  place_sound_key: fence_place

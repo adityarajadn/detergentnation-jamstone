@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: LoofahMace
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weapon_name: Loofah Mace
-  weapon_type: 1
+  description: Mace spons bersudut ayun lebar, optimal membersihkan musuh di area
+    sekeliling.
   price: 200
   damage: 40
   fire_rate: 0.3
@@ -29,3 +30,6 @@ MonoBehaviour:
   projectile_prefab: {fileID: 0}
   weapon_prefab: {fileID: 7349915262368154906, guid: 29d07fd805d346541b16f884b838d466, type: 3}
   attack_sound: {fileID: 0}
+  attack_sound_key: swing_imelda
+  hit_sound_key: hit_hammer
+  attack_style: 0

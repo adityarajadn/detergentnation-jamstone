@@ -10,13 +10,6 @@ public enum SpawnLocation
     Top
 }
 
-public enum WaveStartCondition
-{
-    RoundStart,
-    FinishedSpawning,
-    AllDefeated
-}
-
 [Serializable]
 public class SpawnEntry
 {
@@ -30,9 +23,7 @@ public class SpawnEntry
 [Serializable]
 public class WaveData
 {
-    public int wave_number = 1;
     public bool is_huge_wave = false;
-    public WaveStartCondition start_condition = WaveStartCondition.RoundStart;
     public List<SpawnEntry> spawns = new List<SpawnEntry>();
 }
 
@@ -45,8 +36,6 @@ public class LevelData : ScriptableObject
 
     [Header("Defense & Stars")]
     public int defense_points_start = 6;
-    public int max_restocks_for_star = 3;
-    public int max_defense_points_for_star = 6;
     public int min_minimarket_hp_percent_for_star = 50;
     public int target_kill_streak_for_star = 10;
     public List<WaveData> waves = new List<WaveData>();

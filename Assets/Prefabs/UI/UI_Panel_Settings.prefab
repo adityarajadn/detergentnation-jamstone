@@ -4910,43 +4910,33 @@ MonoBehaviour:
   sfx_volume_slider: {fileID: 859302887391707893}
   keybind_rows:
   - action: 0
-    display_name: Move Left
     rebind_button: {fileID: 1168697514203707102}
     key_text: {fileID: 1748045732538258922}
   - action: 1
-    display_name: Move Right
     rebind_button: {fileID: 3129699001038692028}
     key_text: {fileID: 8905885817497968322}
   - action: 2
-    display_name: Jump
     rebind_button: {fileID: 2473312882960014662}
     key_text: {fileID: 4283908963088745868}
   - action: 3
-    display_name: Drop Platform
     rebind_button: {fileID: 3237227601901669128}
     key_text: {fileID: 8780692189267361512}
   - action: 7
-    display_name: Interact / Restock
     rebind_button: {fileID: 5019235050977709116}
     key_text: {fileID: 9113331349580041860}
   - action: 4
-    display_name: Use Consumable
     rebind_button: {fileID: 1857509638164717710}
     key_text: {fileID: 5474736979264519367}
   - action: 5
-    display_name: Equip Slot 1
     rebind_button: {fileID: 4498178029202309157}
     key_text: {fileID: 2350148980301803643}
   - action: 6
-    display_name: Equip Slot 2
     rebind_button: {fileID: 2990586867619180063}
     key_text: {fileID: 3612957259409370811}
   - action: 8
-    display_name: Ranged Attack
     rebind_button: {fileID: 1361333356132777634}
     key_text: {fileID: 9040604631985442396}
   - action: 9
-    display_name: Melee Attack
     rebind_button: {fileID: 6805127819446295357}
     key_text: {fileID: 2911398798239943893}
   reset_controls_btn: {fileID: 1144127860911246437}
@@ -5322,6 +5312,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1646310462778030862, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646310462778030862, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 90605f3e49bfbf748abd2e878741b2c8, type: 3}
+    - target: {fileID: 1646310462778030862, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e922a759f7f276d4e80fe01153829499, type: 3}
+    - target: {fileID: 1646310462778030862, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e922a759f7f276d4e80fe01153829499, type: 3}
+    - target: {fileID: 1646310462778030862, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 90605f3e49bfbf748abd2e878741b2c8, type: 3}
+    - target: {fileID: 2176289331007498775, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5546536577465531141, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
       propertyPath: m_text
       value: BACK
@@ -5405,6 +5419,14 @@ PrefabInstance:
     - target: {fileID: 6528318570627550364, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8816627516511220856, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e922a759f7f276d4e80fe01153829499, type: 3}
+    - target: {fileID: 8816627516511220856, guid: 2553e070002208d40907a6f1f834d9e2, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

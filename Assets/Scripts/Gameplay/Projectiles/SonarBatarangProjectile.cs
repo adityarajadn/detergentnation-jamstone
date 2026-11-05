@@ -1,16 +1,21 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class SonarBatarangProjectile : MonoBehaviour
 {
+    private const float SpinTurnSeconds = 0.5f;
+
     public float speed = 12f;
     public float stun_radius = 4.0f;
     public float stun_duration = 4.0f;
     public float lifetime = 3.0f;
     public GameObject hit_effect_prefab;
+    public GameObject bat_swarm_prefab;
 
     private Rigidbody2D rb;
     private float timer = 0f;
     private bool has_detonated = false;
+    private Tween spin_tween;
 
     private void Awake()
     {
@@ -25,10 +30,38 @@ public class SonarBatarangProjectile : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        // 720 degrees per second = one full turn every SpinTurnSeconds
+        spin_tween = transform
+            .DORotate(new Vector3(0f, 0f, 360f), SpinTurnSeconds, RotateMode.FastBeyond360)
+            .SetRelative()
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Incremental);
+    }
+
+    private void OnDisable()
+    {
+        KillSpin();
+    }
+
+    private void OnDestroy()
+    {
+        KillSpin();
+    }
+
+    private void KillSpin()
+    {
+        if (spin_tween != null)
+        {
+            spin_tween.Kill();
+            spin_tween = null;
+        }
+    }
+
     private void Update()
     {
         timer += Time.deltaTime;
-        transform.Rotate(0, 0, 720f * Time.deltaTime);
 
         if (timer >= lifetime && !has_detonated)
         {
@@ -63,6 +96,11 @@ public class SonarBatarangProjectile : MonoBehaviour
             }
         }
 
+        if (bat_swarm_prefab != null)
+        {
+            Instantiate(bat_swarm_prefab, transform.position, Quaternion.identity);
+        }
+
         if (hit_effect_prefab != null)
         {
             Instantiate(hit_effect_prefab, transform.position, Quaternion.identity);
@@ -71,3 +109,4 @@ public class SonarBatarangProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 }
+ 

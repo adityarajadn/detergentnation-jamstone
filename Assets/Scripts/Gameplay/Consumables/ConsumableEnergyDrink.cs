@@ -7,17 +7,14 @@ public class ConsumableEnergyDrink : ConsumableBase
 
     private void Reset()
     {
-        consumable_name = "Energy Drink";
-        price = 10;
+        consumable_name = GameConstants.EquipmentNames.ConsumableEnergyDrink;
         popup_label = "SPEED UP!";
-        popup_color = new Color(0.22f, 0.74f, 0.97f, 1f);
     }
 
     protected override void Awake()
     {
         base.Awake();
         if (string.IsNullOrEmpty(popup_label) || popup_label == "USED!") popup_label = "SPEED UP!";
-        if (popup_color == Color.white) popup_color = new Color(0.22f, 0.74f, 0.97f, 1f);
     }
 
     public override bool Use(PlayerCombat combat, Vector3 target_world_pos)

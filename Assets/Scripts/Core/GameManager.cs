@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public UnityEvent<string> on_jetpack_changed;
     public UnityEvent<string, int> on_consumable_equipped;
 
+    private bool is_dirty = false;
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void AutoLoad()
     {
@@ -44,14 +46,43 @@ public class GameManager : MonoBehaviour
         }
 
         instance = this;
+        ServiceLocator.Register<GameManager>(this);
         DontDestroyOnLoad(gameObject);
         LoadData();
+    }
+
+    private void OnDestroy()
+    {
+        FlushSave();
+        ServiceLocator.Unregister<GameManager>();
+        if (instance == this) instance = null;
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            FlushSave();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        FlushSave();
+    }
+
+    public void FlushSave()
+    {
+        if (is_dirty)
+        {
+            SaveData();
+        }
     }
 
     public void AddCandy(int amount)
     {
         candy_total += amount;
-        SaveData();
+        is_dirty = true;
         if (on_candy_changed != null)
         {
             on_candy_changed.Invoke(candy_total);
@@ -212,6 +243,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveData()
     {
+        is_dirty = false;
         PlayerPrefs.SetInt(GameConstants.PrefKeys.CandyTotal, candy_total);
         PlayerPrefs.SetInt(GameConstants.PrefKeys.UnlockedLevel, highest_unlocked_level);
         for (int i = 0; i < level_stars.Length; i++)

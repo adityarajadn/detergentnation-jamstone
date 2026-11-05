@@ -65,22 +65,22 @@ public class Projectile : MonoBehaviour
             {
                 if (is_enemy_projectile && (hits[i].CompareTag(GameConstants.Tags.Player) || hits[i].CompareTag(GameConstants.Tags.Minimarket) || hits[i].CompareTag(GameConstants.Tags.Defense)))
                 {
-                    Health target_health = hits[i].GetComponent<Health>();
-                    if (target_health != null) target_health.TakeDamage(damage);
+                    IDamageable target_damageable = hits[i].GetComponent<IDamageable>();
+                    if (target_damageable != null && !target_damageable.IsDead) target_damageable.TakeDamage(damage);
                 }
                 else if (!is_enemy_projectile && hits[i].CompareTag(GameConstants.Tags.Enemy))
                 {
-                    Health target_health = hits[i].GetComponent<Health>();
-                    if (target_health != null) target_health.TakeDamage(damage);
+                    IDamageable target_damageable = hits[i].GetComponent<IDamageable>();
+                    if (target_damageable != null && !target_damageable.IsDead) target_damageable.TakeDamage(damage);
                 }
             }
         }
         else
         {
-            Health health = target.GetComponent<Health>();
-            if (health != null)
+            IDamageable damageable = target.GetComponent<IDamageable>();
+            if (damageable != null && !damageable.IsDead)
             {
-                health.TakeDamage(damage);
+                damageable.TakeDamage(damage);
             }
         }
     }

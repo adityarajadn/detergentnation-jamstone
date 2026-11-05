@@ -22,12 +22,18 @@ public class LevelManager : MonoBehaviour
     public UnityEvent<int> on_victory; // stars earned
     public UnityEvent on_defeat;
 
-    private int restock_count = 0;
     private int stars_earned = 0;
 
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<LevelManager>(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<LevelManager>();
+        if (instance == this) instance = null;
     }
 
     private void Start()
@@ -57,12 +63,6 @@ public class LevelManager : MonoBehaviour
         }
 
         Health player_health = PlayerController.Instance != null ? PlayerController.Instance.GetComponent<Health>() : null;
-        if (player_health == null)
-        {
-            GameObject player = GameObject.FindGameObjectWithTag(GameConstants.Tags.Player);
-            if (player != null) player_health = player.GetComponent<Health>();
-        }
-
         if (player_health != null)
         {
             // Player death sequence will invoke OnLevelDefeat after animation and equipment fling finish
@@ -92,28 +92,15 @@ public class LevelManager : MonoBehaviour
         if (current_phase != GamePhase.Planning) return;
 
         SetPhase(GamePhase.Combat);
-        if (WaveManager.instance != null)
+        if (WaveManager.instance != null && !WaveManager.instance.is_running)
         {
-            if (!WaveManager.instance.is_running)
-            {
-                WaveManager.instance.StartWaves();
-            }
-            else
-            {
-                WaveManager.instance.SkipBreak();
-            }
+            WaveManager.instance.StartWaves();
         }
     }
 
     public void StartWaveBreak()
     {
-        if (current_phase == GamePhase.Victory || current_phase == GamePhase.Defeat) return;
-        SetPhase(GamePhase.Planning);
-    }
-
-    public void RegisterRestock()
-    {
-        restock_count++;
+        // Wave break happens within Combat phase; planning is only at level start
     }
 
     private void OnLevelVictory()

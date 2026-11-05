@@ -2,11 +2,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
-public class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour, IInteractable
 {
     [Header("Prompt Settings")]
     [SerializeField] private string action_label = "INTERACT";
     [SerializeField] private float interaction_radius = 2.5f;
+
+    public string ActionLabel => action_label;
+
+    public void OnInteract(PlayerCombat player)
+    {
+        player_combat = player;
+        TriggerInteract();
+    }
 
     [Header("Visual Reference (Assign from hierarchy)")]
     [SerializeField] private TMP_Text prompt_text;
@@ -18,12 +26,6 @@ public class Interactable : MonoBehaviour
     private PlayerCombat player_combat;
     private bool is_player_in_range = false;
     private Collider2D trigger_collider;
-
-    public TMP_Text PromptText
-    {
-        get => prompt_text;
-        set => prompt_text = value;
-    }
 
     private void Awake()
     {
@@ -73,9 +75,8 @@ public class Interactable : MonoBehaviour
                 return;
             }
 
-            Collider2D col = GetComponent<Collider2D>();
-            float distance = col != null
-                ? Vector2.Distance(col.ClosestPoint(player_transform.position), player_transform.position)
+            float distance = trigger_collider != null
+                ? Vector2.Distance(trigger_collider.ClosestPoint(player_transform.position), player_transform.position)
                 : Vector2.Distance(player_transform.position, transform.position);
 
             is_player_in_range = distance <= interaction_radius;
@@ -156,11 +157,6 @@ public class Interactable : MonoBehaviour
     {
         action_label = label;
         UpdatePromptText();
-    }
-
-    public void SetInteractionRadius(float radius)
-    {
-        interaction_radius = radius;
     }
 
     private void OnDisable()

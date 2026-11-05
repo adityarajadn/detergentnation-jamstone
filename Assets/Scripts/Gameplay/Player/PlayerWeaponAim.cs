@@ -8,8 +8,6 @@ public class PlayerWeaponAim : MonoBehaviour
     [SerializeField] private Transform visuals;
     [SerializeField] private float aim_deadzone = 0.25f;
 
-    // Backward compatibility property
-    public Transform weapon_mount { get => hand_mount; set => hand_mount = value; }
 
     private Camera main_camera;
     private PlayerController player_controller;
