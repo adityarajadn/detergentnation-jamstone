@@ -50,6 +50,21 @@ public class Pickup : MonoBehaviour
             {
                 AudioManager.PlaySFX(pickup_sound);
             }
+            else
+            {
+                if (pickup_type == PickupType.Candy)
+                {
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.PickupCandy);
+                }
+                else if (pickup_type == PickupType.HealthPoint)
+                {
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerHeal);
+                }
+                else if (pickup_type == PickupType.RepairPoint)
+                {
+                    AudioManager.PlaySFX(GameConstants.AudioKeys.Repair);
+                }
+            }
 
             if (pickup_type == PickupType.Candy)
             {

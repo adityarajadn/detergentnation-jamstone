@@ -177,6 +177,8 @@ public class PlayerCombat : MonoBehaviour
         if (ranged_weapon == null || active_ranged_comp == null) return;
         if (ammo_comp == null || !ammo_comp.CanShoot())
         {
+            AudioManager.PlaySFX(GameConstants.AudioKeys.GunEmpty);
+            next_fire_time = Time.time + (ranged_weapon.fire_rate * fire_rate_mod);
             if (ammo_comp != null && ammo_comp.ammo_carried <= 0 && ammo_comp.ammo_in_mag <= 0)
             {
                 NotificationToast.Show("Out of ammo! Restock at Minimarket!", ToastType.Warning);

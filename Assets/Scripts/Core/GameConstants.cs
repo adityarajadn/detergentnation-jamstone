@@ -111,6 +111,9 @@ public static class GameConstants
         public const string SwingStick = "swing_stick";
         public const string HitHammer = "hit_hammer";
         public const string HitStick = "hit_stick";
+        public const string PickupCandy = "pickup_candy";
+        public const string PlayerLand = "player_land";
+        public const string GunEmpty = "gun_empty";
     }
 
     public static class AnimParams

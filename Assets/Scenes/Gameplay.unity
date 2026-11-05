@@ -2153,6 +2153,15 @@ MonoBehaviour:
   - sound_id: jetpack
     clip: {fileID: 8300000, guid: 92a9298f86ad2e44b97d159096afc595, type: 3}
     volume: 1
+  - sound_id: pickup_candy
+    clip: {fileID: 8300000, guid: 91000e1f6ca90fc41bcbcdec745188d0, type: 3}
+    volume: 1
+  - sound_id: player_land
+    clip: {fileID: 8300000, guid: 937412632f2a21647a3f6268db6cdf17, type: 3}
+    volume: 1
+  - sound_id: gun_empty
+    clip: {fileID: 8300000, guid: 0a137567cd0d0a54783373b06b02adb8, type: 3}
+    volume: 1
 --- !u!4 &549139228
 Transform:
   m_ObjectHideFlags: 0

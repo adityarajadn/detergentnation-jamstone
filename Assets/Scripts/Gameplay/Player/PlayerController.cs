@@ -229,6 +229,10 @@ public class PlayerController : MonoBehaviour
         if (is_grounded && !was_grounded)
         {
             can_double_jump = CanDoubleJumpWithEquipment();
+            if (rb != null && rb.linearVelocity.y <= 0f && Time.timeSinceLevelLoad > 0.2f)
+            {
+                AudioManager.PlaySFX(GameConstants.AudioKeys.PlayerLand);
+            }
         }
     }
 
