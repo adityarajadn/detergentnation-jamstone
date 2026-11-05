@@ -18,6 +18,7 @@ public class Health : MonoBehaviour, IDamageable, IHealable
     public event Action<int, int> OnHealthChanged;
     public event Action OnDied;
     public event Action<int> OnDamageTaken;
+    public event Action<int> OnShieldChargesChanged;
 
     public UnityEvent<int, int> on_health_changed;
     public UnityEvent on_death;
@@ -36,6 +37,12 @@ public class Health : MonoBehaviour, IDamageable, IHealable
         equipped_armor = armor;
     }
 
+    public void SetShieldCharges(int charges)
+    {
+        shield_charges = Mathf.Max(0, charges);
+        OnShieldChargesChanged?.Invoke(shield_charges);
+    }
+
     public void TakeDamage(int amount)
     {
         if (is_dead || amount <= 0) return;
@@ -43,6 +50,7 @@ public class Health : MonoBehaviour, IDamageable, IHealable
         if (shield_charges > 0)
         {
             shield_charges--;
+            OnShieldChargesChanged?.Invoke(shield_charges);
             return;
         }
 
@@ -71,6 +79,11 @@ public class Health : MonoBehaviour, IDamageable, IHealable
         if (health_current <= 0)
         {
             is_dead = true;
+            if (shield_charges > 0)
+            {
+                shield_charges = 0;
+                OnShieldChargesChanged?.Invoke(0);
+            }
             OnDied?.Invoke();
             if (on_death != null)
             {

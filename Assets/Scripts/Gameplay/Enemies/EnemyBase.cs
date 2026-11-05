@@ -24,6 +24,9 @@ public class EnemyBase : MonoBehaviour
     protected bool is_attacking = false;
     protected bool is_stunned = false;
     protected float stun_timer = 0f;
+    private GameObject active_stun_effect_instance;
+
+    public bool IsDead => health != null && health.is_dead;
 
     protected virtual void Awake()
     {
@@ -85,6 +88,7 @@ public class EnemyBase : MonoBehaviour
             if (stun_timer <= 0f)
             {
                 is_stunned = false;
+                RemoveStunEffect();
             }
             return;
         }
@@ -207,6 +211,29 @@ public class EnemyBase : MonoBehaviour
         is_stunned = true;
         stun_timer = Mathf.Max(stun_timer, duration);
         if (rb != null) rb.linearVelocity = Vector2.zero;
+        SpawnStunEffect();
+    }
+
+    private void SpawnStunEffect()
+    {
+        if (active_stun_effect_instance == null)
+        {
+            GameObject stunPrefab = Resources.Load<GameObject>("Effects/FX_StunStars");
+            if (stunPrefab != null)
+            {
+                active_stun_effect_instance = Instantiate(stunPrefab, transform);
+                active_stun_effect_instance.transform.localPosition = new Vector3(0f, 0.75f, 0f);
+            }
+        }
+    }
+
+    private void RemoveStunEffect()
+    {
+        if (active_stun_effect_instance != null)
+        {
+            Destroy(active_stun_effect_instance);
+            active_stun_effect_instance = null;
+        }
     }
 
     protected virtual void MoveTowardsTarget()
@@ -328,6 +355,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnDeath()
     {
+        RemoveStunEffect();
         AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyDeath);
         OnDied?.Invoke(this);
         OnAnyEnemyDied?.Invoke(this);

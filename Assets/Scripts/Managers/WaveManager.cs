@@ -153,11 +153,6 @@ public class WaveManager : MonoBehaviour
         is_in_break = true;
         skip_break_requested = false;
 
-        if (LevelManager.instance != null)
-        {
-            LevelManager.instance.StartWaveBreak();
-        }
-
         AudioManager.PlaySFX(GameConstants.AudioKeys.VictorySmall);
         NotificationToast.Show("Wave Cleared! Break Time: Restock & Repair!", ToastType.Success);
 
@@ -176,11 +171,6 @@ public class WaveManager : MonoBehaviour
 
         is_in_break = false;
         skip_break_requested = false;
-
-        if (LevelManager.instance != null)
-        {
-            LevelManager.instance.StartCombatPhase();
-        }
     }
 
     private void SpawnEnemy(EnemyData data, SpawnLocation location)

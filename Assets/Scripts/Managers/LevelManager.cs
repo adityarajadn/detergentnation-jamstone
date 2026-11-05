@@ -92,23 +92,15 @@ public class LevelManager : MonoBehaviour
         if (current_phase != GamePhase.Planning) return;
 
         SetPhase(GamePhase.Combat);
-        if (WaveManager.instance != null)
+        if (WaveManager.instance != null && !WaveManager.instance.is_running)
         {
-            if (!WaveManager.instance.is_running)
-            {
-                WaveManager.instance.StartWaves();
-            }
-            else
-            {
-                WaveManager.instance.SkipBreak();
-            }
+            WaveManager.instance.StartWaves();
         }
     }
 
     public void StartWaveBreak()
     {
-        if (current_phase == GamePhase.Victory || current_phase == GamePhase.Defeat) return;
-        SetPhase(GamePhase.Planning);
+        // Wave break happens within Combat phase; planning is only at level start
     }
 
     private void OnLevelVictory()

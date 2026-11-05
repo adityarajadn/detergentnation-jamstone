@@ -22,7 +22,7 @@ public class ConsumableSoapWaterBucket : ConsumableBase
         Health hp = combat.GetComponent<Health>();
         if (hp == null) return false;
 
-        hp.shield_charges = shield_charges;
+        hp.SetShieldCharges(shield_charges);
         return true;
     }
 }
