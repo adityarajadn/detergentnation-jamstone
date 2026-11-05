@@ -27,10 +27,12 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<LevelManager>(this);
     }
 
     private void OnDestroy()
     {
+        ServiceLocator.Unregister<LevelManager>();
         if (instance == this) instance = null;
     }
 

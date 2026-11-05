@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         Instance = this;
+        ServiceLocator.Register<PlayerController>(this);
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -75,6 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
+        ServiceLocator.Unregister<PlayerController>();
         if (Instance == this) Instance = null;
     }
 
@@ -176,11 +178,11 @@ public class PlayerController : MonoBehaviour
         {
             if (is_grounded)
             {
-                float boost = active_jetpack != null ? active_jetpack.GetJumpForceMultiplier() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride ? joyride_speed_multiplier : (equipped_jetpack == GameConstants.EquipmentNames.JetpackVengeance ? vengeance_speed_multiplier : 1f));
+                float boost = GetJumpBoostMultiplier();
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * boost);
-                can_double_jump = active_jetpack != null ? active_jetpack.AllowsDoubleJump() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
+                can_double_jump = CanDoubleJumpWithEquipment();
             }
-            else if (can_double_jump && (active_jetpack != null ? active_jetpack.AllowsDoubleJump() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride)))
+            else if (can_double_jump && CanDoubleJumpWithEquipment())
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * 1.05f);
                 can_double_jump = false;
@@ -218,8 +220,18 @@ public class PlayerController : MonoBehaviour
 
         if (is_grounded && !was_grounded)
         {
-            can_double_jump = active_jetpack != null ? active_jetpack.AllowsDoubleJump() : (equipped_jetpack == GameConstants.EquipmentNames.JetpackJoyride);
+            can_double_jump = CanDoubleJumpWithEquipment();
         }
+    }
+
+    private float GetJumpBoostMultiplier()
+    {
+        return active_jetpack != null ? active_jetpack.GetJumpForceMultiplier() : 1f;
+    }
+
+    private bool CanDoubleJumpWithEquipment()
+    {
+        return active_jetpack != null && active_jetpack.AllowsDoubleJump();
     }
 
     private void ApplyMovement()

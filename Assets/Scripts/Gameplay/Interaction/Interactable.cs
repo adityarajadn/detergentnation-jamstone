@@ -2,11 +2,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
-public class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour, IInteractable
 {
     [Header("Prompt Settings")]
     [SerializeField] private string action_label = "INTERACT";
     [SerializeField] private float interaction_radius = 2.5f;
+
+    public string ActionLabel => action_label;
+
+    public void OnInteract(PlayerCombat player)
+    {
+        player_combat = player;
+        TriggerInteract();
+    }
 
     [Header("Visual Reference (Assign from hierarchy)")]
     [SerializeField] private TMP_Text prompt_text;

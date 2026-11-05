@@ -2,13 +2,22 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IDamageable, IHealable
 {
     public int health_max = 100;
     public int health_current;
     public int shield_charges = 0;
     public bool is_dead = false;
     public ArmorBase equipped_armor;
+
+    public bool IsDead => is_dead;
+    public int CurrentHealth => health_current;
+    public int MaxHealth => health_max;
+
+    // Observer events (fast C# Actions & UnityEvents)
+    public event Action<int, int> OnHealthChanged;
+    public event Action OnDied;
+    public event Action<int> OnDamageTaken;
 
     public UnityEvent<int, int> on_health_changed;
     public UnityEvent on_death;
@@ -46,11 +55,14 @@ public class Health : MonoBehaviour
         health_current -= amount;
         if (health_current < 0) health_current = 0;
 
+        OnDamageTaken?.Invoke(amount);
+
         if (GetComponent<EnemyBase>() != null || CompareTag(GameConstants.Tags.Enemy))
         {
             DamagePopup.Spawn(transform.position + Vector3.up * 0.5f, amount);
         }
 
+        OnHealthChanged?.Invoke(health_current, health_max);
         if (on_health_changed != null)
         {
             on_health_changed.Invoke(health_current, health_max);
@@ -59,6 +71,7 @@ public class Health : MonoBehaviour
         if (health_current <= 0)
         {
             is_dead = true;
+            OnDied?.Invoke();
             if (on_death != null)
             {
                 on_death.Invoke();
@@ -73,6 +86,7 @@ public class Health : MonoBehaviour
         health_current += amount;
         if (health_current > health_max) health_current = health_max;
 
+        OnHealthChanged?.Invoke(health_current, health_max);
         if (on_health_changed != null)
         {
             on_health_changed.Invoke(health_current, health_max);
@@ -91,6 +105,7 @@ public class Health : MonoBehaviour
             health_current = health_max;
         }
 
+        OnHealthChanged?.Invoke(health_current, health_max);
         if (on_health_changed != null)
         {
             on_health_changed.Invoke(health_current, health_max);

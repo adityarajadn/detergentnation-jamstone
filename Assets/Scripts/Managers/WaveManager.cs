@@ -34,10 +34,22 @@ public class WaveManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<WaveManager>(this);
+    }
+
+    private void OnEnable()
+    {
+        EnemyBase.OnAnyEnemyDied += OnEnemyKilled;
+    }
+
+    private void OnDisable()
+    {
+        EnemyBase.OnAnyEnemyDied -= OnEnemyKilled;
     }
 
     private void OnDestroy()
     {
+        ServiceLocator.Unregister<WaveManager>();
         if (instance == this) instance = null;
     }
 

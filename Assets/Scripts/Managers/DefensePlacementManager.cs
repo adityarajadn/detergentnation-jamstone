@@ -16,10 +16,12 @@ public class DefensePlacementManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<DefensePlacementManager>(this);
     }
 
     private void OnDestroy()
     {
+        ServiceLocator.Unregister<DefensePlacementManager>();
         if (instance == this) instance = null;
     }
 

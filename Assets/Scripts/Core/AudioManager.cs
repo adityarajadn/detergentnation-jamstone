@@ -31,10 +31,17 @@ public class AudioManager : MonoBehaviour
         }
 
         instance = this;
+        ServiceLocator.Register<AudioManager>(this);
         DontDestroyOnLoad(gameObject);
 
         BuildSoundMap();
         LoadVolumeSettings();
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<AudioManager>();
+        if (instance == this) instance = null;
     }
 
     public void LoadVolumeSettings()

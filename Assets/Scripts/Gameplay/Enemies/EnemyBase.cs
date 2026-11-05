@@ -14,6 +14,9 @@ public class EnemyBase : MonoBehaviour
     protected Health health;
     protected Rigidbody2D rb;
 
+    public static event System.Action<EnemyBase> OnAnyEnemyDied;
+    public event System.Action<EnemyBase> OnDied;
+
     protected Transform target_transform;
     protected Health target_health;
     protected Transform player_target;
@@ -326,20 +329,8 @@ public class EnemyBase : MonoBehaviour
     protected virtual void OnDeath()
     {
         AudioManager.PlaySFX(GameConstants.AudioKeys.EnemyDeath);
-        if (KillStreakManager.instance != null)
-        {
-            KillStreakManager.instance.RegisterKill();
-        }
-
-        if (DropSystem.instance != null && enemy_data != null)
-        {
-            DropSystem.instance.SpawnDrops(transform.position, enemy_data);
-        }
-
-        if (WaveManager.instance != null)
-        {
-            WaveManager.instance.OnEnemyKilled(this);
-        }
+        OnDied?.Invoke(this);
+        OnAnyEnemyDied?.Invoke(this);
 
         if (rb != null)
         {

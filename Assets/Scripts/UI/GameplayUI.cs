@@ -96,6 +96,7 @@ public class GameplayUI : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        ServiceLocator.Register<GameplayUI>(this);
         BuildViews();
     }
 
@@ -194,6 +195,7 @@ public class GameplayUI : MonoBehaviour
         streak_tween?.Kill();
         streak_tween = null;
         if (pause_menu != null) pause_menu.Unbind();
+        ServiceLocator.Unregister<GameplayUI>();
         if (Instance == this) Instance = null;
         Time.timeScale = 1f;
     }

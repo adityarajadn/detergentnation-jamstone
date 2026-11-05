@@ -34,6 +34,22 @@ public class KillStreakManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<KillStreakManager>(this);
+    }
+
+    private void OnEnable()
+    {
+        EnemyBase.OnAnyEnemyDied += HandleEnemyDied;
+    }
+
+    private void OnDisable()
+    {
+        EnemyBase.OnAnyEnemyDied -= HandleEnemyDied;
+    }
+
+    private void HandleEnemyDied(EnemyBase enemy)
+    {
+        RegisterKill();
     }
 
     private void Start()
@@ -51,6 +67,7 @@ public class KillStreakManager : MonoBehaviour
         {
             cached_player_health.on_health_changed.RemoveListener(OnPlayerHealthChanged);
         }
+        ServiceLocator.Unregister<KillStreakManager>();
         if (instance == this) instance = null;
     }
 

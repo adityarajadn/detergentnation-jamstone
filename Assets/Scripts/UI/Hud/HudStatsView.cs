@@ -34,6 +34,18 @@ public class HudStatsView
     private PlayerAmmo player_ammo;
     private Health player_health;
 
+    private int last_hp = -1;
+    private int last_max_hp = -1;
+    private int last_candy = -1;
+    private int last_repair = -1;
+    private string last_ammo_str = null;
+    private int last_c1_count = -1;
+    private int last_c2_count = -1;
+    private string last_c1_name = null;
+    private string last_c2_name = null;
+    private int last_market_hp = -1;
+    private int last_market_max_hp = -1;
+
     public void Tick()
     {
         UpdatePlayerUI();
@@ -67,38 +79,49 @@ public class HudStatsView
             return;
         }
 
-        if (player_health_slider != null)
+        if (player_health_slider != null && (player_health.health_current != last_hp || player_health.health_max != last_max_hp))
         {
-            player_health_slider.maxValue = player_health.health_max;
-            player_health_slider.value = player_health.health_current;
+            last_hp = player_health.health_current;
+            last_max_hp = player_health.health_max;
+            player_health_slider.maxValue = last_max_hp;
+            player_health_slider.value = last_hp;
         }
 
         if (ammo_text != null)
         {
+            string current_ammo;
             if (player_combat.active_weapon != null)
             {
-                ammo_text.text = player_combat.active_weapon.GetAmmoDisplayText(player_ammo);
+                current_ammo = player_combat.active_weapon.GetAmmoDisplayText(player_ammo);
             }
             else if (player_combat.active_weapon_type == WeaponType.Melee)
             {
-                ammo_text.text = player_combat.melee_weapon != null ? player_combat.melee_weapon.weapon_name : "MELEE";
+                current_ammo = player_combat.melee_weapon != null ? player_combat.melee_weapon.weapon_name : "MELEE";
             }
             else
             {
                 int inMag = player_ammo != null ? player_ammo.ammo_in_mag : 0;
                 int carried = player_ammo != null ? player_ammo.ammo_carried : 0;
-                ammo_text.text = inMag + " / " + carried;
+                current_ammo = inMag + " / " + carried;
+            }
+
+            if (current_ammo != last_ammo_str)
+            {
+                last_ammo_str = current_ammo;
+                ammo_text.text = current_ammo;
             }
         }
 
-        if (candy_text != null && GameManager.instance != null)
+        if (candy_text != null && GameManager.instance != null && GameManager.instance.candy_total != last_candy)
         {
-            candy_text.text = GameManager.instance.candy_total.ToString();
+            last_candy = GameManager.instance.candy_total;
+            candy_text.text = last_candy.ToString();
         }
 
-        if (repair_points_text != null)
+        if (repair_points_text != null && player_combat.repair_points != last_repair)
         {
-            repair_points_text.text = player_combat.repair_points.ToString();
+            last_repair = player_combat.repair_points;
+            repair_points_text.text = last_repair.ToString();
         }
 
         UpdateConsumableUI();
@@ -114,30 +137,33 @@ public class HudStatsView
         int c1_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c1_name) : 0;
         int c2_count = GameManager.instance != null ? GameManager.instance.GetConsumableCount(c2_name) : 0;
 
-        if (consumable_slot1_text != null)
+        if (consumable_slot1_text != null && c1_count != last_c1_count)
         {
+            last_c1_count = c1_count;
             consumable_slot1_text.text = c1_count.ToString();
         }
 
-        if (consumable_slot2_text != null)
+        if (consumable_slot2_text != null && c2_count != last_c2_count)
         {
+            last_c2_count = c2_count;
             consumable_slot2_text.text = c2_count.ToString();
         }
 
-        if (consumable_slot1_icon != null)
+        if (consumable_slot1_icon != null && c1_name != last_c1_name)
         {
+            last_c1_name = c1_name;
             Sprite s1 = GetConsumableSprite(c1_name);
             consumable_slot1_icon.sprite = s1;
             consumable_slot1_icon.enabled = s1 != null;
         }
 
-        if (consumable_slot2_icon != null)
+        if (consumable_slot2_icon != null && c2_name != last_c2_name)
         {
+            last_c2_name = c2_name;
             Sprite s2 = GetConsumableSprite(c2_name);
             consumable_slot2_icon.sprite = s2;
             consumable_slot2_icon.enabled = s2 != null;
         }
-
     }
 
     public Sprite GetConsumableSprite(string itemName)
@@ -159,8 +185,13 @@ public class HudStatsView
     {
         if (Minimarket.instance != null && Minimarket.instance.health != null && minimarket_health_slider != null)
         {
-            minimarket_health_slider.maxValue = Minimarket.instance.health.health_max;
-            minimarket_health_slider.value = Minimarket.instance.health.health_current;
+            if (Minimarket.instance.health.health_current != last_market_hp || Minimarket.instance.health.health_max != last_market_max_hp)
+            {
+                last_market_hp = Minimarket.instance.health.health_current;
+                last_market_max_hp = Minimarket.instance.health.health_max;
+                minimarket_health_slider.maxValue = last_market_max_hp;
+                minimarket_health_slider.value = last_market_hp;
+            }
         }
     }
 }

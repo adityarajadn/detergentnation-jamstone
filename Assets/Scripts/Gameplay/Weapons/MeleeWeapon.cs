@@ -44,12 +44,12 @@ public class MeleeWeapon : WeaponBase
 
         if (!isEnemy) return;
 
-        Health hp = enemy_col.GetComponent<Health>();
-        if (hp == null) hp = enemy_col.GetComponentInParent<Health>();
+        IDamageable damageable = enemy_col.GetComponent<IDamageable>();
+        if (damageable == null) damageable = enemy_col.GetComponentInParent<IDamageable>();
 
-        if (hp != null && !hp.is_dead)
+        if (damageable != null && !damageable.IsDead)
         {
-            hp.TakeDamage(damage);
+            damageable.TakeDamage(damage);
             string hitSound = GameConstants.AudioKeys.HitImelda;
             if (weapon_data != null)
             {

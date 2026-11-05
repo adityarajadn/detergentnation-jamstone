@@ -1,10 +1,17 @@
 using UnityEngine;
 
-public class DefensePlacementSlot : MonoBehaviour
+public class DefensePlacementSlot : MonoBehaviour, IInteractable
 {
     public Transform spawn_point;
     public GameObject current_defense_instance;
     public DefenseData current_defense_data;
+
+    public string ActionLabel => HasDefense() ? "REMOVE DEFENSE" : "PLACE DEFENSE";
+
+    public void OnInteract(PlayerCombat player)
+    {
+        HandleInteraction();
+    }
 
     private SpriteRenderer indicator;
     private Collider2D slot_collider;
@@ -60,8 +67,7 @@ public class DefensePlacementSlot : MonoBehaviour
 
     private void Update()
     {
-        UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
-        if (kb != null && kb.eKey.wasPressedThisFrame)
+        if (KeybindManager.WasPressedThisFrame(KeyAction.Interact))
         {
             PlayerController pc = PlayerController.Instance;
             if (pc != null && Vector2.Distance(pc.transform.position, transform.position) <= 2.2f)

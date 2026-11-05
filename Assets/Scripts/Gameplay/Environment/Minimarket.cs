@@ -19,6 +19,7 @@ public class Minimarket : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        ServiceLocator.Register<Minimarket>(this);
         if (health == null) health = GetComponent<Health>();
         if (health != null)
         {
@@ -118,6 +119,7 @@ public class Minimarket : MonoBehaviour
 
     private void OnDestroy()
     {
+        ServiceLocator.Unregister<Minimarket>();
         if (instance == this) instance = null;
     }
 

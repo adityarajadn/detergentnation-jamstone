@@ -56,6 +56,7 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
         Instance = this;
+        ServiceLocator.Register<PlayerCombat>(this);
 
         weapon_aim = GetComponent<PlayerWeaponAim>();
         ammo_comp = GetComponent<PlayerAmmo>();
@@ -329,5 +330,11 @@ public class PlayerCombat : MonoBehaviour
             Transform mp = current_weapon_instance.transform.Find("MeleePoint");
             if (mp != null) melee_point = mp;
         }
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Unregister<PlayerCombat>();
+        if (Instance == this) Instance = null;
     }
 }
