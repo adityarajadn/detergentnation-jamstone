@@ -15,6 +15,26 @@ public class DefenseObject : MonoBehaviour
     protected GameObject visuals_container;
     public System.Action on_destroyed;
 
+    protected FacingDirection facing_direction = FacingDirection.Right;
+
+    public virtual void SetFacingDirection(FacingDirection direction)
+    {
+        facing_direction = direction;
+        ApplyFacingDirection(direction == FacingDirection.Left);
+    }
+
+    protected virtual void ApplyFacingDirection(bool flip_x)
+    {
+        if (visuals_container != null)
+        {
+            SpriteRenderer sr = visuals_container.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.flipX = flip_x;
+            }
+        }
+    }
+
     protected virtual void Awake()
     {
         health = GetComponent<Health>();

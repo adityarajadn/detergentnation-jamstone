@@ -1,7 +1,19 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+
+public enum FacingDirection
+{
+    Right,
+    Left
+}
 
 public class DefensePlacementSlot : MonoBehaviour, IInteractable
 {
+    [Header("Placement Orientation")]
+    [SerializeField] private FacingDirection slot_direction = FacingDirection.Right;
+    public FacingDirection SlotDirection => slot_direction;
+
     public Transform spawn_point;
     public GameObject current_defense_instance;
     public DefenseData current_defense_data;
@@ -16,6 +28,10 @@ public class DefensePlacementSlot : MonoBehaviour, IInteractable
     private SpriteRenderer indicator;
     private Collider2D slot_collider;
 
+    private readonly Color normal_color = new Color(0.2f, 0.7f, 1f, 0.5f);
+    private readonly Color hover_color = new Color(1f, 0.95f, 0.3f, 0.85f);
+    private bool is_hovered = false;
+
     private void Awake()
     {
         indicator = GetComponent<SpriteRenderer>();
@@ -25,6 +41,11 @@ public class DefensePlacementSlot : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        if (indicator != null)
+        {
+            indicator.color = normal_color;
+        }
+
         if (LevelManager.instance != null)
         {
             LevelManager.instance.on_phase_changed.AddListener(OnPhaseChanged);
@@ -57,28 +78,98 @@ public class DefensePlacementSlot : MonoBehaviour, IInteractable
         if (indicator != null)
         {
             indicator.enabled = should_show;
+            indicator.color = normal_color;
         }
 
         if (slot_collider != null)
         {
             slot_collider.enabled = should_show;
         }
+
+        is_hovered = false;
     }
 
     private void Update()
     {
+        if (LevelManager.instance != null && LevelManager.instance.current_phase != GamePhase.Planning)
+        {
+            return;
+        }
+
+        HandleMouseDetection();
+        HandleKeyboardInteraction();
+    }
+
+    private void HandleKeyboardInteraction()
+    {
         if (KeybindManager.WasPressedThisFrame(KeyAction.Interact))
         {
             PlayerController pc = PlayerController.Instance;
-            if (pc != null && Vector2.Distance(pc.transform.position, transform.position) <= 2.2f)
+            if (pc != null && Vector2.Distance(pc.transform.position, transform.position) <= 2.5f)
             {
                 HandleInteraction();
             }
         }
     }
 
+    private void HandleMouseDetection()
+    {
+        if (slot_collider == null || !slot_collider.enabled) return;
+
+        Camera cam = Camera.main;
+        if (cam == null) return;
+
+        Vector2 mouse_pos = Mouse.current != null ? Mouse.current.position.ReadValue() : (Vector2)Input.mousePosition;
+        Vector2 world_pos = cam.ScreenToWorldPoint(mouse_pos);
+
+        bool pointer_over_slot = slot_collider.OverlapPoint(world_pos);
+
+        // Check if pointer is blocked by UI
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            pointer_over_slot = false;
+        }
+
+        if (pointer_over_slot != is_hovered)
+        {
+            is_hovered = pointer_over_slot;
+            if (indicator != null)
+            {
+                indicator.color = is_hovered ? hover_color : normal_color;
+            }
+        }
+
+        bool mouse_clicked = (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            || Input.GetMouseButtonDown(0);
+
+        if (is_hovered && mouse_clicked)
+        {
+            HandleInteraction();
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        if (slot_collider != null && slot_collider.enabled)
+        {
+            is_hovered = true;
+            if (indicator != null) indicator.color = hover_color;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        is_hovered = false;
+        if (indicator != null) indicator.color = normal_color;
+    }
+
     private void OnMouseDown()
     {
+        // Fallback for Unity's built-in click
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         HandleInteraction();
     }
 
@@ -138,6 +229,7 @@ public class DefensePlacementSlot : MonoBehaviour, IInteractable
                 DefenseObject def_obj = obj.GetComponent<DefenseObject>();
                 if (def_obj != null)
                 {
+                    def_obj.SetFacingDirection(slot_direction);
                     def_obj.on_destroyed += OnPlacedDefenseDestroyed;
                 }
 

@@ -19,5 +19,5 @@ MonoBehaviour:
   damage: 30
   attack_range: 5
   prefab: {fileID: 8019755350357960268, guid: e31b5572615f4f042b2a93c2ff9ac4aa, type: 3}
-  icon: {fileID: 0}
+  icon: {fileID: 917334417918013833, guid: 13751ad3bc6034b41a433eded49af64c, type: 3}
   place_sound_key: 

@@ -50,12 +50,19 @@ public class DefenseRollingBarrel : DefenseObject
         ReleaseBarrel();
     }
 
+    public override void SetFacingDirection(FacingDirection direction)
+    {
+        base.SetFacingDirection(direction);
+        roll_direction = direction == FacingDirection.Left ? -1f : 1f;
+    }
+
     public void ReleaseBarrel()
     {
         if (is_rolling) return;
         is_rolling = true;
         AudioManager.PlaySFX(GameConstants.AudioKeys.BarrelRoll);
-        roll_direction = transform.position.x < 0 ? -1f : 1f;
+        if (facing_direction == FacingDirection.Left) roll_direction = -1f;
+        else if (facing_direction == FacingDirection.Right) roll_direction = 1f;
         HidePrompt();
         StartRolling();
         Destroy(gameObject, RollLifetimeSeconds);

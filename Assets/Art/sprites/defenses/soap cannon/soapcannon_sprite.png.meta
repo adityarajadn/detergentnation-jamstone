@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 4f7e43fa88872904fb58eff6febd1bca
+guid: 13751ad3bc6034b41a433eded49af64c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8033561105798181356
-    second: soap_cannon_0
+      213: 5668318385909005091
+    second: soapcannon_sprite_0
+  - first:
+      213: 917334417918013833
+    second: soapcannon_icon
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: soap_cannon_0
+      name: soapcannon_sprite_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 35
-        height: 24
+        width: 112
+        height: 112
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 41e4187ecbe038090800000000000000
-      internalID: -8033561105798181356
+      spriteID: 32bfbe93a89e9ae40800000000000000
+      internalID: 5668318385909005091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: soapcannon_icon
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 31
+        width: 51
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9813e38fac60bbc00800000000000000
+      internalID: 917334417918013833
       vertices: []
       indices: 
       edges: []
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      soap_cannon_0: -8033561105798181356
+      soapcannon_icon: 917334417918013833
+      soapcannon_sprite_0: 5668318385909005091
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
