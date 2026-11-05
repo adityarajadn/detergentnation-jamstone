@@ -12,6 +12,7 @@ public class DefensePlacementManager : MonoBehaviour
     public DefenseData selected_defense;
     public bool is_refund_mode = false;
     public UnityEvent<int, int> on_points_changed;
+    public UnityEvent<DefenseData, bool> on_selection_changed = new UnityEvent<DefenseData, bool>();
 
     private void Awake()
     {
@@ -35,6 +36,11 @@ public class DefensePlacementManager : MonoBehaviour
         UnityEngine.InputSystem.Keyboard kb = UnityEngine.InputSystem.Keyboard.current;
         if (kb == null) return;
 
+        if ((kb.digit1Key.wasPressedThisFrame || kb.numpad1Key.wasPressedThisFrame) && available_defenses.Count > 0) SelectDefense(available_defenses[0]);
+        if ((kb.digit2Key.wasPressedThisFrame || kb.numpad2Key.wasPressedThisFrame) && available_defenses.Count > 1) SelectDefense(available_defenses[1]);
+        if ((kb.digit3Key.wasPressedThisFrame || kb.numpad3Key.wasPressedThisFrame) && available_defenses.Count > 2) SelectDefense(available_defenses[2]);
+        if ((kb.digit4Key.wasPressedThisFrame || kb.numpad4Key.wasPressedThisFrame) && available_defenses.Count > 3) SelectDefense(available_defenses[3]);
+
         if (kb.xKey.wasPressedThisFrame) ToggleRefundMode();
         if (kb.escapeKey.wasPressedThisFrame) ClearSelection();
     }
@@ -48,17 +54,31 @@ public class DefensePlacementManager : MonoBehaviour
         }
 
         selected_defense = data;
-        is_refund_mode = false;    }
+        is_refund_mode = false;
+        NotifySelectionChanged();
+    }
 
     public void ToggleRefundMode()
     {
         is_refund_mode = !is_refund_mode;
-        if (is_refund_mode) selected_defense = null;    }
+        if (is_refund_mode) selected_defense = null;
+        NotifySelectionChanged();
+    }
 
     public void ClearSelection()
     {
         selected_defense = null;
-        is_refund_mode = false;    }
+        is_refund_mode = false;
+        NotifySelectionChanged();
+    }
+
+    private void NotifySelectionChanged()
+    {
+        if (on_selection_changed != null)
+        {
+            on_selection_changed.Invoke(selected_defense, is_refund_mode);
+        }
+    }
 
     public void InitPoints(int starting_points)
     {
@@ -98,6 +118,15 @@ public class DefensePlacementManager : MonoBehaviour
         if (on_points_changed != null)
         {
             on_points_changed.Invoke(defense_points_current, defense_points_max);
+        }
+
+        if (selected_defense != null && !CanAfford(selected_defense))
+        {
+            ClearSelection();
+        }
+        else
+        {
+            NotifySelectionChanged();
         }
 
         return obj;

@@ -27,4 +27,6 @@ public class JetpackBase : MonoBehaviour
     }
 
     public virtual void HandleGliding(Rigidbody2D rb, bool is_grounded) { }
+
+    public virtual void OnJumpTriggered() { }
 }

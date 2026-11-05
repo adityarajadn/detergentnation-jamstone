@@ -7,11 +7,33 @@ public class DefenseRollingBarrel : DefenseObject
 
     [SerializeField] private float roll_speed = 9f;
     [SerializeField] private GameObject explosion_effect_prefab;
+    [SerializeField] private Animator roll_animator;
+    [SerializeField] private Rigidbody2D rb;
 
     private bool is_rolling = false;
     private float roll_direction = 1f;
     private Tween move_tween;
     private Tween spin_tween;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        if (roll_animator == null && visuals_container != null)
+        {
+            roll_animator = visuals_container.GetComponent<Animator>();
+        }
+        if (roll_animator != null)
+        {
+            roll_animator.enabled = false;
+        }
+    }
 
     protected override bool CanInteract()
     {
@@ -43,18 +65,49 @@ public class DefenseRollingBarrel : DefenseObject
     {
         KillTweens();
 
-        // Linear travel along X for the barrel's whole lifetime
-        float travel = roll_direction * roll_speed * RollLifetimeSeconds;
-        move_tween = transform.DOMoveX(transform.position.x + travel, RollLifetimeSeconds).SetEase(Ease.Linear);
-
-        // One full turn per second, looping
-        if (visuals_container != null)
+        if (rb != null)
         {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = 3f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.linearVelocity = new Vector2(roll_direction * roll_speed, rb.linearVelocity.y);
+        }
+        else
+        {
+            // Linear travel along X for the barrel's whole lifetime
+            float travel = roll_direction * roll_speed * RollLifetimeSeconds;
+            move_tween = transform.DOMoveX(transform.position.x + travel, RollLifetimeSeconds).SetEase(Ease.Linear);
+        }
+
+        if (roll_animator != null)
+        {
+            roll_animator.enabled = true;
+        }
+        else if (visuals_container != null)
+        {
+            // One full turn per second, looping fallback
             spin_tween = visuals_container.transform
                 .DOLocalRotate(new Vector3(0f, 0f, -roll_direction * 360f), 1f, RotateMode.FastBeyond360)
                 .SetRelative()
                 .SetEase(Ease.Linear)
                 .SetLoops(-1, LoopType.Incremental);
+        }
+
+        if (visuals_container != null)
+        {
+            SpriteRenderer sr = visuals_container.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.flipX = roll_direction < 0f;
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (is_rolling && rb != null && rb.bodyType == RigidbodyType2D.Dynamic)
+        {
+            rb.linearVelocity = new Vector2(roll_direction * roll_speed, rb.linearVelocity.y);
         }
     }
 
@@ -80,6 +133,14 @@ public class DefenseRollingBarrel : DefenseObject
         if (is_rolling) return;
 
         base.Update();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (is_rolling && collision.gameObject.CompareTag(GameConstants.Tags.Enemy))
+        {
+            ExplodeBarrel();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

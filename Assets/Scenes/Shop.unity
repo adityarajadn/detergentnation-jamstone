@@ -5828,7 +5828,6 @@ MonoBehaviour:
     price: 0
     description: Senjata pukul awal standar dengan ayunan cepat dan knockback ringan.
     preview_sprite: {fileID: -792859449625526860, guid: a84423f87899ca24cae6e772eb13a17b, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 546118750}
     expand_panel: {fileID: 1947613924}
@@ -5852,7 +5851,6 @@ MonoBehaviour:
     description: Palu sabun berat berdaya hancur tinggi, knockback besar, serta berpeluang
       memberi efek stun.
     preview_sprite: {fileID: 8139947380414667663, guid: 1520277e6016ce2428705384792f1441, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 62601152}
     expand_panel: {fileID: 1176864761}
@@ -5876,7 +5874,6 @@ MonoBehaviour:
     description: Mace spons bersudut ayun lebar, optimal membersihkan musuh di area
       sekeliling.
     preview_sprite: {fileID: -4407156738309008878, guid: 9a82bdddd63331949a5458d0a637a90f, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1669574687}
     expand_panel: {fileID: 358849761}
@@ -5900,7 +5897,6 @@ MonoBehaviour:
     description: Pedang terkutuk berdaya serang dahsyat yang menyerap sedikit darah
       musuh (lifesteal) saat menebas.
     preview_sprite: {fileID: 9010560868807495507, guid: 6ba6d5bc3aded7c4b8f161aa88e0da9c, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1294591252}
     expand_panel: {fileID: 766574568}
@@ -5923,7 +5919,6 @@ MonoBehaviour:
     price: 0
     description: Senjata awal standar berakurasi tinggi dengan tembakan air cepat.
     preview_sprite: {fileID: -6768715193755453775, guid: 045e5d184f50d8f4382a6cda951c2c53, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 521338319}
     expand_panel: {fileID: 976811482}
@@ -5963,7 +5958,6 @@ MonoBehaviour:
     description: Tembakan cepat burst 3 peluru, sangat efektif menghalau kerumunan
       musuh.
     preview_sprite: {fileID: 8609919863068727619, guid: 4b659eb4244014c43bf58955cb8283c3, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1405980843}
     expand_panel: {fileID: 1293093371}
@@ -6003,7 +5997,6 @@ MonoBehaviour:
     description: Menembakkan bola plasma berdaya rusak tinggi yang menembus banyak
       musuh sekaligus.
     preview_sprite: {fileID: 4678784114830581866, guid: 4689753d69a638841b48ceda54f1b2d3, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 360880881}
     expand_panel: {fileID: 25819315}
@@ -6043,7 +6036,6 @@ MonoBehaviour:
     description: Menembakkan rentetan gelembung sabun yang memperlambat laju gerakan
       musuh.
     preview_sprite: {fileID: 877903833251634843, guid: ef85b03cc8d2d614f9f34b1978266424, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1017560070}
     expand_panel: {fileID: 308406868}
@@ -6083,7 +6075,6 @@ MonoBehaviour:
     description: Helm pelindung proyek kokoh yang meningkatkan kapasitas Max HP sebesar
       20%.
     preview_sprite: {fileID: 4462932120348938567, guid: da9a66a69a81937459e1d1bc72c3e9f3, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1411711069}
     expand_panel: {fileID: 1573760035}
@@ -6107,7 +6098,6 @@ MonoBehaviour:
     description: Rompi pelindung tangguh yang meredam benturan dan tabrakan musuh
       sebesar 25%.
     preview_sprite: {fileID: -8664401213119919609, guid: bedc7a33d4384224cb1cb994ebd8e6e0, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1937051581}
     expand_panel: {fileID: 1449435398}
@@ -6131,7 +6121,6 @@ MonoBehaviour:
     description: Perisai sabun nano licin; membuat musuh di sekitar terpeleset dan
       memicu lemparan bom sabun saat diserang.
     preview_sprite: {fileID: 236204173789307413, guid: c7637cb7c98929d45abcf14a1b2b3fb8, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 2020060636}
     expand_panel: {fileID: 14965770}
@@ -6154,8 +6143,7 @@ MonoBehaviour:
     price: 100
     description: Jetpack pendorong udara yang memberikan lompatan ganda (Double Jump)
       dan melayang stabil.
-    preview_sprite: {fileID: -7559335286566603207, guid: 9270a01c7d9b85c43a883c85b7fe88bf, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
+    preview_sprite: {fileID: -2640089873255853024, guid: e88d4f5f303de2548b1c80f72b3db467, type: 3}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 1353827667}
     expand_panel: {fileID: 345731596}
@@ -6179,7 +6167,6 @@ MonoBehaviour:
     description: Jetpack bermanuver cepat yang meninggalkan jejak busa sabun beracun
       perusak musuh di bawahnya.
     preview_sprite: {fileID: -8951251301511139612, guid: 3f97434863678f34195eea5abb8b5669, type: 3}
-    preview_color: {r: 1, g: 1, b: 1, a: 1}
     item_prefab: {fileID: 0}
     row_expand_button: {fileID: 282228519}
     expand_panel: {fileID: 2097307017}
@@ -6950,7 +6937,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -45}
+  m_AnchoredPosition: {x: 450, y: -10}
   m_SizeDelta: {x: 880, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &307875732
@@ -12045,7 +12032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -285}
+  m_AnchoredPosition: {x: 450, y: -40}
   m_SizeDelta: {x: 880, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &536368100
@@ -24072,7 +24059,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -205}
+  m_AnchoredPosition: {x: 450, y: -30}
   m_SizeDelta: {x: 880, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1156359360
@@ -33928,7 +33915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3, g: 0.85, b: 0.95, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -33937,7 +33924,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 9202713574010850225, guid: d1913b80f4db3924fae95a353aab5514, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -35772,7 +35759,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7559335286566603207, guid: 9270a01c7d9b85c43a883c85b7fe88bf, type: 3}
+  m_Sprite: {fileID: -2640089873255853024, guid: e88d4f5f303de2548b1c80f72b3db467, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -39799,7 +39786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -125}
+  m_AnchoredPosition: {x: 450, y: -20}
   m_SizeDelta: {x: 880, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1894489328

@@ -20,6 +20,14 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private float lifetime = 0.55f;
     [SerializeField] private float move_speed_y = 1.4f;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        pool?.Clear();
+        pool = null;
+        cached_prefab = null;
+    }
+
     private static void EnsurePool()
     {
         if (pool == null)
@@ -36,11 +44,11 @@ public class DamagePopup : MonoBehaviour
                 },
                 actionOnGet: popup =>
                 {
-                    popup.gameObject.SetActive(true);
+                    if (popup != null) popup.gameObject.SetActive(true);
                 },
                 actionOnRelease: popup =>
                 {
-                    popup.gameObject.SetActive(false);
+                    if (popup != null) popup.gameObject.SetActive(false);
                 },
                 actionOnDestroy: popup =>
                 {

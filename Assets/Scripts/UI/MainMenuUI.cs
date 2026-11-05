@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -12,10 +11,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button credits_button;
     [SerializeField] private TMP_Text candy_text;
     [SerializeField] private GameObject settings_panel;
-    [SerializeField] private GameObject credits_panel;
-
-    private RectTransform credits_modal;
-    private Button credits_back_button;
 
     private void Start()
     {
@@ -25,53 +20,9 @@ public class MainMenuUI : MonoBehaviour
         if (exit_button != null) exit_button.onClick.AddListener(OnExitClicked);
         if (credits_button != null) credits_button.onClick.AddListener(OnCreditsClicked);
         if (settings_panel != null) settings_panel.SetActive(false);
-        if (credits_panel != null)
-        {
-            SetupCreditsPanel();
-            credits_panel.SetActive(false);
-        }
 
         UpdateCandyDisplay();
         AudioManager.PlayMusic(GameConstants.AudioKeys.MusicMainMenu);
-    }
-
-    private void SetupCreditsPanel()
-    {
-        if (credits_panel == null) return;
-        Transform modalTransform = credits_panel.transform.Find("CreditsModal");
-        if (modalTransform != null)
-        {
-            credits_modal = modalTransform.GetComponent<RectTransform>();
-            Transform backBtn = modalTransform.Find("UI_Button_Back");
-            if (backBtn != null)
-            {
-                credits_back_button = backBtn.GetComponent<Button>();
-                if (credits_back_button != null)
-                {
-                    credits_back_button.onClick.AddListener(CloseCredits);
-                }
-            }
-        }
-    }
-
-    private void CloseCredits()
-    {
-        AudioManager.PlaySFX(GameConstants.AudioKeys.UiClick);
-        if (credits_modal != null)
-        {
-            credits_modal.DOKill();
-            credits_modal.DOAnchorPos(new Vector2(0f, 900f), 0.25f)
-                .SetEase(Ease.InQuad)
-                .SetUpdate(true)
-                .OnComplete(() =>
-                {
-                    if (credits_panel != null) credits_panel.SetActive(false);
-                });
-        }
-        else if (credits_panel != null)
-        {
-            credits_panel.SetActive(false);
-        }
     }
 
     private void UpdateCandyDisplay()
@@ -111,24 +62,7 @@ public class MainMenuUI : MonoBehaviour
     private void OnCreditsClicked()
     {
         AudioManager.PlaySFX(GameConstants.AudioKeys.UiClick);
-        if (credits_panel != null)
-        {
-            if (!credits_panel.activeSelf)
-            {
-                credits_panel.SetActive(true);
-                if (credits_modal == null) SetupCreditsPanel();
-                if (credits_modal != null)
-                {
-                    credits_modal.DOKill();
-                    credits_modal.anchoredPosition = new Vector2(0f, 900f);
-                    credits_modal.DOAnchorPos(Vector2.zero, 0.35f).SetEase(Ease.OutBack).SetUpdate(true);
-                }
-            }
-            else
-            {
-                CloseCredits();
-            }
-        }
+        SceneLoader.LoadCredits();
     }
 
     private void OnExitClicked()

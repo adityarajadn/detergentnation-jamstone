@@ -10,6 +10,11 @@ public class HudStatsView
 {
     // Player & combat
     public Slider player_health_slider;
+    public Image player_health_fill_image;
+    public Sprite playerbar_green;
+    public Sprite playerbar_yellow;
+    public Sprite playerbar_red;
+
     public TMP_Text ammo_text;
     public TMP_Text candy_text;
     public TMP_Text repair_points_text;
@@ -27,9 +32,6 @@ public class HudStatsView
     public Sprite icon_soap_bucket;
     public Sprite icon_sonar_batarang;
 
-    // Minimarket
-    public Slider minimarket_health_slider;
-
     private PlayerCombat player_combat;
     private PlayerAmmo player_ammo;
     private Health player_health;
@@ -43,13 +45,10 @@ public class HudStatsView
     private int last_c2_count = -1;
     private string last_c1_name = null;
     private string last_c2_name = null;
-    private int last_market_hp = -1;
-    private int last_market_max_hp = -1;
 
     public void Tick()
     {
         UpdatePlayerUI();
-        UpdateMinimarketUI();
     }
 
     public void FindPlayerReferences()
@@ -85,6 +84,23 @@ public class HudStatsView
             last_max_hp = player_health.health_max;
             player_health_slider.maxValue = last_max_hp;
             player_health_slider.value = last_hp;
+
+            if (player_health_fill_image != null && last_max_hp > 0)
+            {
+                float ratio = (float)last_hp / last_max_hp;
+                if (ratio > 0.6f && playerbar_green != null)
+                {
+                    player_health_fill_image.sprite = playerbar_green;
+                }
+                else if (ratio > 0.3f && playerbar_yellow != null)
+                {
+                    player_health_fill_image.sprite = playerbar_yellow;
+                }
+                else if (playerbar_red != null)
+                {
+                    player_health_fill_image.sprite = playerbar_red;
+                }
+            }
         }
 
         if (ammo_text != null)
@@ -179,19 +195,5 @@ public class HudStatsView
             case GameConstants.EquipmentNames.ConsumableSonarBatarang: return icon_sonar_batarang;
         }
         return null;
-    }
-
-    private void UpdateMinimarketUI()
-    {
-        if (Minimarket.instance != null && Minimarket.instance.health != null && minimarket_health_slider != null)
-        {
-            if (Minimarket.instance.health.health_current != last_market_hp || Minimarket.instance.health.health_max != last_market_max_hp)
-            {
-                last_market_hp = Minimarket.instance.health.health_current;
-                last_market_max_hp = Minimarket.instance.health.health_max;
-                minimarket_health_slider.maxValue = last_market_max_hp;
-                minimarket_health_slider.value = last_market_hp;
-            }
-        }
     }
 }

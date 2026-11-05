@@ -181,12 +181,20 @@ public class PlayerController : MonoBehaviour
                 float boost = GetJumpBoostMultiplier();
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * boost);
                 can_double_jump = CanDoubleJumpWithEquipment();
+                if (active_jetpack != null)
+                {
+                    active_jetpack.OnJumpTriggered();
+                }
             }
             else if (can_double_jump && CanDoubleJumpWithEquipment())
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump_force * 1.05f);
                 can_double_jump = false;
                 AudioManager.PlaySFX(GameConstants.AudioKeys.Jetpack);
+                if (active_jetpack != null)
+                {
+                    active_jetpack.OnJumpTriggered();
+                }
             }
         }
 

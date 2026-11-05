@@ -12,6 +12,10 @@ public class GameplayUI : MonoBehaviour
 {
     [Header("Player & Combat")]
     [SerializeField] private Slider player_health_slider;
+    [SerializeField] private Image player_health_fill_image;
+    [SerializeField] private Sprite playerbar_green;
+    [SerializeField] private Sprite playerbar_yellow;
+    [SerializeField] private Sprite playerbar_red;
     [SerializeField] private TMP_Text ammo_text;
     [SerializeField] private TMP_Text candy_text;
     [SerializeField] private TMP_Text repair_points_text;
@@ -28,9 +32,6 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Sprite icon_energy_drink;
     [SerializeField] private Sprite icon_soap_bucket;
     [SerializeField] private Sprite icon_sonar_batarang;
-
-    [Header("Minimarket")]
-    [SerializeField] private Slider minimarket_health_slider;
 
     [Header("Wave Progress")]
     [SerializeField] private TMP_Text wave_text;
@@ -105,6 +106,10 @@ public class GameplayUI : MonoBehaviour
         stats_view = new HudStatsView
         {
             player_health_slider = player_health_slider,
+            player_health_fill_image = player_health_fill_image,
+            playerbar_green = playerbar_green,
+            playerbar_yellow = playerbar_yellow,
+            playerbar_red = playerbar_red,
             ammo_text = ammo_text,
             candy_text = candy_text,
             repair_points_text = repair_points_text,
@@ -118,8 +123,7 @@ public class GameplayUI : MonoBehaviour
             icon_tools_box = icon_tools_box,
             icon_energy_drink = icon_energy_drink,
             icon_soap_bucket = icon_soap_bucket,
-            icon_sonar_batarang = icon_sonar_batarang,
-            minimarket_health_slider = minimarket_health_slider
+            icon_sonar_batarang = icon_sonar_batarang
         };
 
         wave_view = new HudWaveView(this)
@@ -207,7 +211,10 @@ public class GameplayUI : MonoBehaviour
             TogglePause();
         }
 
-        stats_view.Tick();
+        if (stats_view != null)
+        {
+            stats_view.Tick();
+        }
     }
 
     public Sprite GetConsumableSprite(string itemName)

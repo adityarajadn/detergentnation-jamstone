@@ -17,6 +17,11 @@ public class HudDefenseView
     public Button defense_btn_barrel;
     public Button defense_btn_refund;
 
+    private readonly Color color_defense_normal = new Color(0.18f, 0.22f, 0.32f, 0.95f);
+    private readonly Color color_defense_selected = new Color(0.15f, 0.58f, 0.92f, 1f);
+    private readonly Color color_refund_normal = new Color(0.40f, 0.18f, 0.18f, 0.95f);
+    private readonly Color color_refund_selected = new Color(0.85f, 0.22f, 0.22f, 1f);
+
     public void Bind()
     {
         if (LevelManager.instance != null)
@@ -27,6 +32,7 @@ public class HudDefenseView
         if (DefensePlacementManager.instance != null)
         {
             DefensePlacementManager.instance.on_points_changed.AddListener(OnDefensePointsChanged);
+            DefensePlacementManager.instance.on_selection_changed.AddListener(OnDefenseSelectionChanged);
 
             var defs = DefensePlacementManager.instance.available_defenses;
             if (defense_btn_fence != null && defs.Count > 0)
@@ -41,6 +47,7 @@ public class HudDefenseView
                 defense_btn_refund.onClick.AddListener(() => DefensePlacementManager.instance.ToggleRefundMode());
 
             UpdateDefenseButtonStates(DefensePlacementManager.instance.defense_points_current);
+            OnDefenseSelectionChanged(DefensePlacementManager.instance.selected_defense, DefensePlacementManager.instance.is_refund_mode);
         }
 
         if (start_wave_button != null)
@@ -57,6 +64,11 @@ public class HudDefenseView
         if (planning_panel != null)
         {
             planning_panel.SetActive(phase == GamePhase.Planning);
+        }
+
+        if (phase != GamePhase.Planning && DefensePlacementManager.instance != null)
+        {
+            DefensePlacementManager.instance.ClearSelection();
         }
     }
 
@@ -78,6 +90,27 @@ public class HudDefenseView
         if (defense_btn_cannon != null && defs.Count > 1) defense_btn_cannon.interactable = current_points >= defs[1].point_cost;
         if (defense_btn_trap != null && defs.Count > 2) defense_btn_trap.interactable = current_points >= defs[2].point_cost;
         if (defense_btn_barrel != null && defs.Count > 3) defense_btn_barrel.interactable = current_points >= defs[3].point_cost;
+    }
+
+    private void OnDefenseSelectionChanged(DefenseData selected, bool is_refund)
+    {
+        if (DefensePlacementManager.instance == null) return;
+        var defs = DefensePlacementManager.instance.available_defenses;
+
+        SetButtonSelected(defense_btn_fence, defs.Count > 0 && selected == defs[0], color_defense_normal, color_defense_selected);
+        SetButtonSelected(defense_btn_cannon, defs.Count > 1 && selected == defs[1], color_defense_normal, color_defense_selected);
+        SetButtonSelected(defense_btn_trap, defs.Count > 2 && selected == defs[2], color_defense_normal, color_defense_selected);
+        SetButtonSelected(defense_btn_barrel, defs.Count > 3 && selected == defs[3], color_defense_normal, color_defense_selected);
+        SetButtonSelected(defense_btn_refund, is_refund, color_refund_normal, color_refund_selected);
+    }
+
+    private void SetButtonSelected(Button btn, bool isSelected, Color normalColor, Color selectedColor)
+    {
+        if (btn == null) return;
+        if (btn.image != null)
+        {
+            btn.image.color = isSelected ? selectedColor : normalColor;
+        }
     }
 
 }
