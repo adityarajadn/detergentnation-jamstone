@@ -10,6 +10,7 @@ public class SonarBatarangProjectile : MonoBehaviour
     public float stun_duration = 4.0f;
     public float lifetime = 3.0f;
     public GameObject hit_effect_prefab;
+    public GameObject bat_swarm_prefab;
 
     private Rigidbody2D rb;
     private float timer = 0f;
@@ -95,6 +96,11 @@ public class SonarBatarangProjectile : MonoBehaviour
             }
         }
 
+        if (bat_swarm_prefab != null)
+        {
+            Instantiate(bat_swarm_prefab, transform.position, Quaternion.identity);
+        }
+
         if (hit_effect_prefab != null)
         {
             Instantiate(hit_effect_prefab, transform.position, Quaternion.identity);
@@ -103,3 +109,4 @@ public class SonarBatarangProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 }
+ 

@@ -37,7 +37,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7614610172249955558
 SpriteRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,9 +92,8 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
-  m_BlendShapeWeights: []
 --- !u!50 &5908859407516149923
 Rigidbody2D:
   serializedVersion: 5
@@ -175,3 +174,4 @@ MonoBehaviour:
   stun_duration: 4
   lifetime: 3
   hit_effect_prefab: {fileID: 0}
+  bat_swarm_prefab: {fileID: 3344694686113342372, guid: af0e3b6cc837aff4ca82c783272baa90, type: 3}
